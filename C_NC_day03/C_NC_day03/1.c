@@ -2,6 +2,17 @@
 #include<stdlib.h>
 #define N 5
 
+void PrintArr(int a[], int n)
+{
+	int i;
+
+	for (i = 0; i < n; i++)
+	{
+		printf("a[%d] = %d ", i, a[i]);
+	}
+	printf("\n");
+}
+
 int main()
 {
 	int i, tmp;
@@ -9,16 +20,8 @@ int main()
 	int b[N] = { 6, 7, 8, 9, 10 };
 
 	printf("交换前：\n");
-	for (i = 0; i < N; i++)
-	{
-		printf("a[%d] = %d ", i, a[i]);
-	}
-	printf("\n");
-	for (i = 0; i < N; i++)
-	{
-		printf("b[%d] = %d ", i, b[i]);
-	}
-	printf("\n");
+	PrintArr(a, N);
+	PrintArr(b, N);
 
 	for( i = 0; i < N ; i++ )
 	{
@@ -28,16 +31,8 @@ int main()
 	}
 	
 	printf("交换后：\n");
-	for (i = 0; i < N; i++)
-	{
-		printf("a[%d] = %d ", i, a[i]);
-	}
-	printf("\n");
-	for (i = 0; i < N; i++)
-	{
-		printf("b[%d] = %d ", i, b[i]);
-	}
-	printf("\n");
+	PrintArr(a, N);
+	PrintArr(b, N);
 
 	system("pause");
 	return 0;
