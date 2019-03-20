@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int main()
+int main3()
 {
 	int n, i, sum = 0, tmp = 0;
 
