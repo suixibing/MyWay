@@ -285,6 +285,7 @@ void Play()
 {
 	char ch;
 	char board[ROW][COL] = { 0 };
+	system("cls");
 
 	printf("ÓÎÏ·¿ªÊ¼:>\n");
 	Display(board, ROW, COL);
@@ -292,6 +293,7 @@ void Play()
 	while (1)
 	{
 		PlayerMove(board, ROW, COL);
+		system("cls");
 		Display(board, ROW, COL);
 		ch = CheckWin(board, ROW, COL);
 		if (ch != CONTINUE)
@@ -299,6 +301,7 @@ void Play()
 			break;
 		}
 		ComputerMove(board, ROW, COL);
+		system("cls");
 		Display(board, ROW, COL);
 		ch = CheckWin(board, ROW, COL);
 		if (ch != CONTINUE)
