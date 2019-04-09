@@ -5,29 +5,25 @@
 #define MAX 100
 
 
-int main3()
+int main()
 {
-	int i, j, n, tmp[MAX] = { 0 }, a[MAX] = { 0 };
-	a[1] = 1;
+	int i, j, n, a[MAX] = { 0 };
+	a[0] = 1;
 
 	scanf("%d", &n);
-	printf("%2d\n", a[1]);
-	for (i = 1; i < n; i++)
+
+	for (j = 1; j <= n; j++)
 	{
-		for (j = 1; a[j] + a[j - 1] != 0 && j < MAX; j++)
+		for (i = j - 1; i > 0; i--)
 		{
-			tmp[j] = a[j] + a[j - 1];
+			a[i] = a[i] + a[i - 1];
 		}
-		for (j = 0; j <= i; j++)
+		for (i = 0; i < j; i++)
 		{
-			printf("%2d ", tmp[j + 1]);
-			
-		}
-		for (j = 0; j < MAX; j++)
-		{
-			a[j] = tmp[j];
+			printf("%3d ", a[i]);
 		}
 		putchar('\n');
+		
 	}
 
 	system("pause");
