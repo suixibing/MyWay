@@ -1,6 +1,6 @@
 #include"DataStructures.h"
 
-void StackTest1()
+void StackTest_1()
 {
 	int i, len;
 	char input[100];

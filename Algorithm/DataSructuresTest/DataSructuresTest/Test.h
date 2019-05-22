@@ -1,6 +1,9 @@
 #pragma once
 
 
-int QueueTest1();
-int StackTest1();
-void QueueStackTest1();
+
+void LinkListTest_1();
+void LinkListTest_2();
+void QueueTest_1();
+void QueueStackTest_1();
+void StackTest_1();

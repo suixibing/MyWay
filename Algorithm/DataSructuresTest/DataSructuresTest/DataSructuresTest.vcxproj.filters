@@ -30,6 +30,12 @@
     <ClCompile Include="QueueStack_拉火车游戏.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="LinkList_建立有序链表.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkList_模拟链表.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataStructures.h">

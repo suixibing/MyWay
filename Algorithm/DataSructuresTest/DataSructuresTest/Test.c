@@ -6,7 +6,9 @@ int main()
 {
 	//QueueTest1();
 	//StackTest1();
-	QueueStackTest1();
+	//QueueStackTest_1();
+	//LinkListTest_1();
+	LinkListTest_2();
 
 	system("pause");
 	return 0;

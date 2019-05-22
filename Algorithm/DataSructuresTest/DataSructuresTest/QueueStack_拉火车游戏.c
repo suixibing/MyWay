@@ -1,7 +1,7 @@
 #include"DataStructures.h"
 #define N 6
 
-void QueueStackTest1()
+void QueueStackTest_1()
 {
 	int i, tmp, book[20] = { 0 };
 	STACK s;

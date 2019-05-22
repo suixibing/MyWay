@@ -116,6 +116,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DataStructures.c" />
+    <ClCompile Include="LinkList_建立有序链表.c" />
+    <ClCompile Include="LinkList_模拟链表.c" />
     <ClCompile Include="QueueStack_拉火车游戏.c" />
     <ClCompile Include="Queue_破解原数.c" />
     <ClCompile Include="Stack_解密回文.c" />

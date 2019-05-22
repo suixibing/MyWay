@@ -1,6 +1,6 @@
 #include"DataStructures.h"
 
-void QueueTest1()
+void QueueTest_1()
 {
 	QUEUE q;
 	int i, len, arr[] = { 6, 3, 1, 7, 5, 8, 9, 2, 4 };

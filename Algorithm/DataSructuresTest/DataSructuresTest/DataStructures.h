@@ -6,6 +6,8 @@
 #include<string.h>
 #include<stdlib.h>
 
+#define END -999
+
 //╤сап
 typedef struct
 {
@@ -22,3 +24,15 @@ typedef struct
 	int top;
 }STACK;
 
+
+typedef struct Node
+{
+	int data;
+	struct Node *next;
+}NODE, *LIST;
+
+typedef struct SimulateNode
+{
+	int data;
+	int next;
+}S_NODE;
