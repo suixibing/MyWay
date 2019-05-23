@@ -2,7 +2,7 @@
 
 void LinkListTest_2()
 {
-	int input, count, head = 0, len = -1;
+	int input, count, head = -1, len = -1;
 	S_NODE slist[100];
 
 	while (1)
@@ -15,17 +15,29 @@ void LinkListTest_2()
 		len++;
 		slist[len].data = input;
 		slist[len].next = -1;
+		if (len == 0)
+		{
+			head = 0;
+			continue;
+		}
 		count = head;
-		while (slist[count].data > slist[len].data || (slist[count].next != -1 && slist[slist[count].next].data < slist[len].data))
+		if (slist[head].data > slist[len].data)
+		{
+			slist[len].next = head;
+			head = len;
+			continue;
+		}
+		while (slist[count].next != -1 && slist[slist[count].next].data < slist[len].data)
 		{
 			count = slist[count].next;
 		}
 		slist[len].next = slist[count].next;
-		if (len == 0)
-		{
-			continue;
-		}
 		slist[count].next = len;
+	}
+	if (head == -1)
+	{
+		printf("Пе\n");
+		return;
 	}
 	count = head;
 	while (slist[count].next != -1)
