@@ -2,7 +2,8 @@
 
 int main()
 {
-	BomberMan_1();
+	//BomberMan_1();
+	StickEquation();
 
 	system("pause");
 	return 0;

@@ -11,3 +11,4 @@
 
 
 void BomberMan_1();
+void StickEquation();
