@@ -116,8 +116,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Test.c" />
+    <ClCompile Include="Test_数的全排列.c" />
     <ClCompile Include="Test_火柴棍等式.c" />
     <ClCompile Include="Test_炸弹人游戏.c" />
+    <ClCompile Include="Test_等式判断.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Test.h" />

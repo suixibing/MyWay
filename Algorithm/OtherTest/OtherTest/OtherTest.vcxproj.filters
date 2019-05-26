@@ -24,6 +24,12 @@
     <ClCompile Include="Test_火柴棍等式.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Test_数的全排列.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_等式判断.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Test.h">
