@@ -9,7 +9,9 @@ int main()
 	int a[] = { 27, 53, 19, 5, 73, 92, 39 };
 	int n = sizeof(a) / sizeof(a[0]);
 
-	QuickSort(a, 0, n - 1);
+	//QuickSort(a, 0, n - 1);
+	//InsertionSort(a, n);
+	MergeSort(a, 0, n - 1);
 	for (int i = 0; i < n; i++)
 	{
 		printf("%d ", a[i]);

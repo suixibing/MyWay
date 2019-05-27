@@ -27,6 +27,12 @@
     <ClCompile Include="QuickSort.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="InsertionSort.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MergeSort.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sort.h">
