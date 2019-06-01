@@ -32,12 +32,12 @@ void FullPermutation_DFS(int *base, int step, int *book, int num)
 		putchar('\n');
 		return;
 	}
-	for (i = 0; i < num; i++)
+	for (i = 1; i <= num; i++)
 	{
 		if (book[i] == 0)
 		{
 			book[i] = 1;
-			base[step] = i + 1;
+			base[step] = i;
 			FullPermutation_DFS(base, step + 1, book, num);
 			book[i] = 0;
 		}

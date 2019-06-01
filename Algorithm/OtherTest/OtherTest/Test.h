@@ -16,3 +16,5 @@ void FullPermutation_1();
 void FullPermutation_DFS(int *base, int step, int *book, int num);
 void EquationEnum();
 void EquationArr();
+int EquationDFS(int *base, int step, int *book);
+void ExitMaze();

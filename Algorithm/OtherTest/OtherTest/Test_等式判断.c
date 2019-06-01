@@ -126,3 +126,35 @@ void EquationEnum()
 	}
 	printf("¹²ÓĞ%d¸ö\n", count / 2);
 }
+
+int EquationDFS(int *base, int step, int *book)
+{
+	int i;
+	static int count = 0;
+
+	if (step == 0)
+	{
+		count = 0;
+	}
+	else if (step == NUM - 1)
+	{
+		if (100 * base[0] + 10 * base[1] + base[2] + 100 * base[3] + 10 * base[4] + base[5] == 100 * base[6] + 10 * base[7] + base[8])
+		{
+			count++;
+			printf("%d%d%d + %d%d%d = %d%d%d\n", base[0], base[1], base[2], base[3], base[4], base[5], base[6], base[7], base[8]);
+		}
+		return 0;
+	}
+	for (i = 1; i < NUM; i++)
+	{
+		if (book[i] == 0)
+		{
+			book[i] = 1;
+			base[step] = i;
+			EquationDFS(base, step + 1, book);
+			book[i] = 0;
+		}
+	}
+
+	return count / 2;
+}
