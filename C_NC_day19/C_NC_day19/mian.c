@@ -2,7 +2,8 @@
 
 void MailSystem()
 {
-	int flag;
+	int id, ret, flag;
+	char aim[50] = { 0 };
 
 	g_mail.num = 0;
 	while (flag = Menu())
@@ -16,13 +17,44 @@ void MailSystem()
 			InsertMail();
 			break;
 		case DELETE_MSG:
-			DeleteMail();
+			printf("请输入要删除信息人的编号:>");
+			scanf("%d", &id);
+			if (DeleteMail(id - 1))
+			{
+				printf("删除成功!\n");
+			}
+			else
+			{
+				printf("该信息不存在!\n");
+			}
 			break;
 		case SEARCH_MSG:
-			SearchMail();
+			printf("请输入要查找的信息:>");
+			scanf("%s", aim);
+			printf("查找开始：\n");
+			ret = SearchMail(aim);
+			if (ret)
+			{
+				printf("查找结束！\n");
+				printf("共查找到信息%d条\n", ret);
+			}
+			else
+			{
+				printf("不存在符合条件的信息\n");
+				printf("查找结束！\n");
+			}
 			break;
 		case CHANGE_MSG:
-			ChangeMail();
+			printf("请输入要修改信息人的编号:>");
+			scanf("%d", &id);
+			if (ChangeMail(id - 1))
+			{
+				printf("修改成功!\n");
+			}
+			else
+			{
+				printf("该信息不存在!\n");
+			}
 			break;
 		case OUTPUT_MSG:
 			OutputMail();

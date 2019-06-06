@@ -4,6 +4,7 @@ int Menu()
 {
 	int input;
 
+	putchar('\n');
 	printf("\t\t\t0、退出\n");
 	printf("\t\t\t1、增加信息\n");
 	printf("\t\t\t2、删除信息\n");
@@ -20,11 +21,11 @@ int Menu()
 
 void PrintTitle()
 {
-	printf("   姓名   性别    年龄   联系方式    住址\n");
+	printf("编号   姓名   性别    年龄   联系方式    住址\n");
 }
 void PrintMSG(int id)
 {
-	printf("  %-8s %3s    %3d  %11s  %-10s\n", g_mail.man[id].name, g_mail.man[id].sex, g_mail.man[id].age, g_mail.man[id].tele, g_mail.man[id].addr);
+	printf(" %d   %-8s %3s    %3d  %11s  %-10s\n", id + 1, g_mail.man[id].name, g_mail.man[id].sex, g_mail.man[id].age, g_mail.man[id].tele, g_mail.man[id].addr);
 }
 
 void InputMSG(MailMSG **p)
@@ -47,30 +48,132 @@ void InsertMail()
 	MailMSG input, *p = &input;
 
 	InputMSG(&p);
-	for (i = g_mail.num; i > 0 && strcmp(g_mail.man[i - 1].name, input.name) > 0; i++)
+	if (g_mail.num == MANNUM - 1)
 	{
-		if (i < MANNUM)
-		{
-			g_mail.man[i] = g_mail.man[i - 1];
-		}
+		printf("通讯录已满,添加失败!\n");
+		return;
+	}
+	for (i = g_mail.num; i - 1 >= 0 && strcmp(g_mail.man[i - 1].name, input.name) > 0; i--)
+	{
+		g_mail.man[i] = g_mail.man[i - 1];
 	}
 	g_mail.man[i] = input;
 	g_mail.num++;
 }
 
-void DeleteMail()
+int DeleteMail(int id)
 {
-	printf("DeleteMail()\n");
+	int i = id;
+
+	if (id >= g_mail.num)
+	{
+		return ERROR;
+	}
+	while (i < g_mail.num)
+	{
+		if (i + 1 < MANNUM)
+		{
+			g_mail.man[i] = g_mail.man[i + 1];
+		}
+		i++;
+	}
+	g_mail.num--;
+
+	return TRUE;
 }
 
-void SearchMail()
+int SearchMail(char *p)
 {
-	printf("SearchMail()\n");
+	int i, flag, count = 0;
+	char *t, age[5] = { 0 };
+
+	for (i = 0; i < g_mail.num; i++)
+	{
+		do
+		{
+			flag = 1;
+			t = strstr(g_mail.man[i].name, p);//在姓名中查找
+			if (t)
+			{
+				break;
+			}
+			t = strstr(g_mail.man[i].addr, p);//在地址中查找
+			if (t)
+			{
+				break;
+			}
+			t = strstr(g_mail.man[i].sex, p);//在性别中查找
+			if (t)
+			{
+				break;
+			}
+			t = strstr(g_mail.man[i].tele, p);//在联系方式中查找
+			if (t)
+			{
+				break;
+			}
+			sprintf(age, "%d", g_mail.man[i].age);
+			t = strstr(age, p);//在年龄中查找
+			if (t)
+			{
+				break;
+			}
+			flag = 0;
+		} while (0);
+		if (flag)
+		{
+			PrintMSG(i);
+			count++;
+		}
+	}
+
+	return count;
 }
 
-void ChangeMail()
+int ChangeMail(int id)
 {
-	printf("ChangeMail()\n");
+	char input[50] = { 0 };
+	if (id >= g_mail.num)
+	{
+		return ERROR;
+	}
+	printf("姓名是否要修改？(y/n)");
+	scanf("%s", input);
+	if (!strcmp(input, "y") || !strcmp(input, "Y"))
+	{
+		printf("请输入新的姓名:>");
+		scanf("%50s", g_mail.man[id].name);
+	}
+	printf("性别是否要修改？(y/n)");
+	scanf("%s", input);
+	if (!strcmp(input, "y") || !strcmp(input, "Y"))
+	{
+		printf("请输入新的性别:>");
+		scanf("%3s", g_mail.man[id].sex);
+	}
+	printf("年龄是否要修改？(y/n)");
+	scanf("%s", input);
+	if (!strcmp(input, "y") || !strcmp(input, "Y"))
+	{
+		printf("请输入新的年龄:>");
+		scanf("%d", &g_mail.man[id].age);
+	}
+	printf("联系方式是否要修改？(y/n)");
+	scanf("%s", input);
+	if (!strcmp(input, "y") || !strcmp(input, "Y"))
+	{
+		printf("请输入新的联系方式:>");
+		scanf("%11s", g_mail.man[id].tele);
+	}
+	printf("住址是否要修改？(y/n)");
+	scanf("%s", input);
+	if (!strcmp(input, "y") || !strcmp(input, "Y"))
+	{
+		printf("请输入新的住址:>");
+		scanf("%50s", g_mail.man[id].addr);
+	}
+
+	return TRUE;
 }
 
 void OutputMail()

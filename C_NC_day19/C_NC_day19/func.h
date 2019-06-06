@@ -18,6 +18,8 @@ typedef struct Mail
 }MailMSG;
 
 #define MANNUM 100
+#define TRUE 1
+#define ERROR 0
 
 typedef struct MailList
 {
@@ -39,9 +41,9 @@ enum OPTION
 
 int Menu();
 void InsertMail();
-void DeleteMail();
-void SearchMail();
-void ChangeMail();
+int DeleteMail(int id);
+int SearchMail(char *p);
+int ChangeMail(int id);
 void OutputMail();
 
 #endif
