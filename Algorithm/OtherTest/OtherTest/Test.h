@@ -8,7 +8,8 @@
 #define WALL '#'
 #define ENEMY 'G'
 #define GRASS '.'
-
+#define ERROR 0
+#define TRUE 1
 
 void BomberMan_1();
 void StickEquation();
