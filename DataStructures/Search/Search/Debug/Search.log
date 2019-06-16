@@ -1,4 +1,2 @@
 ﻿  test.c
-c:\users\10142\source\repos\数据结构实验\search\search\test.c(308): warning C4047: “函数”:“Tree **”与“Tree *”的间接级别不同
-c:\users\10142\source\repos\数据结构实验\search\search\test.c(308): warning C4024: “DeleteTreeNode”: 形参和实参 1 的类型不同
   Search.vcxproj -> C:\Users\10142\source\repos\数据结构实验\Search\Debug\Search.exe

@@ -96,7 +96,7 @@ void InputTree(Tree **tree, char input)
 		{
 			if (p->right == NULL)
 			{
-				p->right = (Tree*)calloc(1, sizeof(Tree));
+				p->right = (Tree*)malloc(sizeof(Tree));
 				p->right->data = input;
 				p->right->right = NULL;
 				p->right->left = NULL;
@@ -108,7 +108,7 @@ void InputTree(Tree **tree, char input)
 		{
 			if (p->left == NULL)
 			{
-				p->left = (Tree*)calloc(1, sizeof(Tree));
+				p->left = (Tree*)malloc(sizeof(Tree));
 				p->left->data = input;
 				p->left->right = NULL;
 				p->left->left = NULL;
@@ -122,11 +122,16 @@ void InputTree(Tree **tree, char input)
 void CandomCreate(Tree **tree)
 {
 	char tmp[100] = { 0 };
-	int i, num, flag;
+	int i, num, flag, book[130] = { 0 };
 
 	srand((unsigned int)time(NULL));
 	printf("请输入随机关键字的长度(<=100):>");
 	scanf("%d", &num);
+	if (!num)
+	{
+		printf("什么都没有生成,建立二叉树失败!\n");
+		return;
+	}
 	for (i = 0; i < num; i++)
 	{
 		flag = rand() % 3;
@@ -142,8 +147,14 @@ void CandomCreate(Tree **tree)
 		{
 			tmp[i] = rand() % 26 + 'A';
 		}
+		if (book[tmp[i]])
+		{
+			i--;
+		}
+		book[tmp[i]]++;
 	}
 	printf("随机关键字为:%s\n", tmp);
+	*tree = malloc(sizeof(Tree));
 	(*tree)->left = NULL;
 	(*tree)->right = NULL;
 	(*tree)->data = tmp[0];
@@ -164,32 +175,10 @@ void PrintTree(Tree *p)
 	PrintTree(p->right);
 }
 
-void NodeDeleteTree(Tree **last, Tree *p)
-{
-	if (p->left == NULL)
-	{
-		(*last)->right = p->right;
-	}
-	else if (p->right == NULL)
-	{
-		(*last)->right = p->left;
-	}
-	else
-	{
-		p = p->right;
-		while (p->left != NULL)
-		{
-			p = p->left;
-		}
-		p->left = (*last)->right->left;
-		(*last)->right = (*last)->right->right;
-	}
-}
-
 void DeleteTreeNode(Tree **t, char k)
 {
-	int flag = 0;
-	Tree *last = *t, *p = *t;
+	int flag = -1;
+	Tree *last = *t, *p = *t, *n = NULL;
 
 	while (p != NULL && k != p->data)
 	{
@@ -205,57 +194,56 @@ void DeleteTreeNode(Tree **t, char k)
 			p = p->left;
 		}
 	}
-	NodeDeleteTree(&p, p);
-	//if (p)
-	//{
-	//	if (flag)
-	//	{
-	//		if (p->left == NULL)
-	//		{
-	//			last->left = p->right;
-	//		}
-	//		else if (p->right == NULL)
-	//		{
-	//			last->left = p->left;
-	//		}
-	//		else
-	//		{
-	//			p = p->right;
-	//			while (p->left != NULL)
-	//			{
-	//				p = p->left;
-	//			}
-	//			p->left = last->left->left;
-	//			last->left = last->left->right;
-	//		}
-	//	}
-	//	else
-	//	{
-	//		if (p->left == NULL)
-	//		{
-	//			last->right = p->right;
-	//		}
-	//		else if (p->right == NULL)
-	//		{
-	//			last->right = p->left;
-	//		}
-	//		else
-	//		{
-	//			p = p->right;
-	//			while (p->left != NULL)
-	//			{
-	//				p = p->left;
-	//			}
-	//			p->left = last->right->left;
-	//			last->right = last->right->right;
-	//		}
-	//	}
-	//	printf("删除成功!\n");
-	//}
-	//else
-	//{
-	//	printf("不存在!\n");
-	//}
+	if (p != NULL)
+	{
+		n = p;
+		if (flag > 0)
+		{
+			if (p->right != NULL)
+			{
+				last->left = p->right;
+				last->left->left = p->left;
+			}
+			else
+			{
+				last->left = p->left;
+			}
+		}
+		else if (flag == 0)
+		{
+			if (p->right != NULL)
+			{
+				last->right = p->right;
+				last->right->left = p->left;
+			}
+			else
+			{
+				last->right = p->left;
+			}
+		}
+		else
+		{
+			if (p->right != NULL)
+			{
+				p = p->right;
+				while (p->left != NULL)
+				{
+					p = p->left;
+				}
+				p->left = (*t)->left;
+				*t = last->right;
+			}
+			else
+			{
+				*t = p->left;
+			}
+		}
+		free(n);
+	}
+	else
+	{
+		printf("未找到要删除的字符!\n");
+	}
 }
 
 void Menu()
@@ -273,16 +261,22 @@ int main()
 	char ch;
 	int k, ret, choice = 1;
 	List list, *pl = &list;
-	Tree tree, *pt = &tree, *t = NULL;
+	Tree *pt = NULL, *t = NULL;
 	
 	while (choice)
 	{
 		Menu();
 		scanf("%d", &choice);
+		getchar();
 		switch (choice)
 		{
 		case 1:
-			InsertCreat(&pl);
+			printf("是否要创建新的有序表?(y/n)\n");
+			scanf("%c", &ch);
+			if (ch == 'y' || ch == 'Y')
+			{
+				InsertCreat(&pl);
+			}
 			printf("要查找的数:>");
 			scanf("%d", &k);
 			ret = BSearch(pl, k);
@@ -296,17 +290,27 @@ int main()
 			}
 			break;
 		case 2:
+			if (pt != NULL)
+			{
+				free(pt);
+			}
 			CandomCreate(&pt);
-			printf("中序遍历生成的二叉排序树:>");
-			PrintTree(pt);
-			putchar('\n');
+			if (pt != NULL)
+			{
+				printf("中序遍历生成的二叉排序树:>");
+				PrintTree(pt);
+				putchar('\n');
+			}
 			break;
 		case 3:
 			printf("请输入您要删除的字符:>");
-			getchar();
 			ch = getchar();
-			DeleteTreeNode(pt, ch);
+			DeleteTreeNode(&pt, ch);
 			printf("删除字符后的二叉排序树:>");
+			if (pt == NULL)
+			{
+				printf("二叉树为空!\n");
+			}
 			PrintTree(pt);
 			putchar('\n');
 			break;
