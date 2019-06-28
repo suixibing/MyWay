@@ -2,31 +2,24 @@
 
 int main()
 {
-	int ret;
+	int i;
 	SeqList test;
-
+	//≥ı ºªØ
 	SeqListInit(&test, 10);
 
-	SeqListPushBack(&test, 1);
-	SeqListPushBack(&test, 2);
+	for (i = 0; i < 7; i++)
+	{
+		SeqListPushBack(&test, i);
+	}
 	SeqListPushBack(&test, 3);
-	SeqListPopBack(&test);
-	SeqListPushBack(&test, 4);
-	SeqListPushFront(&test, 5);
-	SeqListPushBack(&test, 6);
-	SeqListPushFront(&test, 7);
-	SeqListPushBack(&test, 8);
-	SeqListPopFront(&test);
-
+	SeqListPushBack(&test, 5);
+	SeqListPushBack(&test, 3);
+	SeqListPushBack(&test, 3);
+	SeqListPrint(&test);
+	SeqListRemoveAll(&test, 3);
 	SeqListPrint(&test);
 
-	SeqListInsert(&test, 3, 19);
-	ret = SeqListFind(&test, 6);
-	SeqListRemove(&test, 8);
-	SeqListModify(&test, 3, 17);
-
-	SeqListPrint(&test);
-
+	//…æ≥˝
 	SeqListDestory(&test);
 	system("pause");
 	return 0;
