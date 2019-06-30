@@ -35,8 +35,8 @@ DListNode* DListFind(DList* plist, LTDataType x); //在链表中查找数据
 
 void DListInsertBefore(DListNode* pos, LTDataType x); //在pos的前面进行插入
 void DListInsertAfter(DListNode* pos, LTDataType x); //在pos的后面进行插入
-void DListErase(DListNode* pos); //删除pos位置的节点
-void DListRemove(DList* plist, LTDataType x); //删除所有数据为x的节点
+void DListErase(DListNode* pos); //删除pos位置的结点
+void DListRemove(DList* plist, LTDataType x); //删除所有数据为x的结点
 
 void DListPrint(DList* plist); //打印链表
 

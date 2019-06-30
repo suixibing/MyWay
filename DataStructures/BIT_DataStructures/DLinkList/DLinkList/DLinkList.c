@@ -1,5 +1,5 @@
 #include"DLinkList.h"
-
+//链表初始化
 void DListInit(DList* plist)
 {
 	assert(plist);
@@ -11,6 +11,7 @@ void DListInit(DList* plist)
 	plist->_head->_next = plist->_head;
 	plist->_head->_prev = plist->_head;
 }
+//链表销毁
 void DListDestory(DList* plist)
 {
 	assert(plist);
@@ -26,7 +27,7 @@ void DListDestory(DList* plist)
 		free(tmp);
 	}
 }
-
+//头插法插入数据
 void DListPushStart(DList* plist, LTDataType x)
 {
 	assert(plist);
@@ -41,6 +42,7 @@ void DListPushStart(DList* plist, LTDataType x)
 	cur->_prev = plist->_head;
 	cur->_next->_prev = cur;
 }
+//头插法删除数据
 void DListPopStart(DList* plist)
 {
 	assert(plist);
@@ -55,6 +57,7 @@ void DListPopStart(DList* plist)
 		free(cur);
 	}
 }
+//尾插法插入数据
 void DListPushTail(DList* plist, LTDataType x)
 {
 	assert(plist);
@@ -69,6 +72,7 @@ void DListPushTail(DList* plist, LTDataType x)
 	cur->_next = plist->_head;
 	cur->_prev->_next = cur;
 }
+//尾插法删除数据
 void DListPopTail(DList* plist)
 {
 	assert(plist);
@@ -83,7 +87,7 @@ void DListPopTail(DList* plist)
 		free(cur);
 	}
 }
-
+//在链表中查找数据
 DListNode* DListFind(DList* plist, LTDataType x)
 {
 	assert(plist);
@@ -130,7 +134,7 @@ void DListInsertAfter(DListNode* pos, LTDataType x)
 	cur->_prev = pos;
 	cur->_next->_prev = cur;
 }
-// 删除pos位置的节点 
+// 删除pos位置的结点 
 void DListErase(DListNode* pos)
 {
 	assert(pos);
@@ -139,6 +143,7 @@ void DListErase(DListNode* pos)
 	pos->_prev->_next = pos->_next;
 	free(pos);
 }
+//删除所有数据为x的结点
 void DListRemove(DList* plist, LTDataType x)
 {
 	assert(plist);
@@ -150,7 +155,7 @@ void DListRemove(DList* plist, LTDataType x)
 		DListErase(cur);
 	}
 }
-
+//打印链表
 void DListPrint(DList* plist)
 {
 	assert(plist);
