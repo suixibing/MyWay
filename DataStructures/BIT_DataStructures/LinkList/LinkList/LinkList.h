@@ -38,4 +38,9 @@ void SListRemove(SList* plist, SLTDataType x); //删除最先出现的指定数据
 void SListPrint(SList* plist); //打印链表
 void TestSList();
 
+void SListReverse(SList* plist); //链表反转
+SListNode* GetIntersectionNode(SList* listA, SList* listB); //判断两链表是否相交
+int SListHasCycle(SList* plist); //判断链表是否成环
+SListNode* SListDetectCycle(SList* plist); //找到入环结点
+
 #endif //_LINKLIST_H_
