@@ -1,0 +1,12 @@
+﻿  BinaryTree.c
+c:\users\10142\source\repos\bit_datastructures\binarytree\binarytree\binarytree.c(14): warning C4133: “=”: 从“BTNode *”到“BinTreeNode *”的类型不兼容
+c:\users\10142\source\repos\bit_datastructures\binarytree\binarytree\binarytree.c(16): warning C4133: “=”: 从“BTNode *”到“BinTreeNode *”的类型不兼容
+c:\users\10142\source\repos\bit_datastructures\binarytree\binarytree\binarytree.c(18): warning C4133: “=”: 从“BTNode *”到“BinTreeNode *”的类型不兼容
+c:\users\10142\source\repos\bit_datastructures\binarytree\binarytree\binarytree.c(93): warning C4133: “函数”: 从“BinTreeNode *”到“BTNode *”的类型不兼容
+c:\users\10142\source\repos\bit_datastructures\binarytree\binarytree\binarytree.c(94): warning C4133: “函数”: 从“BinTreeNode *”到“BTNode *”的类型不兼容
+c:\users\10142\source\repos\bit_datastructures\binarytree\binarytree\binarytree.c(40): warning C4716: “BinaryTreeLeafSize”: 必须返回一个值
+c:\users\10142\source\repos\bit_datastructures\binarytree\binarytree\binarytree.c(36): warning C4716: “BinaryTreeSize”: 必须返回一个值
+c:\users\10142\source\repos\bit_datastructures\binarytree\binarytree\binarytree.c(44): warning C4716: “BinaryTreeLevelKSize”: 必须返回一个值
+c:\users\10142\source\repos\bit_datastructures\binarytree\binarytree\binarytree.c(48): warning C4716: “BinaryTreeFind”: 必须返回一个值
+c:\users\10142\source\repos\bit_datastructures\binarytree\binarytree\binarytree.c(73): warning C4716: “BinaryTreeComplete”: 必须返回一个值
+  BinaryTree.vcxproj -> C:\Users\10142\source\repos\BIT_DataStructures\BinaryTree\Debug\BinaryTree.exe
