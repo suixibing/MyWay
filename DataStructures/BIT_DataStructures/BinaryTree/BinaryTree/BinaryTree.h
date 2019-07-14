@@ -20,13 +20,13 @@ typedef struct BinaryTreeNode
 	BTDataType _data; // 当前节点值域 
 }BTNode;
 // 通过前序遍历的数组"ABD##E#H##CF##G##"构建二叉树 
-BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi, BTNode* parent); 
-void BinaryTreeDestory(BTNode** root);
+BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi, BTNode* parent); //二叉树的建立
+void BinaryTreeDestory(BTNode** root); //二叉树的销毁
 
-int BinaryTreeSize(BTNode* root); 
-int BinaryTreeLeafSize(BTNode* root); 
-int BinaryTreeLevelKSize(BTNode* root, int k);
-BTNode* BinaryTreeFind(BTNode* root, BTDataType x);
+int BinaryTreeSize(BTNode* root); //二叉树的结点数
+int BinaryTreeLeafSize(BTNode* root); //二叉树的叶子结点数
+int BinaryTreeLevelKSize(BTNode* root, int k); //二叉树在指定层的结点数
+BTNode* BinaryTreeFind(BTNode* root, BTDataType x); //查找指定数据
 
 // 遍历 
 void BinaryTreePrevOrder(BTNode* root); 
