@@ -142,9 +142,9 @@ void BinaryTreeInOrder(BTNode* root)
 {
 	if (root)
 	{
-		BinaryTreePrevOrder(root->_pLeft);
+		BinaryTreeInOrder(root->_pLeft);
 		BTREE_PRINT(root->_data);
-		BinaryTreePrevOrder(root->_pRight);
+		BinaryTreeInOrder(root->_pRight);
 	}
 }
 // 后序遍历
@@ -152,8 +152,8 @@ void BinaryTreePostOrder(BTNode* root)
 {
 	if (root)
 	{
-		BinaryTreePrevOrder(root->_pLeft);
-		BinaryTreePrevOrder(root->_pRight);
+		BinaryTreePostOrder(root->_pLeft);
+		BinaryTreePostOrder(root->_pRight);
 		BTREE_PRINT(root->_data);
 	}
 }
@@ -216,17 +216,79 @@ int BinaryTreeComplete(BTNode* root)
 // 先序遍历
 void BinaryTreePrevOrderNonR(BTNode* root)
 {
+	assert(root);
 
+	BTNode *stack[100], *cur;
+	int top = -1;
+
+	stack[++top] = root;
+	while (top >= 0)
+	{
+		cur = stack[top--];
+		if (cur)
+		{
+			BTREE_PRINT(cur->_data);
+			stack[++top] = cur->_pRight;
+			stack[++top] = cur->_pLeft;
+		}
+	}
 }
 // 中序遍历
 void BinaryTreeInOrderNonR(BTNode* root)
 {
+	assert(root);
 
+	BTNode *stack[100], *cur = root;
+	int top = -1;
+
+	while (top >= 0 || cur)
+	{
+		if (cur)
+		{
+			stack[++top] = cur;
+			cur = cur->_pLeft;
+		}
+		else
+		{
+			cur = stack[top--];
+			BTREE_PRINT(cur->_data);
+			cur = cur->_pRight;
+		}
+	}
 }
 // 后序遍历
 void BinaryTreePostOrderNonR(BTNode* root)
 {
+	assert(root);
 
+	BTNode *stack[100], *cur = root, *last = root;
+	int top = -1;
+
+	stack[++top] = cur;
+	cur = cur->_pLeft;
+	while (top >= 0)
+	{
+		while (cur && cur->_pLeft != last && cur->_pRight != last)
+		{
+			stack[++top] = cur;
+			cur = cur->_pLeft;
+		}
+		cur = stack[top--];
+		if (!cur->_pRight || cur->_pRight == last)
+		{
+			last = cur;
+			BTREE_PRINT(cur->_data);
+			if (top >= 0)
+			{
+				cur = stack[top];
+			}
+		}
+		else
+		{
+			stack[++top] = cur;
+			cur = cur->_pRight;
+		}
+	}
 }
 
 // 通过调用各种遍历来打印
@@ -236,10 +298,22 @@ void BinaryTreePrint(BTNode* root)
 
 	printf("\n先序遍历：");
 	BinaryTreePrevOrder(root);
+	printf("(遍历实现)\t");
+	BinaryTreePrevOrderNonR(root);
+	printf("(非遍历实现)\t");
+
 	printf("\n中序遍历：");
 	BinaryTreeInOrder(root);
+	printf("(遍历实现)\t");
+	BinaryTreeInOrderNonR(root);
+	printf("(非遍历实现)\t");
+
 	printf("\n后序遍历：");
 	BinaryTreePostOrder(root);
+	printf("(遍历实现)\t");
+	BinaryTreePostOrderNonR(root);
+	printf("(非遍历实现)\t");
+
 	printf("\n层序遍历：");
 	BinaryTreeLevelOrder(root);
 	putchar('\n');
@@ -249,9 +323,9 @@ void BinaryTreePrint(BTNode* root)
 void TestBinaryTree()
 {
 	BTNode *root, *tmp;
-	BTDataType a1[100] = "ABD##E#H##CF##G##";
+	BTDataType a[100] = "ABD##E#H##CF##G##";
 	BTDataType a2[100] = "ABD##E##CF##G##";
-	BTDataType a[100] = "ABDK##N##E##CF##G##";
+	BTDataType a3[100] = "ABDK##N##E##CF##G##";
 	int pi = 0, n = strlen(a), ret;
 
 	root = BinaryTreeCreate(a, n, &pi, NULL);
