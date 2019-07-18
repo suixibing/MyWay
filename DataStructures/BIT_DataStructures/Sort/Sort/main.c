@@ -8,7 +8,10 @@ int main()
 	Print(a, size);
 	//InsertSort(a, size);
 	//ShellSort(a, size);
-	SeclectionSort(a, size);
+	//SeclectionSort(a, size);
+	//HeapSort(a, size);
+	//BubbleSort(a, size);
+	MergeSort(a, 0, size - 1);
 	Print(a, size);
 
 	system("pause");

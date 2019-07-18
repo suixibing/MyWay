@@ -62,7 +62,98 @@ void SeclectionSort(SORTDATA arr[], int size)
 		arr[now] = tmp;
 	}
 }
+// 建立大堆
+void HeapCreate(SORTDATA arr[], int size)
+{
+	int i, num;
+	SORTDATA tmp;
 
+	for (num = size; num > 0; num--)
+	{
+		i = num;
+		while (i > 0)
+		{
+			if (arr[i] > arr[i / 2])
+			{
+				tmp = arr[i];
+				arr[i] = arr[i / 2];
+				arr[i / 2] = tmp;
+			}
+			i /= 2;
+		}
+	}
+}
+// 堆排序
+void HeapSort(SORTDATA arr[], int size)
+{
+	int num = size;
+	SORTDATA tmp;
+
+	while (num--)
+	{
+		HeapCreate(arr, num);
+		tmp = arr[num];
+		arr[num] = arr[0];
+		arr[0] = tmp;
+	}
+}
+// 冒泡排序
+void BubbleSort(SORTDATA arr[], int size)
+{
+	int i, j;
+	SORTDATA tmp;
+
+	for (i = 0; i < size; i++)
+	{
+		for (j = 0; j < size - i - 1; j++)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				tmp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = tmp;
+			}
+		}
+	}
+}
+// 归并子函数
+void Merge(SORTDATA arr[], int left, int mid, int right)
+{
+	int i = 0, l = left, m = mid + 1, size = right - left + 1;
+	SORTDATA *cur = (SORTDATA*)malloc(size * sizeof(SORTDATA));
+
+	while (i < size)
+	{
+		if (l <= mid && arr[l] < arr[m])
+		{
+			cur[i] = arr[l++];
+		}
+		else if (m <= right)
+		{
+			cur[i] = arr[m++];
+		}
+		i++;
+	}
+	for (i = 0; i < size; i++)
+	{
+		printf("%2d ", cur[i]);
+		arr[left + i] = cur[i];
+	}
+	putchar('\n');
+}
+// 归并排序
+void MergeSort(SORTDATA arr[], int left, int right)
+{
+	int mid = left + (right - left) / 2;
+
+	if (left >= right)
+	{
+		return;
+	}
+	MergeSort(arr, left, mid);
+	MergeSort(arr, mid + 1, right);
+	Merge(arr, left, mid, right);
+}
 // 打印数据
 void Print(SORTDATA arr[], int size)
 {
