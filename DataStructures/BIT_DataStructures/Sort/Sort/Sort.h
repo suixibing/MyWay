@@ -14,7 +14,9 @@ void ShellSort(SORTDATA arr[], int size); // оё╤ШеепР(кУп║тЖа©еепР)
 void SeclectionSort(SORTDATA arr[], int size); // я║тЯеепР
 void HeapSort(SORTDATA arr[], int size); // ╤яеепР
 void BubbleSort(SORTDATA arr[], int size); // ц╟ещеепР
+void QuickSort(SORTDATA arr[], int left, int right); // ©ЛкыеепР
 void MergeSort(SORTDATA arr[], int left, int right); // ╧И╡╒еепР
+void BucketSort(SORTDATA arr[], int size); // м╟еепР
 
 void Print(SORTDATA arr[], int size); // ╢Рс║йЩ╬щ
 

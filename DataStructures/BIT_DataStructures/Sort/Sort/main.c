@@ -11,7 +11,9 @@ int main()
 	//SeclectionSort(a, size);
 	//HeapSort(a, size);
 	//BubbleSort(a, size);
-	MergeSort(a, 0, size - 1);
+	QuickSort(a, 0, size - 1);
+	//MergeSort(a, 0, size - 1);
+	//BucketSort(a, size);
 	Print(a, size);
 
 	system("pause");

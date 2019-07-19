@@ -1,5 +1,14 @@
 #include"Sort.h"
 
+void DataExchange(SORTDATA* a, SORTDATA* b)
+{
+	SORTDATA t;
+
+	t = *a;
+	*a = *b;
+	*b = t;
+}
+
 // 直接插入排序
 void InsertSort(SORTDATA arr[], int size)
 {
@@ -41,11 +50,11 @@ void ShellSort(SORTDATA arr[], int size)
 		gap /= 2;
 	}
 }
+
 // 选择排序
 void SeclectionSort(SORTDATA arr[], int size)
 {
 	int i, now, min;
-	SORTDATA tmp;
 
 	for (now = 0; now < size; now++)
 	{
@@ -57,16 +66,14 @@ void SeclectionSort(SORTDATA arr[], int size)
 				min = i;
 			}
 		}
-		tmp = arr[min];
-		arr[min] = arr[now];
-		arr[now] = tmp;
+		DataExchange(&arr[min], &arr[now]);
 	}
 }
+
 // 建立大堆
 void HeapCreate(SORTDATA arr[], int size)
 {
 	int i, num;
-	SORTDATA tmp;
 
 	for (num = size; num > 0; num--)
 	{
@@ -75,9 +82,7 @@ void HeapCreate(SORTDATA arr[], int size)
 		{
 			if (arr[i] > arr[i / 2])
 			{
-				tmp = arr[i];
-				arr[i] = arr[i / 2];
-				arr[i / 2] = tmp;
+				DataExchange(&arr[i], &arr[i / 2]);
 			}
 			i /= 2;
 		}
@@ -87,21 +92,18 @@ void HeapCreate(SORTDATA arr[], int size)
 void HeapSort(SORTDATA arr[], int size)
 {
 	int num = size;
-	SORTDATA tmp;
 
 	while (num--)
 	{
 		HeapCreate(arr, num);
-		tmp = arr[num];
-		arr[num] = arr[0];
-		arr[0] = tmp;
+		DataExchange(&arr[0], &arr[num]);
 	}
 }
+
 // 冒泡排序
 void BubbleSort(SORTDATA arr[], int size)
 {
 	int i, j;
-	SORTDATA tmp;
 
 	for (i = 0; i < size; i++)
 	{
@@ -109,22 +111,55 @@ void BubbleSort(SORTDATA arr[], int size)
 		{
 			if (arr[j] > arr[j + 1])
 			{
-				tmp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = tmp;
+				DataExchange(&arr[j], &arr[j + 1]);
 			}
 		}
 	}
 }
+
+// 快速排序
+void QuickSort(SORTDATA arr[], int left, int right)
+{
+	int i = left + 1, j = right;
+	SORTDATA key = arr[left];
+
+	if (i > j)
+	{
+		return;
+	}
+	while (i < j)
+	{
+		while (i < j && key < arr[j])
+		{
+			j--;
+		}
+		while (i < j && key > arr[i])
+		{
+			i++;
+		}
+		if (i < j)
+		{
+			DataExchange(&arr[i], &arr[j]);
+		}
+	}
+	if (arr[left] > arr[i])
+	{
+		arr[left] = arr[i];
+		arr[i] = key;
+	}
+	QuickSort(arr, left, i - 1);
+	QuickSort(arr, i, right);
+}
+
 // 归并子函数
 void Merge(SORTDATA arr[], int left, int mid, int right)
 {
-	int i = 0, l = left, m = mid + 1, size = right - left + 1;
+	int i = 0, l = left, m = mid, size = right - left + 1;
 	SORTDATA *cur = (SORTDATA*)malloc(size * sizeof(SORTDATA));
 
 	while (i < size)
 	{
-		if (l <= mid && arr[l] < arr[m])
+		if (l < mid && arr[l] < arr[m] || m > right)
 		{
 			cur[i] = arr[l++];
 		}
@@ -134,26 +169,57 @@ void Merge(SORTDATA arr[], int left, int mid, int right)
 		}
 		i++;
 	}
-	for (i = 0; i < size; i++)
-	{
-		printf("%2d ", cur[i]);
-		arr[left + i] = cur[i];
-	}
-	putchar('\n');
 }
 // 归并排序
 void MergeSort(SORTDATA arr[], int left, int right)
 {
 	int mid = left + (right - left) / 2;
 
-	if (left >= right)
+	if (left < right)
 	{
-		return;
+		MergeSort(arr, left, mid);
+		MergeSort(arr, mid + 1, right);
+		Merge(arr, left, mid + 1, right);
 	}
-	MergeSort(arr, left, mid);
-	MergeSort(arr, mid + 1, right);
-	Merge(arr, left, mid, right);
 }
+
+// 桶排序
+void BucketSort(SORTDATA arr[], int size)
+{
+	int i, j, num;
+	int min = arr[0], max = arr[0];
+	SORTDATA *book;
+
+	for (i = 1; i < size; i++)
+	{
+		if (arr[i] > max)
+		{
+			max = arr[i];
+		}
+		else if (arr[i] < min)
+		{
+			min = arr[i];
+		}
+	}
+	num = max - min + 1;
+	book = (SORTDATA*)calloc(num, sizeof(SORTDATA));
+	for (i = 0; i < size; i++)
+	{
+		book[arr[i] - min]++;
+	}
+	for (i = 0, j = 0; i < size; )
+	{
+		if (book[j]-- > 0)
+		{
+			arr[i++] = min + j;
+		}
+		else
+		{
+			j++;
+		}
+	}
+}
+
 // 打印数据
 void Print(SORTDATA arr[], int size)
 {
