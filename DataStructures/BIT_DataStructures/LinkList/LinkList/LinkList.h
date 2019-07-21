@@ -42,6 +42,9 @@ SListNode* SListDetectCycle(SList* plist); // 找到入环结点
 
 int RemoveElements(SList* head, int val); // 删除所有指定元素
 SListNode* MiddleNode(SList* head); // 返回中间结点
+void SListQuickSort(SListNode *head); // 快速排序
+SListNode* MergeTwoLists(SList* plist1, SList* plist2); // 有序链表合并
+SListNode* SListClone(SList* plist); // 链表复制
 
 void SListPrint(SList* plist); // 打印链表
 void TestSList(); // 测试函数

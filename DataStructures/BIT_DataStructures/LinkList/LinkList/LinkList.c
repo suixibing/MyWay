@@ -339,7 +339,118 @@ SListNode* MiddleNode(SList* head)
 
 	return cur;
 }
+// 快速排序
+void SListQuickSort(SListNode *head)
+{
+	SListNode *cur, *last, *mid;
+	SLTDataType key;
 
+	if (head && head->_next) // 当有两个数据以上时进行
+	{
+		cur = head->_next;
+		mid = cur; // mid 是 key 值的结点
+		key = cur->_data;
+		if (head->_data > cur->_data) // 确保首数据小于次数据，并始终以次数据为 key 
+		{
+			key = head->_data;
+			head->_data = cur->_data;
+			cur->_data = key;
+		}
+		while (cur->_next)
+		{
+			last = cur;
+			cur = cur->_next;
+			if (cur->_data < key) // 将比 key 小的数据都放到 mid 结点的前面
+			{
+				last->_next = cur->_next;
+				cur->_next = head->_next;
+				head->_next = cur;
+				cur = last;
+			}
+		}
+		SListQuickSort(mid->_next);
+		if (head->_next != mid) // 当前半部分只有一个数据时，前半部分不进行快排
+		{
+			SListQuickSort(head);
+		}
+	}
+}
+// 有序链表合并
+SListNode* MergeTwoLists(SList* plist1, SList* plist2)
+{
+	SList head;
+	SListNode *cur, *node1, *node2;
+
+	if (!plist1 || !plist1->_head)
+	{
+		return plist2->_head;
+	}
+	else if (!plist2 || !plist2->_head)
+	{
+		return plist1->_head;
+	}
+	node1 = plist1->_head;
+	node2 = plist2->_head;
+	plist1->_head = NULL;
+	plist2->_head = NULL;
+
+	if (node1->_data < node2->_data)
+	{
+		head._head = node1;
+		node1 = node1->_next;
+	}
+	else
+	{
+		head._head = node2;
+		node2 = node2->_next;
+	}
+	cur = head._head;
+	while (node1 && node2)
+	{
+		if (node1->_data < node2->_data)
+		{
+			cur->_next = node1;
+			node1 = node1->_next;
+		}
+		else
+		{
+			cur->_next = node2;
+			node2 = node2->_next;
+		}
+		cur = cur->_next;
+	}
+	if (node1)
+	{
+		cur->_next = node1;
+	}
+	else
+	{
+		cur->_next = node2;
+	}
+
+	return head._head;
+}
+// 链表复制
+SListNode* SListClone(SList* plist)
+{
+	assert(plist);
+
+	SListNode *aim = plist->_head, head, *cur = (SListNode*)malloc(sizeof(SListNode));
+
+	head._next = cur;
+	cur->_data = aim->_data;
+	aim = aim->_next;
+	while (aim->_next)
+	{
+		cur->_next = (SListNode*)malloc(sizeof(SListNode));
+		cur = cur->_next;
+		aim = aim->_next;
+		cur->_data = aim->_data;
+	}
+	cur->_next = NULL;
+
+	return head._next;
+}
 
 // 打印链表
 void SListPrint(SList* plist)
@@ -360,9 +471,11 @@ void TestSList()
 	int ret, val = 9;
 	SList test, *pt = &test;
 	SList test2, *pt2 = &test2;
+	SList test3, *pt3 = &test3;
 
 	SListInit(pt);
 	SListInit(pt2);
+	SListInit(pt3);
 
 	SListPushFront(pt, 4);
 	SListPushFront(pt, 3);
@@ -373,6 +486,21 @@ void TestSList()
 	SListPushFront(pt, 1);
 
 	SListPrint(pt);
+	pt2->_head = SListClone(pt);
+	SListPushFront(pt2, -2);
+	SListPushFront(pt2, 6);
+	SListQuickSort(pt2->_head);
+	SListQuickSort(pt->_head);
+	printf("pt1 :> ");
+	SListPrint(pt);
+	printf("pt2 :> ");
+	SListPrint(pt2);
+
+	pt3->_head = SListClone(pt);
+	pt3->_head = MergeTwoLists(pt2, pt3);
+	printf("pt3 :> ");
+	SListPrint(pt3);
+
 	if (MiddleNode(pt))
 	{
 		printf("MiddleNode(pt) = %d\n", MiddleNode(pt)->_data);
@@ -420,7 +548,7 @@ void TestSList()
 
 	SListReverse(pt);
 	//SListPrint(pt);
-	SListPrint(pt2);
+	//SListPrint(pt2);
 
 	//if (GetIntersectionNode(pt, pt2))
 	//{
