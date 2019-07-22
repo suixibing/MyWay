@@ -45,6 +45,9 @@ SListNode* MiddleNode(SList* head); // 返回中间结点
 void SListQuickSort(SListNode *head); // 快速排序
 SListNode* MergeTwoLists(SList* plist1, SList* plist2); // 有序链表合并
 SListNode* SListClone(SList* plist); // 链表复制
+SListNode* SListPartition(SList* plist, int val); // 以给定值 val 为基准保留原来的数据顺序将链表分割成两部分
+SListNode* DeleteDuplication(SList* plist); // 有序链表中删除重复结点
+int CheckPalindrome(SList* plist); // 回文链表判断
 
 void SListPrint(SList* plist); // 打印链表
 void TestSList(); // 测试函数

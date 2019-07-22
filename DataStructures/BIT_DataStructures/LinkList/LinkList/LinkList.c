@@ -439,7 +439,6 @@ SListNode* SListClone(SList* plist)
 
 	head._next = cur;
 	cur->_data = aim->_data;
-	aim = aim->_next;
 	while (aim->_next)
 	{
 		cur->_next = (SListNode*)malloc(sizeof(SListNode));
@@ -451,6 +450,80 @@ SListNode* SListClone(SList* plist)
 
 	return head._next;
 }
+// 以给定值 val 为基准保留原来的数据顺序将链表分割成两部分
+SListNode* SListPartition(SList* plist, int val)
+{
+	assert(plist);
+
+	SListNode head1, head2; // 带头结点
+	SListNode *cur = plist->_head, *before, *after;
+
+	before = &head1;
+	after = &head2;
+	while (cur)
+	{
+		if (cur->_data < val)
+		{
+			before->_next = cur;
+			before = before->_next;
+		}
+		else
+		{
+			after->_next = cur;
+			after = after->_next;
+		}
+		cur = cur->_next;
+	}
+	before->_next = head2._next;
+	after->_next = NULL;
+
+
+	return head1._next;
+}
+// 有序链表中删除重复结点
+SListNode* DeleteDuplication(SList* plist)
+{
+	assert(plist);
+
+	SListNode *cur = plist->_head, *tmp;
+
+	while (cur && cur->_next)
+	{
+		if (cur->_data == cur->_next->_data)
+		{
+			tmp = cur->_next;
+			cur->_next = tmp->_next;
+			free(tmp);
+			continue;
+		}
+		cur = cur->_next;
+	}
+
+	return plist->_head;
+}
+// 回文链表判断
+int CheckPalindrome(SList* plist)
+{
+	assert(plist);
+
+	SList head;
+	SListNode *cur = plist->_head, *other;
+
+	head._head = SListClone(plist);
+	SListReverse(&head);
+	other = head._head;
+	while (cur)
+	{
+		if (cur->_data != other->_data)
+		{
+			return 0;
+		}
+		cur = cur->_next;
+		other = other->_next;
+	}
+	
+	return 1;
+}
 
 // 打印链表
 void SListPrint(SList* plist)
@@ -461,7 +534,7 @@ void SListPrint(SList* plist)
 
 	for (cur = plist->_head; cur; cur = cur->_next)
 	{
-		printf("%d->", cur->_data);
+		printf("%2d -> ", cur->_data);
 	}
 	printf("NULL\n");
 }
@@ -472,10 +545,12 @@ void TestSList()
 	SList test, *pt = &test;
 	SList test2, *pt2 = &test2;
 	SList test3, *pt3 = &test3;
+	SList test4, *pt4 = &test4;
 
 	SListInit(pt);
 	SListInit(pt2);
 	SListInit(pt3);
+	SListInit(pt4);
 
 	SListPushFront(pt, 4);
 	SListPushFront(pt, 3);
@@ -489,6 +564,7 @@ void TestSList()
 	pt2->_head = SListClone(pt);
 	SListPushFront(pt2, -2);
 	SListPushFront(pt2, 6);
+	pt4->_head = SListClone(pt2);
 	SListQuickSort(pt2->_head);
 	SListQuickSort(pt->_head);
 	printf("pt1 :> ");
@@ -500,6 +576,34 @@ void TestSList()
 	pt3->_head = MergeTwoLists(pt2, pt3);
 	printf("pt3 :> ");
 	SListPrint(pt3);
+
+	DeleteDuplication(pt3);
+	printf("pt3 :> ");
+	SListPrint(pt3);
+
+	printf("pt4 :> ");
+	SListPrint(pt4);
+	pt4->_head = SListPartition(pt4, 3);
+	printf("pt4 :> ");
+	SListPrint(pt4);
+
+	SListPushFront(pt2, 4);
+	SListPushFront(pt2, 3);
+	SListPushFront(pt2, 1);
+	SListPushFront(pt2, 2);
+	SListPushFront(pt2, 1);
+	SListPushFront(pt2, 3);
+	SListPushFront(pt2, 4);
+	printf("pt2 :> ");
+	SListPrint(pt2);
+	if (CheckPalindrome(pt2))
+	{
+		printf("True\n");
+	}
+	else
+	{
+		printf("False\n");
+	}
 
 	if (MiddleNode(pt))
 	{
