@@ -6,23 +6,17 @@
 #define _DEQUEUE_H
 
 typedef int DeQUDataType;
-
-typedef struct DeQueueNode
-{
-	struct DeQueueNode* _next;
-	DeQUDataType _data;
-}DeQueueNode;
+#define QUEUENUM 5
 
 typedef struct DeQueue
 {
-	DeQueueNode* _front; // 队头    
-	DeQueueNode* _rear;  // 队尾
+	DeQUDataType data[QUEUENUM];
+	DeQUDataType* _head; // 队头    
+	DeQUDataType* _tail;  // 队尾
 }DeQueue;
 
 void DeQueueInit(DeQueue* pq);
-void DeQueueDestory(DeQueue* pq);
 
-DeQueueNode* BuyDeQueueNode(DeQUDataType x);
 void DeQueuePush(DeQueue* pq, DeQUDataType x);
 void DeQueuePop(DeQueue* pq);
 DeQUDataType DeQueueFront(DeQueue* pq);
