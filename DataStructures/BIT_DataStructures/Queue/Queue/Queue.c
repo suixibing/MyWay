@@ -94,10 +94,10 @@ int QueueEmpty(Queue* pq)
 
 	if (pq->_front != pq->_rear)
 	{
-		return 1;
+		return 0;
 	}
 
-	return 0;
+	return 1;
 }
 // 返回队列中元素个数
 int QueueSize(Queue* pq)
@@ -129,7 +129,7 @@ void QueuePrint(Queue *pq)
 
 	while (cur != pq->_rear)
 	{
-		printf("%d 、 ", cur->_data);
+		PRINT(cur->_data);
 		cur = cur->_next;
 	}
 	putchar('\n');
@@ -141,7 +141,7 @@ void QueueState(Queue *pq)
 	QueuePrint(pq);
 	
 	printf("QueueSize(pq) = %d\n", QueueSize(pq));
-	if (!QueueEmpty(pq))
+	if (QueueEmpty(pq))
 	{
 		printf("Empty Queue!\n");
 		return;
@@ -165,7 +165,7 @@ void TestQueue()
 	QueuePush(pq, 163);
 
 	QueueState(pq);
-	while (QueueEmpty(pq))
+	while (!QueueEmpty(pq))
 	{
 		QueuePop(pq);
 		QueueState(pq);

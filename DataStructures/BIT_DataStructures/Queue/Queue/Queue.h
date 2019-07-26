@@ -6,6 +6,7 @@
 #define _QUEUE_H
 
 typedef int QUDataType;
+#define PRINT(data) printf("%d ¡¢ ", (data))
 
 typedef struct QueueNode 
 { 
