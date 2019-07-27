@@ -44,11 +44,13 @@ int RemoveElements(SList* head, int val); // É¾³ıËùÓĞÖ¸¶¨Êı¾İ£¬·µ»ØÉ¾³ıÊı¾İµÄ¸öÊ
 SListNode* MiddleNode(SList* head); // ·µ»ØÖĞ¼ä½áµã(Å¼Êı¸ö½áµãÊ±ÎªÆ«ÓÒ½áµã)
 void SListQuickSort(SListNode *head); // ¿ìËÙÅÅĞò
 SListNode* MergeTwoLists(SList* plist1, SList* plist2); // ÓĞĞòÁ´±íºÏ²¢
+SListNode* MergeKLists(SListNode** lists, int k);// k ¸öÓĞĞòÁ´±íºÏ²¢
 SListNode* SListClone(SList* plist); // Á´±í¸´ÖÆ
 SListNode* SListPartition(SList* plist, int val); // ÒÔ¸ø¶¨Öµ val Îª»ù×¼±£ÁôÔ­À´µÄÊı¾İË³Ğò½«Á´±í·Ö¸î³ÉÁ½²¿·Ö
 SListNode* DeleteDuplication(SList* plist); // ÓĞĞòÁ´±íÖĞÉ¾³ıÖØ¸´½áµã
 int CheckPalindrome(SList* plist); // »ØÎÄÁ´±íÅĞ¶Ï
 SListNode* AddTwoNumbers(SList* plist1, SList* plist2); // Á½ÊıÏà¼Ó£¬ Á´±íÊı¾İ°´ÕÕÊı×ÖµÄÃ¿Ò»Î»µÄµ¹ĞòÀ´´æ´¢
+SListNode* SListSwapPairs(SListNode* head); // ÒÔÁ½¸öÊıÎªÒ»×é½øĞĞ×éÄÚÄæĞò
 
 void SListPrint(SList* plist); // ´òÓ¡Á´±í
 void TestSList(); // ²âÊÔº¯Êı

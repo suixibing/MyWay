@@ -372,7 +372,7 @@ void SListQuickSort(SListNode *head)
 		}
 	}
 }
-// 有序链表合并
+// 两个有序链表合并
 SListNode* MergeTwoLists(SList* plist1, SList* plist2)
 {
 	SList head;
@@ -418,6 +418,68 @@ SListNode* MergeTwoLists(SList* plist1, SList* plist2)
 	}
 
 	return head._head;
+}
+// k 个有序链表合并
+SListNode* MergeKLists(SListNode** lists, int k)
+{
+	SListNode *list1, *list2, *newHead, *cur;
+
+	if (k > 2)
+	{
+		list1 = MergeKLists(lists, k - 1);
+	}
+	else if (k == 2)
+	{
+		list1 = lists[0];
+	}
+	else if (k == 1)
+	{
+		return lists[0];
+	}
+	else
+	{
+		return NULL;
+	}
+	list2 = lists[k - 1];
+	if (list1 && list2 && list1->_data > list2->_data || list2 && !list1)
+	{
+		newHead = list2;
+		list2 = list2->_next;
+	}
+	else if (list1 && list2 && list1->_data <= list2->_data || list1 && !list2)
+	{
+		newHead = list1;
+		list1 = list1->_next;
+	}
+	else
+	{
+		return NULL;
+	}
+	cur = newHead;
+	while (list1 && list2)
+	{
+		if (list1->_data < list2->_data)
+		{
+			cur->_next = list1;
+			list1 = list1->_next;
+		}
+		else
+		{
+			cur->_next = list2;
+			list2 = list2->_next;
+		}
+		cur = cur->_next;
+	}
+	if (list1)
+	{
+		cur->_next = list1;
+	}
+	else
+	{
+		cur->_next = list2;
+	}
+
+	return newHead;
 }
 // 链表复制
 SListNode* SListClone(SList* plist)
@@ -548,6 +610,35 @@ SListNode* AddTwoNumbers(SList* plist1, SList* plist2)
 
 	return head._next;
 }
+// 以两个数为一组进行组内逆序
+SListNode* SListSwapPairs(SListNode* head)
+{
+	SListNode *newHead = head, *cur = NULL, *tmp = head;
+
+	if (head && head->_next)
+	{
+		cur = head->_next;
+		newHead = cur;
+	}
+	while (cur)
+	{
+		tmp->_next = cur->_next;
+		cur->_next = tmp;
+		cur = tmp->_next;
+		if (cur && cur->_next)
+		{
+			tmp->_next = cur->_next;
+			tmp = cur;
+			cur = cur->_next;
+		}
+		else if (cur)
+		{
+			cur = cur->_next;
+		}
+	}
+
+	return newHead;
+}
 
 // 打印链表
 void SListPrint(SList* plist)
@@ -562,8 +653,56 @@ void SListPrint(SList* plist)
 	}
 	printf("NULL\n");
 }
-// 测试函数
+
+
 void TestSList()
+{
+	SList test1, *pt1 = &test1;
+	SList test2, *pt2 = &test2;
+	SList test3, *pt3 = &test3;
+	SListNode ha[5];
+	SListNode **list = (SListNode **)&ha;
+
+	SListInit(pt1);
+	SListInit(pt2);
+	SListInit(pt3);
+
+	SListPushFront(pt1, 35);
+	SListPushFront(pt1, 34);
+	SListPushFront(pt1, 23);
+	SListPushFront(pt1, 12);
+	SListPushFront(pt1, 1);
+
+	SListPushFront(pt2, 39);
+	SListPushFront(pt2, 28);
+	SListPushFront(pt2, 24);
+	SListPushFront(pt2, 18);
+	SListPushFront(pt2, 13);
+
+	SListPushFront(pt3, 29);
+	SListPushFront(pt3, 24);
+	SListPushFront(pt3, 13);
+	SListPushFront(pt3, 7);
+	SListPushFront(pt3, 3);
+
+	list[0] = pt1->_head;
+	list[1] = pt2->_head;
+	list[2] = pt3->_head;
+	SListPrint(pt1);
+	SListPrint(pt2);
+	SListPrint(pt3);
+	pt1->_head = MergeKLists(list, 3);
+	SListPrint(pt1);
+	pt1->_head = SListSwapPairs(pt1->_head);
+	SListPrint(pt1);
+
+	SListDestory(pt1);
+}
+
+
+
+// 测试函数
+void TestSList_1()
 {
 	int ret, val = 9;
 	SList test, *pt = &test;
