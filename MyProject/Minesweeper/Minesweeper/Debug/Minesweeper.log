@@ -1,0 +1,3 @@
+﻿  Show.c
+c:\users\10142\source\repos\minesweeper\minesweeper\show.c(81): warning C4101: “flag”: 未引用的局部变量
+  Minesweeper.vcxproj -> C:\Users\10142\source\repos\Minesweeper\Debug\Minesweeper.exe
