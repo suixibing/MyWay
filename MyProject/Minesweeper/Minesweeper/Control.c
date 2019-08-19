@@ -1,10 +1,14 @@
 #include <conio.h>
 #include<stdio.h>
+#include"Map.h"
 #include"Show.h"
 #include"Control.h"
 
 void(*set[4])() = { SetPrimary, SetIntermediate, SetExpert, SetFree };
 void (*define[3])(int *, int *, int *) = { DefineHeight , DefineWidth, DefineMine };
+
+extern char map[26][32];
+extern char tag[26][32];
 
 int GetKeyBoard()
 {
@@ -18,10 +22,87 @@ int GetKeyBoard()
 	return flag;
 }
 
-//void Game(int row, int col, int mine)
-//{
-//
-//}
+void Game(int row, int col, int mine)
+{
+	Point point = { row / 2, col / 2 };
+	int input, flag = 1;
+	int coveredBlank = row * col - mine;
+	int mineLeast = mine;
+
+	MapInit(row, col, mine, point);
+	MapPrint(row, col, mine, point, flag);
+	while (1)
+	{
+		input = GetKeyBoard();
+		switch (input)
+		{
+		case ARROW_UP:
+			point.row--;
+			flag = 1;
+			if (point.row == 0)
+			{
+				point.row = row;
+			}
+			break;
+		case ARROW_DOWN:
+			point.row++;
+			flag = 1;
+			if (point.row == row + 1)
+			{
+				point.row = 1;
+			}
+			break;
+		case ARROW_LEFT:
+			point.col--;
+			flag = 1;
+			if (point.col == 0)
+			{
+				point.col = col;
+			}
+			break;
+		case ARROW_RIGHT:
+			point.col++;
+			flag = 1;
+			if (point.col == col + 1)
+			{
+				point.col = 1;
+			}
+			break;
+		case ENTER:
+			if (tag[point.row][point.col] == COVERED)
+			{
+				MapOpen(row, col, point.row, point.col);
+			}
+			else if (map[point.row][point.col] != MINE)
+			{
+				OpenAround(row, col, point);
+			}
+			break;
+		case HIDEPOINT:
+			flag = 0;
+			break;
+		case MINEMARK:
+			if (tag[point.row][point.col] != OPENED)
+			{
+				if (tag[point.row][point.col] == COVERED)
+				{
+					tag[point.row][point.col] = MARKED;
+					mineLeast--;
+				}
+				else
+				{
+					tag[point.row][point.col] = COVERED;
+					mineLeast++;
+				}
+			}
+			break;
+		default:
+			break;
+		}
+		MapPrint(row, col, mineLeast, point, flag);
+		flag = !flag;
+	}
+}
 
 
 
@@ -114,15 +195,15 @@ void FreeDefine(int *row, int *col, int *mine)
 			if (flag == 2)
 			{
 				(*mine)--;
-				if (*mine < 10)
+				if (*mine < MINMINE)
 				{
 					(*mine)++;
 				}
 				break;
 			}
 			flag ? (*col)-- : (*row)--;
-			(*col) < 9 ? (*col)++ : *col;
-			(*row) < 9 ? (*row)++ : *row;
+			(*col) < MINCOL ? (*col)++ : *col;
+			(*row) < MINROW ? (*row)++ : *row;
 			break;
 		case ARROW_RIGHT:
 			if (flag == 2)
@@ -135,8 +216,8 @@ void FreeDefine(int *row, int *col, int *mine)
 				break;
 			}
 			flag ? (*col)++ : (*row)++;
-			(*col) > 30 ? (*col)-- : *col;
-			(*row) > 24 ? (*row)-- : *row;
+			(*col) > MAXCOL ? (*col)-- : *col;
+			(*row) > MAXROW ? (*row)-- : *row;
 			break;
 		case ENTER:
 			return;
@@ -153,7 +234,7 @@ void GameControl()
 	switch (WelcomePage())
 	{
 	case START:
-		//Game(row, col, mine);
+		Game(row, col, mine);
 		break;
 	case SET:
 		Set(&row, &col, &mine);

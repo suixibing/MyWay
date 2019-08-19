@@ -8,8 +8,11 @@
 #define SET 1
 #define EXIT 2
 
+#define HIDEPOINT 'h'
+#define MINEMARK 'm'
+
 int GetKeyBoard();
-//void Game(int row, int col, int mine);
+void Game(int row, int col, int mine);
 void FreeDefine(int *row, int *col, int *mine);
 int SetPage();
 void Set(int *row, int *col, int *mine);
