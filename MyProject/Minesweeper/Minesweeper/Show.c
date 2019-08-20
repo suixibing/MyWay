@@ -10,20 +10,20 @@ void WelcomeContinue()
 {
 	char page[1024] = { 0 };
 
-	strcat(page, "██████████████████\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█　　　　　 扫      雷 　　　　　█\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█        ◆  Continue            █\n");
-	strcat(page, "█　　　　    New Game  　　　　　█\n");
-	strcat(page, "█　　　　　  Game Set　　　　　　█\n");
-	strcat(page, "█　　　　　　  Exit　　　　　　　█\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "██████████████████\n");
-	strcat(page, "　　　 方向键选择　回车键确认\n");
-	strcat(page, "　　　　　　 继续游戏\n");
+	strcat(page, "████████████████████\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　扫　　　　雷　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　◆　　继续　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　 新游戏 　　　　　　　█\n");
+	strcat(page, "█　　　　　　　游戏设置　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　退出　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "████████████████████\n");
+	strcat(page, "　　　   方向键选择　回车键确认\n");
+	strcat(page, "　　　　　  　 继续游戏\n");
 
 	system("cls");
 	puts(page);
@@ -33,20 +33,20 @@ void WelcomeNewGame()
 {
 	char page[1024] = { 0 };
 
-	strcat(page, "██████████████████\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█　　　　　 扫      雷 　　　　　█\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█            Continue            █\n");
-	strcat(page, "█　　　　◆  New Game  　　　　　█\n");
-	strcat(page, "█　　　　　  Game Set　　　　　　█\n");
-	strcat(page, "█　　　　　　  Exit　　　　　　　█\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "██████████████████\n");
-	strcat(page, "　　　 方向键选择　回车键确认\n");
-	strcat(page, "　　　　　　 开始游戏\n");
+	strcat(page, "████████████████████\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　扫　　　　雷　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　继续　　　　　　　　█\n");
+	strcat(page, "█　　　　　◆　 新游戏 　　　　　　　█\n");
+	strcat(page, "█　　　　　　　游戏设置　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　退出　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "████████████████████\n");
+	strcat(page, "　　　   方向键选择　回车键确认\n");
+	strcat(page, "　　　　　  　 开始游戏\n");
 
 	system("cls");
 	puts(page);
@@ -55,22 +55,22 @@ void WelcomeNewGame()
 void WelcomeSet()
 {
 	char page[1024] = { 0 };
-
-	strcat(page, "██████████████████\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█　　　　　 扫      雷 　　　　　█\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█            Continue            █\n");
-	strcat(page, "█　　　　    New Game  　　　　　█\n");
-	strcat(page, "█　　　　◆  Game Set　　　　　　█\n");
-	strcat(page, "█　　　　  　  Exit　　　　　　　█\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "██████████████████\n");
-	strcat(page, "　　　 方向键选择　回车键确认\n");
-	strcat(page, "　　　　 　设置地图大小\n");
-
+	
+	strcat(page, "████████████████████\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　扫　　　　雷　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　继续　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　 新游戏 　　　　　　　█\n");
+	strcat(page, "█　　　　　◆　游戏设置　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　退出　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "████████████████████\n");
+	strcat(page, "　　  　 方向键选择　回车键确认\n");
+	strcat(page, "　　　  　 　设置地图大小\n");
+	
 	system("cls");
 	puts(page);
 }
@@ -79,20 +79,20 @@ void WelcomeExit()
 {
 	char page[1024] = { 0 };
 
-	strcat(page, "██████████████████\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█　　　　　 扫      雷 　　　　　█\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█            Continue            █\n");
-	strcat(page, "█　　　　    New Game  　　　　　█\n");
-	strcat(page, "█　　　      Game Set　　　　　　█\n");
-	strcat(page, "█　　　　◆　  Exit　　　　　　　█\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "██████████████████\n");
-	strcat(page, "　　　 方向键选择　回车键确认\n");
-	strcat(page, "　　　　　　 退出游戏\n");
+	strcat(page, "████████████████████\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　扫　　　　雷　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　继续　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　 新游戏 　　　　　　　█\n");
+	strcat(page, "█　　　　　　　游戏设置　　　　　　　█\n");
+	strcat(page, "█　　　　　◆　　退出　　　　　　　　█\n");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
+	strcat(page, "████████████████████\n");
+	strcat(page, "　　　   方向键选择　回车键确认\n");
+	strcat(page, "　　　　  　　 退出游戏\n");
 
 	system("cls");
 	puts(page);
@@ -268,6 +268,7 @@ int WelcomePage()
 		welcome[x]();
 		switch (GetKeyBoard())
 		{
+		case UP:
 		case ARROW_UP:
 			x--;
 			if (x == -1)
@@ -275,6 +276,7 @@ int WelcomePage()
 				x = 3;
 			}
 			break;
+		case DOWN:
 		case ARROW_DOWN:
 			x++;
 			if (x == 4)

@@ -117,12 +117,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Control.c" />
+    <ClCompile Include="Extern.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Map.c" />
     <ClCompile Include="Show.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Control.h" />
+    <ClInclude Include="Extern.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Show.h" />
   </ItemGroup>

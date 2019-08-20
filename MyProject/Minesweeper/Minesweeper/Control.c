@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include"Map.h"
 #include"Show.h"
+#include"Extern.h"
 #include"Control.h"
 
 void(*set[4])() = { SetPrimary, SetIntermediate, SetExpert, SetFree };
@@ -10,6 +11,8 @@ void (*define[3])(int *, int *, int *) = { DefineHeight , DefineWidth, DefineMin
 extern int coveredBlank;
 extern char map[26][32];
 extern char tag[26][32];
+
+int gameLevel = 1;
 
 int GetKeyBoard()
 {
@@ -35,6 +38,7 @@ int Game(int row, int col, int mine, int isFirst)
 		input = GetKeyBoard();
 		switch (input)
 		{
+		case UP:
 		case ARROW_UP:
 			point.row--;
 			flag = 1;
@@ -43,6 +47,7 @@ int Game(int row, int col, int mine, int isFirst)
 				point.row = row;
 			}
 			break;
+		case DOWN:
 		case ARROW_DOWN:
 			point.row++;
 			flag = 1;
@@ -51,6 +56,7 @@ int Game(int row, int col, int mine, int isFirst)
 				point.row = 1;
 			}
 			break;
+		case LEFT:
 		case ARROW_LEFT:
 			point.col--;
 			flag = 1;
@@ -59,6 +65,7 @@ int Game(int row, int col, int mine, int isFirst)
 				point.col = col;
 			}
 			break;
+		case RIGHT:
 		case ARROW_RIGHT:
 			point.col++;
 			flag = 1;
@@ -113,6 +120,9 @@ int Game(int row, int col, int mine, int isFirst)
 				}
 			}
 			break;
+		case SAVE:
+			Save(row, col, mineLeast);
+			break;
 		case ESC:
 			return mineLeast;
 		default:
@@ -141,29 +151,29 @@ int Game(int row, int col, int mine, int isFirst)
 
 int SetPage()
 {
-	int x = 0;
-
 	while (1)
 	{
-		set[x]();
+		set[gameLevel]();
 		switch (GetKeyBoard())
 		{
+		case UP:
 		case ARROW_UP:
-			x--;
-			if (x == -1)
+			gameLevel--;
+			if (gameLevel == LEVEL1 - 1)
 			{
-				x = 3;
+				gameLevel = FREE;
 			}
 			break;
+		case DOWN:
 		case ARROW_DOWN:
-			x++;
-			if (x == 4)
+			gameLevel++;
+			if (gameLevel == FREE + 1)
 			{
-				x = 0;
+				gameLevel = LEVEL1;
 			}
 			break;
 		case ENTER:
-			return x;
+			return gameLevel;
 		case ESC:
 			return ESC;
 		default:
@@ -176,22 +186,22 @@ void Set(int *row, int *col, int *mine)
 {
 	switch (SetPage())
 	{
-	case 0:
+	case LEVEL1:
 		*row = 9;
 		*col = 9;
 		*mine = 10;
 		break;
-	case 1:
+	case LEVEL2:
 		*row = 16;
 		*col = 16;
 		*mine = 40;
 		break;
-	case 2:
+	case LEVEL3:
 		*row = 16;
 		*col = 24;
 		*mine = 99;
 		break;
-	case 3:
+	case FREE:
 		FreeDefine(row, col, mine);
 		break;
 	case ESC:
@@ -212,6 +222,7 @@ void FreeDefine(int *row, int *col, int *mine)
 		maxmine = *row * *col * 9 / 10;
 		switch (GetKeyBoard())
 		{
+		case UP:
 		case ARROW_UP:
 			flag--;
 			if (flag == -1)
@@ -219,6 +230,7 @@ void FreeDefine(int *row, int *col, int *mine)
 				flag = 2;
 			}
 			break;
+		case DOWN:
 		case ARROW_DOWN:
 			flag++;
 			if (flag == 3)
@@ -226,6 +238,7 @@ void FreeDefine(int *row, int *col, int *mine)
 				flag = 0;
 			}
 			break;
+		case LEFT:
 		case ARROW_LEFT:
 			if (flag == 2)
 			{
@@ -234,6 +247,7 @@ void FreeDefine(int *row, int *col, int *mine)
 			}
 			flag ? (*col)-- : (*row)--;
 			break;
+		case RIGHT:
 		case ARROW_RIGHT:
 			if (flag == 2)
 			{
@@ -279,12 +293,15 @@ void GameControl()
 	int row = 16, col = 16, mine = 40;
 	int o_row = 16, o_col = 16, o_mine = 0;
 
+	LoadList();
 	while (1)
 	{
 		switch (WelcomePage())
 		{
 		case GAMECONTINUE:
-			o_mine = Game(o_row, o_col, o_mine, NOTFIRST);
+			//o_mine = Game(o_row, o_col, o_mine, NOTFIRST);
+			//LoadData(&row, &col, &mine, 0);
+			Load(&row, &col, &mine);
 			break;
 		case NEWGAME:
 			o_row = row;
@@ -295,6 +312,7 @@ void GameControl()
 			Set(&row, &col, &mine);
 			break;
 		case EXIT:
+			//SaveList();
 			return;
 		default:
 			break;
