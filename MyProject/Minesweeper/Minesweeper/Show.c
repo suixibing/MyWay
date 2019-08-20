@@ -4,9 +4,9 @@
 #include"Control.h"
 #include"Show.h"
 
-void (*welcome[3])() = { WelcomeStart, WelcomeSet, WelcomeExit };
+void (*welcome[4])() = { WelcomeContinue, WelcomeNewGame, WelcomeSet, WelcomeExit };
 
-void WelcomeStart()
+void WelcomeContinue()
 {
 	char page[1024] = { 0 };
 
@@ -16,8 +16,31 @@ void WelcomeStart()
 	strcat(page, "█　　　　　 扫      雷 　　　　　█\n");
 	strcat(page, "█                                █\n");
 	strcat(page, "█                                █\n");
+	strcat(page, "█        ◆  Continue            █\n");
+	strcat(page, "█　　　　    New Game  　　　　　█\n");
+	strcat(page, "█　　　　　  Game Set　　　　　　█\n");
+	strcat(page, "█　　　　　　  Exit　　　　　　　█\n");
 	strcat(page, "█                                █\n");
-	strcat(page, "█　　　　◆ Game Start 　　　　　█\n");
+	strcat(page, "██████████████████\n");
+	strcat(page, "　　　 方向键选择　回车键确认\n");
+	strcat(page, "　　　　　　 继续游戏\n");
+
+	system("cls");
+	puts(page);
+}
+
+void WelcomeNewGame()
+{
+	char page[1024] = { 0 };
+
+	strcat(page, "██████████████████\n");
+	strcat(page, "█                                █\n");
+	strcat(page, "█                                █\n");
+	strcat(page, "█　　　　　 扫      雷 　　　　　█\n");
+	strcat(page, "█                                █\n");
+	strcat(page, "█                                █\n");
+	strcat(page, "█            Continue            █\n");
+	strcat(page, "█　　　　◆  New Game  　　　　　█\n");
 	strcat(page, "█　　　　　  Game Set　　　　　　█\n");
 	strcat(page, "█　　　　　　  Exit　　　　　　　█\n");
 	strcat(page, "█                                █\n");
@@ -39,8 +62,8 @@ void WelcomeSet()
 	strcat(page, "█　　　　　 扫      雷 　　　　　█\n");
 	strcat(page, "█                                █\n");
 	strcat(page, "█                                █\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█　　　　   Game Start 　　　　　█\n");
+	strcat(page, "█            Continue            █\n");
+	strcat(page, "█　　　　    New Game  　　　　　█\n");
 	strcat(page, "█　　　　◆  Game Set　　　　　　█\n");
 	strcat(page, "█　　　　  　  Exit　　　　　　　█\n");
 	strcat(page, "█                                █\n");
@@ -62,8 +85,8 @@ void WelcomeExit()
 	strcat(page, "█　　　　　 扫      雷 　　　　　█\n");
 	strcat(page, "█                                █\n");
 	strcat(page, "█                                █\n");
-	strcat(page, "█                                █\n");
-	strcat(page, "█　　　　   Game Start 　　　　　█\n");
+	strcat(page, "█            Continue            █\n");
+	strcat(page, "█　　　　    New Game  　　　　　█\n");
 	strcat(page, "█　　　      Game Set　　　　　　█\n");
 	strcat(page, "█　　　　◆　  Exit　　　　　　　█\n");
 	strcat(page, "█                                █\n");
@@ -249,12 +272,12 @@ int WelcomePage()
 			x--;
 			if (x == -1)
 			{
-				x = 2;
+				x = 3;
 			}
 			break;
 		case ARROW_DOWN:
 			x++;
-			if (x == 3)
+			if (x == 4)
 			{
 				x = 0;
 			}
@@ -266,35 +289,3 @@ int WelcomePage()
 		}
 	}
 }
-//
-//int DefinePage(int *row, int *col, int *mine)
-//{
-//	int x = 0;
-//
-//	while (1)
-//	{
-//		define[x](row, col, mine);
-//		switch (GetKeyBoard())
-//		{
-//		case ARROW_UP:
-//			x--;
-//			if (x == -1)
-//			{
-//				x = 2;
-//			}
-//			break;
-//		case ARROW_DOWN:
-//			x++;
-//			if (x == 3)
-//			{
-//				x = 0;
-//			}
-//			break;
-//		case ENTER:
-//			return x;
-//		default:
-//			break;
-//		}
-//	}
-//}
-

@@ -8,8 +8,6 @@ int main()
 {
 	GameControl();
 
-	
-
 	system("pause");
 	return 0;
 }

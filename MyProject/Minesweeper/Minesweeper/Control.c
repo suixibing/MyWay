@@ -7,6 +7,7 @@
 void(*set[4])() = { SetPrimary, SetIntermediate, SetExpert, SetFree };
 void (*define[3])(int *, int *, int *) = { DefineHeight , DefineWidth, DefineMine };
 
+extern int coveredBlank;
 extern char map[26][32];
 extern char tag[26][32];
 
@@ -22,16 +23,14 @@ int GetKeyBoard()
 	return flag;
 }
 
-void Game(int row, int col, int mine)
+int Game(int row, int col, int mine, int isFirst)
 {
 	Point point = { row / 2, col / 2 };
-	int input, flag = 1;
-	int coveredBlank = row * col - mine;
+	int input, flag = 1, state = CONTINUE;
 	int mineLeast = mine;
 
-	MapInit(row, col, mine, point);
-	MapPrint(row, col, mine, point, flag);
-	while (1)
+	MapPrint(row, col, mine, point, flag, isFirst);
+	while (!state)
 	{
 		input = GetKeyBoard();
 		switch (input)
@@ -68,14 +67,32 @@ void Game(int row, int col, int mine)
 				point.col = 1;
 			}
 			break;
+		case MINECHECK:
+			if (!isFirst)
+			{
+				MapCheck(row, col, mineLeast);
+			}
+			break;
 		case ENTER:
-			if (tag[point.row][point.col] == COVERED)
+			if (isFirst == FIRST)
+			{
+				MapInit(row, col, mine, point);
+				isFirst = NOTFIRST;
+			}
+			if (map[point.row][point.col] == MINE)
+			{
+				state = OVER;
+			}
+			else if (tag[point.row][point.col] == COVERED)
 			{
 				MapOpen(row, col, point.row, point.col);
 			}
-			else if (map[point.row][point.col] != MINE)
+			else
 			{
-				OpenAround(row, col, point);
+				if (OpenAround(row, col, point, mineLeast))
+				{
+					state = OVER;
+				}
 			}
 			break;
 		case HIDEPOINT:
@@ -96,15 +113,31 @@ void Game(int row, int col, int mine)
 				}
 			}
 			break;
+		case ESC:
+			return mineLeast;
 		default:
 			break;
 		}
-		MapPrint(row, col, mineLeast, point, flag);
+		if (!coveredBlank && !isFirst)
+		{
+			state = WIN;
+		}
+		MapPrint(row, col, mineLeast, point, flag, isFirst);
 		flag = !flag;
 	}
+	if (state == WIN)
+	{
+		GameWin(row, col, mineLeast);
+	}
+	else
+	{
+		GameOver(row, col, mineLeast);
+	}
+	getchar();
+
+	MapInit(row, col, 0, point);
+	return 0;
 }
-
-
 
 int SetPage()
 {
@@ -131,6 +164,8 @@ int SetPage()
 			break;
 		case ENTER:
 			return x;
+		case ESC:
+			return ESC;
 		default:
 			break;
 		}
@@ -159,11 +194,11 @@ void Set(int *row, int *col, int *mine)
 	case 3:
 		FreeDefine(row, col, mine);
 		break;
+	case ESC:
+		return;
 	default:
 		break;
 	}
-
-	printf("row = %d, col = %d, mine = %d\n", *row, *col, *mine);
 }
 
 void FreeDefine(int *row, int *col, int *mine)
@@ -195,51 +230,74 @@ void FreeDefine(int *row, int *col, int *mine)
 			if (flag == 2)
 			{
 				(*mine)--;
-				if (*mine < MINMINE)
-				{
-					(*mine)++;
-				}
 				break;
 			}
 			flag ? (*col)-- : (*row)--;
-			(*col) < MINCOL ? (*col)++ : *col;
-			(*row) < MINROW ? (*row)++ : *row;
 			break;
 		case ARROW_RIGHT:
 			if (flag == 2)
 			{
 				(*mine)++;
-				if (*mine > maxmine)
-				{
-					(*mine)--;
-				}
 				break;
 			}
 			flag ? (*col)++ : (*row)++;
-			(*col) > MAXCOL ? (*col)-- : *col;
-			(*row) > MAXROW ? (*row)-- : *row;
 			break;
 		case ENTER:
 			return;
 		default:
 			break;
 		}
+		if (*col < MINCOL)
+		{
+			*col = MINCOL;
+		}
+		else if(*col > MAXCOL)
+		{
+			*col = MAXCOL;
+		}
+		if (*row < MINROW)
+		{
+			*row = MINROW;
+		}
+		else if (*row > MAXROW)
+		{
+			*row = MAXROW;
+		}
+		if (*mine < MINMINE)
+		{
+			*mine = MINMINE;
+		}
+		else if (*mine > maxmine)
+		{
+			*mine = maxmine;
+		}
 	}
 }
 
 void GameControl()
 {
-	int row = 16, col = 16, mine = 40;;
+	int row = 16, col = 16, mine = 40;
+	int o_row = 16, o_col = 16, o_mine = 0;
 
-	switch (WelcomePage())
+	while (1)
 	{
-	case START:
-		Game(row, col, mine);
-		break;
-	case SET:
-		Set(&row, &col, &mine);
-		break;
-	case EXIT:
-		break;
+		switch (WelcomePage())
+		{
+		case GAMECONTINUE:
+			o_mine = Game(o_row, o_col, o_mine, NOTFIRST);
+			break;
+		case NEWGAME:
+			o_row = row;
+			o_col = col;
+			o_mine = Game(row, col, mine, FIRST);
+			break;
+		case GAMESET:
+			Set(&row, &col, &mine);
+			break;
+		case EXIT:
+			return;
+		default:
+			break;
+		}
 	}
 }

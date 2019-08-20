@@ -11,8 +11,8 @@
 
 #define ENTER 13
 
-
-void WelcomeStart();
+void WelcomeContinue();
+void WelcomeNewGame();
 void WelcomeSet();
 void WelcomeExit();
 
