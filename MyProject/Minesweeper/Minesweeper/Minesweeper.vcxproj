@@ -117,16 +117,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Control.c" />
-    <ClCompile Include="Extern.c" />
+    <ClCompile Include="Save.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Map.c" />
-    <ClCompile Include="Show.c" />
+    <ClCompile Include="Page.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Control.h" />
-    <ClInclude Include="Extern.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Show.h" />
+    <ClInclude Include="Page.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

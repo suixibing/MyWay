@@ -4,14 +4,12 @@
 
 #define _MAP_H_
 
-#define MAXROW 24
 #define MINROW 9
-#define MAXCOL 30
+#define MAXROW 24
 #define MINCOL 9
+#define MAXCOL 30
 #define MINMINE 10
-
-#define NOTFIRST 0
-#define FIRST 1
+#define MAXMINE(row, col) ((row) * (col) - 9)
 
 enum
 {
@@ -33,11 +31,10 @@ typedef struct Point
 }Point;
 
 void MapInit(int row, int col, int mine, Point point);
-void MapPrint(int row, int col, int mineLeast, Point point, int flag, int isFirst);
+void MapPrint(int row, int col, int mineLeast, Point point, int showPoint, int isFirst);
 void MapOpen(int row, int col, int pointx, int pointy);
 int OpenAround(int row, int col, Point point, int mineLeast);
-void GameOver(int row, int col, int mineLeast);
-void GameWin(int row, int col, int mineLeast);
+void GameFinish(int row, int col, int mineLeast, int state);
 void MapCheck(int row, int col, int mineLeast);
 
 

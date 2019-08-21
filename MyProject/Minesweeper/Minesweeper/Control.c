@@ -1,18 +1,15 @@
 #include <conio.h>
 #include<stdio.h>
 #include"Map.h"
-#include"Show.h"
-#include"Extern.h"
+#include"Page.h"
+#include"Save.h"
 #include"Control.h"
-
-void(*set[4])() = { SetPrimary, SetIntermediate, SetExpert, SetFree };
-void (*define[3])(int *, int *, int *) = { DefineHeight , DefineWidth, DefineMine };
 
 extern int coveredBlank;
 extern char map[26][32];
 extern char tag[26][32];
 
-int gameLevel = 1;
+int gameLevel = LEVEL2;
 
 int GetKeyBoard()
 {
@@ -26,13 +23,13 @@ int GetKeyBoard()
 	return flag;
 }
 
-int Game(int row, int col, int mine, int isFirst)
+void Game(int row, int col, int mine, int isFirst)
 {
-	Point point = { row / 2, col / 2 };
-	int input, flag = 1, state = CONTINUE;
+	Point point = { (row + 1) / 2, (col + 1) / 2 };
+	int input, showPoint = TRUE, state = CONTINUE;
 	int mineLeast = mine;
 
-	MapPrint(row, col, mine, point, flag, isFirst);
+	MapPrint(row, col, mine, point, showPoint, isFirst);
 	while (!state)
 	{
 		input = GetKeyBoard();
@@ -41,7 +38,7 @@ int Game(int row, int col, int mine, int isFirst)
 		case UP:
 		case ARROW_UP:
 			point.row--;
-			flag = 1;
+			showPoint = TRUE;
 			if (point.row == 0)
 			{
 				point.row = row;
@@ -50,7 +47,7 @@ int Game(int row, int col, int mine, int isFirst)
 		case DOWN:
 		case ARROW_DOWN:
 			point.row++;
-			flag = 1;
+			showPoint = TRUE;
 			if (point.row == row + 1)
 			{
 				point.row = 1;
@@ -59,7 +56,7 @@ int Game(int row, int col, int mine, int isFirst)
 		case LEFT:
 		case ARROW_LEFT:
 			point.col--;
-			flag = 1;
+			showPoint = TRUE;
 			if (point.col == 0)
 			{
 				point.col = col;
@@ -68,7 +65,7 @@ int Game(int row, int col, int mine, int isFirst)
 		case RIGHT:
 		case ARROW_RIGHT:
 			point.col++;
-			flag = 1;
+			showPoint = TRUE;
 			if (point.col == col + 1)
 			{
 				point.col = 1;
@@ -78,13 +75,14 @@ int Game(int row, int col, int mine, int isFirst)
 			if (!isFirst)
 			{
 				MapCheck(row, col, mineLeast);
+				while (GetKeyBoard() != ESC);
 			}
 			break;
 		case ENTER:
-			if (isFirst == FIRST)
+			if (isFirst == TRUE)
 			{
 				MapInit(row, col, mine, point);
-				isFirst = NOTFIRST;
+				isFirst = FALSE;
 			}
 			if (map[point.row][point.col] == MINE)
 			{
@@ -103,7 +101,7 @@ int Game(int row, int col, int mine, int isFirst)
 			}
 			break;
 		case HIDEPOINT:
-			flag = 0;
+			showPoint = FALSE;
 			break;
 		case MINEMARK:
 			if (tag[point.row][point.col] != OPENED)
@@ -124,7 +122,8 @@ int Game(int row, int col, int mine, int isFirst)
 			Save(row, col, mineLeast);
 			break;
 		case ESC:
-			return mineLeast;
+			SaveData(row, col, mineLeast, TMP);
+			return;
 		default:
 			break;
 		}
@@ -132,28 +131,18 @@ int Game(int row, int col, int mine, int isFirst)
 		{
 			state = WIN;
 		}
-		MapPrint(row, col, mineLeast, point, flag, isFirst);
-		flag = !flag;
+		MapPrint(row, col, mineLeast, point, showPoint, isFirst);
+		showPoint = !showPoint;
 	}
-	if (state == WIN)
-	{
-		GameWin(row, col, mineLeast);
-	}
-	else
-	{
-		GameOver(row, col, mineLeast);
-	}
+	GameFinish(row, col, mineLeast, state);
 	getchar();
-
-	MapInit(row, col, 0, point);
-	return 0;
 }
 
-int SetPage()
+int SetLevel()
 {
 	while (1)
 	{
-		set[gameLevel]();
+		SetPage(gameLevel);
 		switch (GetKeyBoard())
 		{
 		case UP:
@@ -184,7 +173,7 @@ int SetPage()
 
 void Set(int *row, int *col, int *mine)
 {
-	switch (SetPage())
+	switch (SetLevel())
 	{
 	case LEVEL1:
 		*row = 9;
@@ -198,7 +187,7 @@ void Set(int *row, int *col, int *mine)
 		break;
 	case LEVEL3:
 		*row = 16;
-		*col = 24;
+		*col = 30;
 		*mine = 99;
 		break;
 	case FREE:
@@ -213,34 +202,34 @@ void Set(int *row, int *col, int *mine)
 
 void FreeDefine(int *row, int *col, int *mine)
 {
-	int flag = 0;
-	int maxmine = 0;
+	static int flag = 0;
+	int maxMine = 0;
 
 	while (1)
 	{
-		define[flag](row, col, mine);
-		maxmine = *row * *col * 9 / 10;
+		DefinePage(*row, *col, *mine, flag);
+		maxMine = MAXMINE(*row, *col);
 		switch (GetKeyBoard())
 		{
 		case UP:
 		case ARROW_UP:
 			flag--;
-			if (flag == -1)
+			if (flag == DEFINEHEIGHT - 1)
 			{
-				flag = 2;
+				flag = DEFINEMINE;
 			}
 			break;
 		case DOWN:
 		case ARROW_DOWN:
 			flag++;
-			if (flag == 3)
+			if (flag == DEFINEMINE + 1)
 			{
-				flag = 0;
+				flag = DEFINEHEIGHT;
 			}
 			break;
 		case LEFT:
 		case ARROW_LEFT:
-			if (flag == 2)
+			if (flag == DEFINEMINE)
 			{
 				(*mine)--;
 				break;
@@ -249,7 +238,7 @@ void FreeDefine(int *row, int *col, int *mine)
 			break;
 		case RIGHT:
 		case ARROW_RIGHT:
-			if (flag == 2)
+			if (flag == DEFINEMINE)
 			{
 				(*mine)++;
 				break;
@@ -281,9 +270,42 @@ void FreeDefine(int *row, int *col, int *mine)
 		{
 			*mine = MINMINE;
 		}
-		else if (*mine > maxmine)
+		else if (*mine > maxMine)
 		{
-			*mine = maxmine;
+			*mine = maxMine;
+		}
+	}
+}
+
+int Welcome()
+{
+	static int flag = 1;
+
+	while (1)
+	{
+		WelcomePage(flag);
+		switch (GetKeyBoard())
+		{
+		case UP:
+		case ARROW_UP:
+			flag--;
+			if (flag == WELCOMECONTINUE - 1)
+			{
+				flag = WELCOMEEXIT;
+			}
+			break;
+		case DOWN:
+		case ARROW_DOWN:
+			flag++;
+			if (flag == WELCOMEEXIT + 1)
+			{
+				flag = WELCOMECONTINUE;
+			}
+			break;
+		case ENTER:
+			return flag;
+		default:
+			break;
 		}
 	}
 }
@@ -291,28 +313,23 @@ void FreeDefine(int *row, int *col, int *mine)
 void GameControl()
 {
 	int row = 16, col = 16, mine = 40;
-	int o_row = 16, o_col = 16, o_mine = 0;
+	int o_row, o_col, o_mine;
 
 	LoadList();
 	while (1)
 	{
-		switch (WelcomePage())
+		switch (Welcome())
 		{
 		case GAMECONTINUE:
-			//o_mine = Game(o_row, o_col, o_mine, NOTFIRST);
-			//LoadData(&row, &col, &mine, 0);
-			Load(&row, &col, &mine);
+			Load(&o_row, &o_col, &o_mine);
 			break;
 		case NEWGAME:
-			o_row = row;
-			o_col = col;
-			o_mine = Game(row, col, mine, FIRST);
+			Game(row, col, mine, TRUE);
 			break;
 		case GAMESET:
 			Set(&row, &col, &mine);
 			break;
 		case EXIT:
-			//SaveList();
 			return;
 		default:
 			break;

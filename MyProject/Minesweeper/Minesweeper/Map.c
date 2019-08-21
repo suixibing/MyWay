@@ -55,7 +55,7 @@ void MapInit(int row, int col, int mine, Point point)
 	}
 }
 
-void MapPrint(int row, int col, int mineLeast, Point point, int flag, int isFirst)
+void MapPrint(int row, int col, int mineLeast, Point point, int showPoint, int isFirst)
 {
 	int i, j;
 	char page[2000] = { 0 };
@@ -71,7 +71,7 @@ void MapPrint(int row, int col, int mineLeast, Point point, int flag, int isFirs
 		strcat(page, "█");
 		for (j = 1; j <= col; j++)
 		{
-			if (flag && i == point.row && j == point.col)
+			if (showPoint && i == point.row && j == point.col)
 			{
 				strcat(page, "□");
 			}
@@ -94,6 +94,7 @@ void MapPrint(int row, int col, int mineLeast, Point point, int flag, int isFirs
 	{
 		strcat(page, "█");
 	}
+	//strncat(page, "\n　　　　", );
 	strcat(page, "\n　　　　方向键控制 空格键确定\n");
 	strcat(page, "　　　　h-隐藏光标 m-标记地雷\n");
 	strcat(page, "　　　　  未标记雷数： %3d\n");
@@ -135,7 +136,7 @@ void MapOpen(int row, int col, int pointx, int pointy)
 
 int OpenAround(int row, int col, Point point, int mineLeast)
 {
-	int i, j, flag = 0, count = 0;
+	int i, j, flag = CONTINUE, count = 0;
 
 	for (i = -1; i <= 1; i++)
 	{
@@ -146,17 +147,16 @@ int OpenAround(int row, int col, Point point, int mineLeast)
 				count++;
 				if (map[point.row + i][point.col + j] != MINE)
 				{
-					flag = 1;
+					flag = OVER;
 				}
 			}
-
 		}
 	}
 	if (count == map[point.row][point.col])
 	{
 		if (flag)
 		{
-			return 1;
+			return OVER;
 		}
 		else
 		{
@@ -173,10 +173,10 @@ int OpenAround(int row, int col, Point point, int mineLeast)
 		}
 	}
 
-	return 0;
+	return CONTINUE;
 }
 
-void GameOver(int row, int col, int mineLeast)
+void GameFinish(int row, int col, int mineLeast, int state)
 {
 	int i, j;
 	char page[2000] = { 0 };
@@ -209,7 +209,7 @@ void GameOver(int row, int col, int mineLeast)
 				{
 					strcat(page, change[map[i][j]]);
 				}
-				else if (tag[i][j] == MARKED)
+				else if (state == OVER && tag[i][j] == MARKED)
 				{
 					strcat(page, "×");
 				}
@@ -225,59 +225,15 @@ void GameOver(int row, int col, int mineLeast)
 	{
 		strcat(page, "█");
 	}
-	strcat(page, "\n　　　　      你输了…\n");
-	strcat(page, "　　　　    按回车键继续\n");
-	strcat(page, "　　　　  未标记雷数： %3d\n");
-	system("cls");
-	printf(page, mineLeast);
-}
 
-void GameWin(int row, int col, int mineLeast)
-{
-	int i, j;
-	char page[2000] = { 0 };
-	char change[9][4] = { "　", "１", "２", "３", "４", "５", "６", "７", "８" };
-
-	for (j = 0; j < col + 2; j++)
+	if (state == OVER)
 	{
-		strcat(page, "█");
+		strcat(page, "\n　　　　      你输了…\n");
 	}
-	strcat(page, "\n");
-	for (i = 1; i <= row; i++)
+	else
 	{
-		strcat(page, "█");
-		for (j = 1; j <= col; j++)
-		{
-			if (map[i][j] == MINE)
-			{
-				if (tag[i][j] == MARKED)
-				{
-					strcat(page, "△");
-				}
-				else
-				{
-					strcat(page, "¤");
-				}
-			}
-			else
-			{
-				if (tag[i][j] == OPENED)
-				{
-					strcat(page, change[map[i][j]]);
-				}
-				else
-				{
-					strcat(page, "■");
-				}
-			}
-		}
-		strcat(page, "█\n");
+		strcat(page, "\n　　　　      你赢了…\n");
 	}
-	for (j = 0; j < col + 2; j++)
-	{
-		strcat(page, "█");
-	}
-	strcat(page, "\n　　　　      你赢了…\n");
 	strcat(page, "　　　　    按回车键继续\n");
 	strcat(page, "　　　　  未标记雷数： %3d\n");
 	system("cls");

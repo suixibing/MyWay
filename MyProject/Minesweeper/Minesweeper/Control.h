@@ -8,8 +8,13 @@
 #define OVER 1
 #define WIN 2
 
+#define TMP -1
+
 #define SUCCESS 1
 #define ERROR 0
+
+#define FALSE 0
+#define TRUE 1
 
 #define UP 'w'
 #define DOWN 's'
@@ -17,9 +22,10 @@
 #define RIGHT 'd'
 #define HIDEPOINT 'h'
 #define MINEMARK 'm'
-#define MINECHECK 'l'
+#define MINECHECK 'L'
 #define SAVE 'S'
 #define ESC 27
+#define ENTER 13
 
 enum GameLevel
 {
@@ -29,7 +35,7 @@ enum GameLevel
 	FREE,
 };
 
-enum Welcome
+enum WelcomeOption
 {
 	GAMECONTINUE,
 	NEWGAME,
@@ -38,9 +44,10 @@ enum Welcome
 };
 
 int GetKeyBoard();
-int Game(int row, int col, int mine, int isFirst);
+void Game(int row, int col, int mine, int isFirst);
 void FreeDefine(int *row, int *col, int *mine);
-int SetPage();
+int Welcome();
+int SetLevel();
 void Set(int *row, int *col, int *mine);
 void GameControl();
 

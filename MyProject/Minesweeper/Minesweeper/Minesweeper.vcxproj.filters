@@ -21,27 +21,27 @@
     <ClCompile Include="Map.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Show.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Control.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Extern.c">
+    <ClCompile Include="Save.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Page.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Show.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Control.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Extern.h">
+    <ClInclude Include="Save.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Page.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
