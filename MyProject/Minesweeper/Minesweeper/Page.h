@@ -1,8 +1,8 @@
 #pragma once
 
-#ifndef _SHOW_H_
+#ifndef _PAGE_H_
 
-#define _SHOW_H_
+#define _PAGE_H_
 
 #define ARROW_UP    0xE048
 #define ARROW_DOWN  0xE050
@@ -29,4 +29,4 @@ void SetPage(int flag);
 void WelcomePage(int flag);
 void DefinePage(int row, int col, int mine, int flag);
 
-#endif // _SHOW_H_
+#endif // _PAGE_H_

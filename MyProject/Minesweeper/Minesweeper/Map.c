@@ -1,4 +1,4 @@
-#include<time.h>
+ï»¿#include<time.h>
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -55,29 +55,76 @@ void MapInit(int row, int col, int mine, Point point)
 	}
 }
 
-void MapPrint(int row, int col, int mineLeast, Point point, int showPoint, int isFirst)
+void JumpMap(int row, int col, int mineLeast, Point point, int showPoint, int isFirst)
 {
 	int i, j;
 	char page[2000] = { 0 };
-	char change[9][4] = { "¡¡", "£±", "£²", "£³", "£´", "£µ", "£¶", "£·", "£¸" };
-	
-	for (i = 0; i < col + 2; i++)
+	char change1[9][4] = { "ã€€", "ï¼‘", "ï¼’", "ï¼“", "ï¼”", "ï¼•", "ï¼–", "ï¼—", "ï¼˜" };
+	char change2[][4] = { "â‘©", "â‘ ", "â‘¡", "â‘¢", "â‘£", "â‘¤", "â‘¥", "â‘¦", "â‘§", "â‘¨" };
+
+	strcat(page, "â–ˆ");
+	for (j = 1; j < col + 1; j++)
 	{
-		strcat(page, "¨€");
+		strcat(page, change2[j % 10]);
 	}
-	strcat(page, "\n");
+	strcat(page, "â–ˆ\n");
 	for (i = 1; i <= row; i++)
 	{
-		strcat(page, "¨€");
+		strcat(page, change2[i % 10]);
 		for (j = 1; j <= col; j++)
 		{
 			if (showPoint && i == point.row && j == point.col)
 			{
-				strcat(page, "¡õ");
+				strcat(page, "â–¡");
 			}
 			else if (tag[i][j] == COVERED || isFirst)
 			{
-				strcat(page, "¡ö");
+				strcat(page, "â– ");
+			}
+			else if (tag[i][j] == OPENED)
+			{
+				strcat(page, change1[map[i][j]]);
+			}
+			else
+			{
+				strcat(page, "â–³");
+			}
+		}
+		strcat(page, "â–ˆ\n");
+	}
+	for (i = 0; i < col + 2; i++)
+	{
+		strcat(page, "â–ˆ");
+	}
+	strcat(page, "\nã€€ã€€ã€€ã€€æ–¹å‘é”®æŽ§åˆ¶ ç©ºæ ¼é”®ç¡®å®š\n");
+	strcat(page, "ã€€ã€€ã€€ã€€  æœªæ ‡è®°é›·æ•°ï¼š %3d\n");
+	system("cls");
+	printf(page, mineLeast);
+}
+
+void MapPrint(int row, int col, int mineLeast, Point point, int showPoint, int isFirst)
+{
+	int i, j;
+	char page[2000] = { 0 };
+	char change[9][4] = { "ã€€", "ï¼‘", "ï¼’", "ï¼“", "ï¼”", "ï¼•", "ï¼–", "ï¼—", "ï¼˜" };
+	
+	for (j = 0; j < col + 2; j++)
+	{
+		strcat(page, "â–ˆ");
+	}
+	strcat(page, "\n");
+	for (i = 1; i <= row; i++)
+	{
+		strcat(page, "â–ˆ");
+		for (j = 1; j <= col; j++)
+		{
+			if (showPoint && i == point.row && j == point.col)
+			{
+				strcat(page, "â–¡");
+			}
+			else if (tag[i][j] == COVERED || isFirst)
+			{
+				strcat(page, "â– ");
 			}
 			else if(tag[i][j] == OPENED)
 			{
@@ -85,19 +132,19 @@ void MapPrint(int row, int col, int mineLeast, Point point, int showPoint, int i
 			}
 			else
 			{
-				strcat(page, "¡÷");
+				strcat(page, "â–³");
 			}
 		}
-		strcat(page, "¨€\n");
+		strcat(page, "â–ˆ\n");
 	}
-	for (i = 0; i < col + 2; i++)
+	for (j = 0; j < col + 2; j++)
 	{
-		strcat(page, "¨€");
+		strcat(page, "â–ˆ");
 	}
-	//strncat(page, "\n¡¡¡¡¡¡¡¡", );
-	strcat(page, "\n¡¡¡¡¡¡¡¡·½Ïò¼ü¿ØÖÆ ¿Õ¸ñ¼üÈ·¶¨\n");
-	strcat(page, "¡¡¡¡¡¡¡¡h-Òþ²Ø¹â±ê m-±ê¼ÇµØÀ×\n");
-	strcat(page, "¡¡¡¡¡¡¡¡  Î´±ê¼ÇÀ×Êý£º %3d\n");
+	//strncat(page, "\nã€€ã€€ã€€ã€€", );
+	strcat(page, "\nã€€ã€€ã€€ã€€æ–¹å‘é”®æŽ§åˆ¶ ç©ºæ ¼é”®ç¡®å®š\n");
+	strcat(page, "ã€€ã€€ã€€ã€€h-éšè—å…‰æ ‡ m-æ ‡è®°åœ°é›·\n");
+	strcat(page, "ã€€ã€€ã€€ã€€  æœªæ ‡è®°é›·æ•°ï¼š %3d\n");
 	system("cls");
 	printf(page, mineLeast);
 }
@@ -180,27 +227,27 @@ void GameFinish(int row, int col, int mineLeast, int state)
 {
 	int i, j;
 	char page[2000] = { 0 };
-	char change[9][4] = { "¡¡", "£±", "£²", "£³", "£´", "£µ", "£¶", "£·", "£¸" };
+	char change[9][4] = { "ã€€", "ï¼‘", "ï¼’", "ï¼“", "ï¼”", "ï¼•", "ï¼–", "ï¼—", "ï¼˜" };
 
 	for (j = 0; j < col + 2; j++)
 	{
-		strcat(page, "¨€");
+		strcat(page, "â–ˆ");
 	}
 	strcat(page, "\n");
 	for (i = 1; i <= row; i++)
 	{
-		strcat(page, "¨€");
+		strcat(page, "â–ˆ");
 		for (j = 1; j <= col; j++)
 		{
 			if (map[i][j] == MINE)
 			{
 				if (tag[i][j] == MARKED)
 				{
-					strcat(page, "¡÷");
+					strcat(page, "â–³");
 				}
 				else
 				{
-					strcat(page, "¡è");
+					strcat(page, "Â¤");
 				}
 			}
 			else
@@ -211,31 +258,31 @@ void GameFinish(int row, int col, int mineLeast, int state)
 				}
 				else if (state == OVER && tag[i][j] == MARKED)
 				{
-					strcat(page, "¡Á");
+					strcat(page, "Ã—");
 				}
 				else
 				{
-					strcat(page, "¡ö");
+					strcat(page, "â– ");
 				}
 			}
 		}
-		strcat(page, "¨€\n");
+		strcat(page, "â–ˆ\n");
 	}
 	for (j = 0; j < col + 2; j++)
 	{
-		strcat(page, "¨€");
+		strcat(page, "â–ˆ");
 	}
 
 	if (state == OVER)
 	{
-		strcat(page, "\n¡¡¡¡¡¡¡¡      ÄãÊäÁË¡­\n");
+		strcat(page, "\nã€€ã€€ã€€ã€€      ä½ è¾“äº†â€¦\n");
 	}
 	else
 	{
-		strcat(page, "\n¡¡¡¡¡¡¡¡      ÄãÓ®ÁË¡­\n");
+		strcat(page, "\nã€€ã€€ã€€ã€€      ä½ èµ¢äº†â€¦\n");
 	}
-	strcat(page, "¡¡¡¡¡¡¡¡    °´»Ø³µ¼ü¼ÌÐø\n");
-	strcat(page, "¡¡¡¡¡¡¡¡  Î´±ê¼ÇÀ×Êý£º %3d\n");
+	strcat(page, "ã€€ã€€ã€€ã€€    æŒ‰å›žè½¦é”®ç»§ç»­\n");
+	strcat(page, "ã€€ã€€ã€€ã€€  æœªæ ‡è®°é›·æ•°ï¼š %3d\n");
 	system("cls");
 	printf(page, mineLeast);
 }
@@ -244,27 +291,27 @@ void MapCheck(int row, int col, int mineLeast)
 {
 	int i, j;
 	char page[2000] = { 0 };
-	char change[9][4] = { "¡¡", "£±", "£²", "£³", "£´", "£µ", "£¶", "£·", "£¸" };
+	char change[9][4] = { "ã€€", "ï¼‘", "ï¼’", "ï¼“", "ï¼”", "ï¼•", "ï¼–", "ï¼—", "ï¼˜" };
 
 	for (j = 0; j < col + 2; j++)
 	{
-		strcat(page, "¨€");
+		strcat(page, "â–ˆ");
 	}
 	strcat(page, "\n");
 	for (i = 1; i <= row; i++)
 	{
-		strcat(page, "¨€");
+		strcat(page, "â–ˆ");
 		for (j = 1; j <= col; j++)
 		{
 			if (map[i][j] == MINE)
 			{
 				if (tag[i][j] == MARKED)
 				{
-					strcat(page, "¡÷");
+					strcat(page, "â–³");
 				}
 				else
 				{
-					strcat(page, "¡è");
+					strcat(page, "Â¤");
 				}
 			}
 			else
@@ -275,23 +322,23 @@ void MapCheck(int row, int col, int mineLeast)
 				}
 				else if (tag[i][j] == MARKED)
 				{
-					strcat(page, "¡Á");
+					strcat(page, "Ã—");
 				}
 				else
 				{
-					strcat(page, "¡ö");
+					strcat(page, "â– ");
 				}
 			}
 		}
-		strcat(page, "¨€\n");
+		strcat(page, "â–ˆ\n");
 	}
 	for (j = 0; j < col + 2; j++)
 	{
-		strcat(page, "¨€");
+		strcat(page, "â–ˆ");
 	}
-	strcat(page, "\n¡¡¡¡¡¡¡¡·½Ïò¼ü¿ØÖÆ ¿Õ¸ñ¼üÈ·¶¨\n");
-	strcat(page, "¡¡¡¡¡¡¡¡h-Òþ²Ø¹â±ê m-±ê¼ÇµØÀ×\n");
-	strcat(page, "¡¡¡¡¡¡¡¡  Î´±ê¼ÇÀ×Êý£º %3d\n");
+	strcat(page, "\nã€€ã€€ã€€ã€€æ–¹å‘é”®æŽ§åˆ¶ ç©ºæ ¼é”®ç¡®å®š\n");
+	strcat(page, "ã€€ã€€ã€€ã€€h-éšè—å…‰æ ‡ m-æ ‡è®°åœ°é›·\n");
+	strcat(page, "ã€€ã€€ã€€ã€€  æœªæ ‡è®°é›·æ•°ï¼š %3d\n");
 	system("cls");
 	printf(page, mineLeast);
 }

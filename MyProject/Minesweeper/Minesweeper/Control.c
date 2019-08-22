@@ -25,6 +25,7 @@ int GetKeyBoard()
 
 void Game(int row, int col, int mine, int isFirst)
 {
+	Point offSet = { 0, 0 };
 	Point point = { (row + 1) / 2, (col + 1) / 2 };
 	int input, showPoint = TRUE, state = CONTINUE;
 	int mineLeast = mine;
@@ -39,7 +40,7 @@ void Game(int row, int col, int mine, int isFirst)
 		case ARROW_UP:
 			point.row--;
 			showPoint = TRUE;
-			if (point.row == 0)
+			if (point.row <= 0)
 			{
 				point.row = row;
 			}
@@ -48,7 +49,7 @@ void Game(int row, int col, int mine, int isFirst)
 		case ARROW_DOWN:
 			point.row++;
 			showPoint = TRUE;
-			if (point.row == row + 1)
+			if (point.row >= row + 1)
 			{
 				point.row = 1;
 			}
@@ -57,7 +58,7 @@ void Game(int row, int col, int mine, int isFirst)
 		case ARROW_LEFT:
 			point.col--;
 			showPoint = TRUE;
-			if (point.col == 0)
+			if (point.col <= 0)
 			{
 				point.col = col;
 			}
@@ -66,7 +67,7 @@ void Game(int row, int col, int mine, int isFirst)
 		case ARROW_RIGHT:
 			point.col++;
 			showPoint = TRUE;
-			if (point.col == col + 1)
+			if (point.col >= col + 1)
 			{
 				point.col = 1;
 			}
@@ -77,6 +78,12 @@ void Game(int row, int col, int mine, int isFirst)
 				MapCheck(row, col, mineLeast);
 				while (GetKeyBoard() != ESC);
 			}
+			break;
+		case JUMP:
+			JumpMap(row, col, mineLeast, point, showPoint, isFirst);
+			printf("请输入您要跳转的坐标(row, col)：> ");
+			while (!scanf("%d%d", &point.row, &point.col));
+			showPoint = TRUE;
 			break;
 		case ENTER:
 			if (isFirst == TRUE)
@@ -315,7 +322,7 @@ void GameControl()
 	int row = 16, col = 16, mine = 40;
 	int o_row, o_col, o_mine;
 
-	LoadList();
+	LoadList(0);
 	while (1)
 	{
 		switch (Welcome())

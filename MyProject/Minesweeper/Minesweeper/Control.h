@@ -24,6 +24,7 @@
 #define MINEMARK 'm'
 #define MINECHECK 'L'
 #define SAVE 'S'
+#define JUMP 'J'
 #define ESC 27
 #define ENTER 13
 

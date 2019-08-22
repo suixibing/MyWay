@@ -5,7 +5,7 @@
 #include"Page.h"
 #include"Map.h"
 
-extern char save[10][45];
+extern char saveList[100][37];
 
 void WelcomePage(int flag)
 {
@@ -152,8 +152,8 @@ void SavePage(int flag)
 
 	if (flag != TMP)
 	{
-		save[flag][1] = 0xa1;
-		save[flag][2] = 0xf4;
+		saveList[flag][1] = 0xa1;
+		saveList[flag][2] = 0xf4;
 	}
 	else
 	{
@@ -162,17 +162,17 @@ void SavePage(int flag)
 	strcat(page, "████████████████████\n");
 	//strcat(page, "█ ◆ 自定义 Tue Aug 20 15:42:11 2019 █\n"); // 保存样例
 	//strcat(page, "█    未存档 NNN NNN NN NN:NN:NN NNNN █\n"); // 保存样例
-	for (int i = 0; i < 10; i++)
+	for (int i = flag / 10 * 10; i < flag / 10 * 10 + 10; i++)
 	{
 		strcat(page, "█");
-		strcat(page, save[i]);
+		strcat(page, saveList[i]);
 		strcat(page, "█\n");
 	}
 	strcat(page, "█████████████████第%2d页\n");
 	strcat(page, "　　　   方向键选择　回车键确认\n");
 	strcat(page, "　　　　　  C-继续上次游戏\n\n");
-	save[flag][1] = ' ';
-	save[flag][2] = ' ';
+	saveList[flag][1] = ' ';
+	saveList[flag][2] = ' ';
 
 	system("cls");
 	printf(page, flag / 10 + 1);

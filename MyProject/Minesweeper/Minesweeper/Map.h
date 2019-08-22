@@ -31,6 +31,7 @@ typedef struct Point
 }Point;
 
 void MapInit(int row, int col, int mine, Point point);
+void JumpMap(int row, int col, int mineLeast, Point point, int showPoint, int isFirst);
 void MapPrint(int row, int col, int mineLeast, Point point, int showPoint, int isFirst);
 void MapOpen(int row, int col, int pointx, int pointy);
 int OpenAround(int row, int col, Point point, int mineLeast);

@@ -291,6 +291,138 @@ void BinaryTreePostOrderNonR(BTNode* root)
 	}
 }
 
+// 非递归遍历 
+// 先序遍历
+void BinaryTreePrevOrderNonR2(BTNode* root)
+{
+	assert(root);
+
+	BTNode *stack[100], *cur = root;
+	int top = -1;
+
+	while (top > -2)
+	{
+		BTREE_PRINT(cur->_data); // 访问结点
+		if (cur->_pRight) // 如果有右孩子，右孩子入栈
+		{
+			stack[++top] = cur->_pRight;
+		}
+		if (cur->_pLeft) // 如果有左孩子，先访问左孩子
+		{
+			cur = cur->_pLeft;
+		}
+		else // 没有左孩子，访问栈顶
+		{
+			cur = stack[top--];
+		}
+	}
+}
+// 中序遍历
+void BinaryTreeInOrderNonR2(BTNode* root)
+{
+	assert(root);
+
+	BTNode *stack[100], *cur = root;
+	int top = -1;
+
+	while (top > -2)
+	{
+		while (cur && cur->_pLeft && cur != stack[top + 1])
+		{
+			stack[++top] = cur;
+			cur = cur->_pLeft;
+		}
+		BTREE_PRINT(cur->_data);
+		if (cur->_pRight)
+		{
+			cur = cur->_pRight;
+		}
+		else
+		{
+			cur = stack[top--];
+		}
+	}
+}
+// 后序遍历
+void BinaryTreePostOrderNonR2(BTNode* root)
+{
+	assert(root);
+
+	BTNode *stack[100], *cur = root, *last = root;
+	int top = -1;
+
+	while (top > -2)
+	{
+		while (cur && cur->_pLeft && cur != stack[top + 1])
+		{
+			stack[++top] = cur;
+			cur = cur->_pLeft;
+		}
+		if (cur->_pRight && cur->_pRight != stack[top + 2])
+		{
+			stack[++top] = cur;
+			cur = cur->_pRight;
+		}
+		else
+		{
+			BTREE_PRINT(cur->_data);
+			stack[top + 1] = cur;
+			cur = stack[top--];
+		}
+	}
+}
+// 中序遍历
+void BinaryTreeInOrderNonR3(BTNode* root)
+{
+	assert(root);
+
+	BTNode *stack[100], *cur = root;
+	int top = -1;
+
+	while (top >= 0 || cur)
+	{
+		for (; cur; cur = cur->_pLeft) // 将当前结点和所有左孩子入栈
+		{
+			stack[++top] = cur;
+		}
+		if (top >= 0)
+		{
+			cur = stack[top--]; // 访问栈顶（未访问结点中最左下方的结点）
+			BTREE_PRINT(cur->_data); // 访问结点
+			cur = cur->_pRight; 
+		}
+	}
+}
+// 后序遍历
+void BinaryTreePostOrderNonR3(BTNode* root)
+{
+	assert(root);
+
+	BTNode *stack[100], *cur = root, *last = root;
+	int tag[100] = { 0 };
+	int top = -1;
+
+	do
+	{
+		for (; cur; cur = cur->_pLeft) // 将当前结点和所有左孩子入栈并标记 0
+		{
+			stack[++top] = cur;
+			tag[top] = 0;
+		}
+		while (top >= 0 && tag[top]) // 访问栈中所有右孩子已访问过的结点
+		{
+			cur = stack[top--];
+			BTREE_PRINT(cur->_data);
+		}
+		if (top >= 0)
+		{
+			cur = stack[top];
+			cur = cur->_pRight;
+			tag[top] = 1; // 表示已经访问过右孩子结点
+		}
+	} while (top >= 0);
+}
+
 // 通过调用各种遍历来打印
 void BinaryTreePrint(BTNode* root)
 {
@@ -301,18 +433,28 @@ void BinaryTreePrint(BTNode* root)
 	printf("(遍历实现)\t");
 	BinaryTreePrevOrderNonR(root);
 	printf("(非遍历实现)\t");
+	BinaryTreePrevOrderNonR2(root);
+	printf("(非遍历实现2)\t");
 
 	printf("\n中序遍历：");
 	BinaryTreeInOrder(root);
 	printf("(遍历实现)\t");
 	BinaryTreeInOrderNonR(root);
 	printf("(非遍历实现)\t");
+	BinaryTreeInOrderNonR2(root);
+	printf("(非遍历实现2)\t");
+	BinaryTreeInOrderNonR3(root);
+	printf("(非遍历实现3)\t");
 
 	printf("\n后序遍历：");
 	BinaryTreePostOrder(root);
 	printf("(遍历实现)\t");
 	BinaryTreePostOrderNonR(root);
 	printf("(非遍历实现)\t");
+	BinaryTreePostOrderNonR2(root);
+	printf("(非遍历实现2)\t");
+	BinaryTreePostOrderNonR3(root);
+	printf("(非遍历实现3)\t");
 
 	printf("\n层序遍历：");
 	BinaryTreeLevelOrder(root);

@@ -11,7 +11,7 @@ extern int gameLevel;
 extern int coveredBlank;
 extern char map[26][32];
 extern char tag[26][32];
-char save[10][45];
+char saveList[100][37];
 
 void SaveList(int flag)
 {
@@ -39,24 +39,24 @@ void SaveList(int flag)
 	}
 	strncat(tmp, ctime(&saveTime), 24); // ctime(&saveTime); 转换为当地时间
 	strcat(tmp, " ");
-	strcpy(save[flag], tmp);
-	for (int i = 0; i < 10; i++)
+	strcpy(saveList[flag], tmp);
+	for (int i = 0; i <= LASTSAVE; i++)
 	{
-		fputs(save[i], pf);
+		fputs(saveList[i], pf);
 		fputc('\n', pf);
 	}
 	fclose(pf);
 }
 
-void LoadList()
+void LoadList(int flag)
 {
-	char ch;
+	int num = 0;
 	FILE *pf = fopen("..\\Save\\saveList.txt", "r");
 
-	for (int i = 0; i < 10; i++)
+	while (!feof(pf))
 	{
-		fgets(save[i], 37, pf);
-		ch = fgetc(pf);
+		fgets(saveList[num++], 37, pf);
+		fgetc(pf);
 	}
 	fclose(pf);
 }
@@ -64,16 +64,17 @@ void LoadList()
 void SaveData(int row, int col, int mineLeast, int flag)
 {
 	char filename[100] = "..\\Save\\save";
-	char num[10][2] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+	char num[5];
 	FILE *pf;
 
+	_itoa(flag + 1, num, 10);
 	if (flag == TMP)
 	{
 		pf = fopen("..\\Save\\tmp.data", "wb");
 	}
 	else
 	{
-		strcat(filename, num[flag]);
+		strcat(filename, num);
 		strcat(filename, ".data");
 		pf = fopen(filename, "wb");
 	}
@@ -81,6 +82,7 @@ void SaveData(int row, int col, int mineLeast, int flag)
 	fwrite(&row, sizeof(int), 1, pf);
 	fwrite(&col, sizeof(int), 1, pf);
 	fwrite(&mineLeast, sizeof(int), 1, pf);
+	fwrite(&gameLevel, sizeof(int), 1, pf);
 	fwrite(&coveredBlank, sizeof(int), 1, pf);
 	for (int i = 1; i <= row; i++)
 	{
@@ -93,16 +95,17 @@ void SaveData(int row, int col, int mineLeast, int flag)
 int LoadData(int *row, int *col, int *mineLeast, int flag)
 {
 	char filename[100] = "..\\Save\\save";
-	char num[][3] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+	char num[5];
 	FILE *pf;
 
+	_itoa(flag + 1, num, 10);
 	if (flag == TMP)
 	{
 		pf = fopen("..\\Save\\tmp.data", "rb");
 	}
 	else
 	{
-		strcat(filename, num[flag]);
+		strcat(filename, num);
 		strcat(filename, ".data");
 		pf = fopen(filename, "rb");
 	}
@@ -111,13 +114,13 @@ int LoadData(int *row, int *col, int *mineLeast, int flag)
 	if (!pf)
 	{
 		printf("　　　　　　  读档失败!\n");
-		//getchar();
 		GetKeyBoard();
 		return ERROR;
 	}
 	fread(row, sizeof(int), 1, pf);
 	fread(col, sizeof(int), 1, pf);
 	fread(mineLeast, sizeof(int), 1, pf);
+	fread(&gameLevel, sizeof(int), 1, pf);
 	fread(&coveredBlank, sizeof(int), 1, pf);
 	for (int i = 1; i <= *row; i++)
 	{
@@ -131,7 +134,9 @@ int LoadData(int *row, int *col, int *mineLeast, int flag)
 
 void Save(int row, int col, int mineLeast)
 {
-	int flag = 0, state = CONTINUE;
+	int jump;
+	static int flag = 0;
+	int state = CONTINUE;
 	
 	while (!state)
 	{
@@ -141,18 +146,39 @@ void Save(int row, int col, int mineLeast)
 		case UP:
 		case ARROW_UP:
 			flag--;
-			if (flag == -1)
+			if (flag == FIRSTSAVE - 1)
 			{
-				flag = 9;
+				flag = LASTSAVE;
 			}
 			break;
 		case DOWN:
 		case ARROW_DOWN:
 			flag++;
-			if (flag == 10)
+			if (flag == LASTSAVE + 1)
 			{
-				flag = 0;
+				flag = FIRSTSAVE;
 			}
+			break;
+		case LEFT:
+		case ARROW_LEFT:
+			flag -= 10;
+			if (flag < FIRSTSAVE)
+			{
+				flag += LASTSAVE - FIRSTSAVE + 1;
+			}
+			break;
+		case RIGHT:
+		case ARROW_RIGHT:
+			flag += 10;
+			if (flag > LASTSAVE)
+			{
+				flag -= LASTSAVE - FIRSTSAVE + 1;
+			}
+			break;
+		case JUMP:
+			printf("请输入您要跳转的页码：> ");
+			while (!scanf("%d", &jump));
+			flag = (jump - 1) * 10 + flag % 10;
 			break;
 		case ENTER:
 			state = OVER;
@@ -172,6 +198,7 @@ void Save(int row, int col, int mineLeast)
 
 void Load(int *row, int *col, int *mineLeast)
 {
+	int jump;
 	static int flag = 0;
 	int state = CONTINUE;
 
@@ -183,18 +210,39 @@ void Load(int *row, int *col, int *mineLeast)
 		case UP:
 		case ARROW_UP:
 			flag--;
-			if (flag < 0)
+			if (flag < FIRSTSAVE)
 			{
-				flag = 9;
+				flag = LASTSAVE;
 			}
 			break;
 		case DOWN:
 		case ARROW_DOWN:
 			flag++;
-			if (flag > 9)
+			if (flag > LASTSAVE)
 			{
-				flag = 0;
+				flag = FIRSTSAVE;
 			}
+			break;
+		case LEFT:
+		case ARROW_LEFT:
+			flag -= 10;
+			if (flag < FIRSTSAVE)
+			{
+				flag += LASTSAVE - FIRSTSAVE + 1;
+			}
+			break;
+		case RIGHT:
+		case ARROW_RIGHT:
+			flag += 10;
+			if (flag > LASTSAVE)
+			{
+				flag -= LASTSAVE - FIRSTSAVE + 1;
+			}
+			break;
+		case JUMP:
+			printf("请输入您要跳转的页码：> ");
+			while (!scanf("%d", &jump));
+			flag = (jump - 1) * 10 + flag % 10;
 			break;
 		case 'C':
 			flag = TMP; // 临时存档
@@ -205,6 +253,10 @@ void Load(int *row, int *col, int *mineLeast)
 			return;
 		default:
 			break;
+		}
+		if (flag > 99)
+		{
+			flag = 0;
 		}
 		SavePage(flag);
 	}
