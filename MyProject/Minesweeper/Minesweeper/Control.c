@@ -1,15 +1,11 @@
-#include <conio.h>
-#include<stdio.h>
-#include"Map.h"
-#include"Page.h"
-#include"Save.h"
 #include"Control.h"
 
-extern int coveredBlank;
-extern char map[26][32];
-extern char tag[26][32];
+extern int g_coveredBlank;
+extern char g_map[MAXROW + BOUNDARY_NUM][MAXCOL + BOUNDARY_NUM];
+extern char g_tag[MAXROW + BOUNDARY_NUM][MAXCOL + BOUNDARY_NUM];
 
-int gameLevel = LEVEL2;
+int g_gameLevel = LEVEL2;
+int g_nowGameLevel = 0;
 
 int GetKeyBoard()
 {
@@ -23,13 +19,29 @@ int GetKeyBoard()
 	return flag;
 }
 
+void HideCursor()
+{
+	CONSOLE_CURSOR_INFO cursorInfo = { 1, 0 };
+
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
+}
+
+void SetConsoleSize(int cols, int lines)
+{
+	HWND hWnd = GetConsoleWindow();
+	char consoleSize[32];
+
+	sprintf(consoleSize, "mode con cols=%d lines=%d", cols, lines);
+	system(consoleSize);
+	SetWindowLongPtr(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX);
+}
+
 void Game(int row, int col, int mine, int isFirst)
 {
-	Point offSet = { 0, 0 };
 	Point point = { (row + 1) / 2, (col + 1) / 2 };
 	int input, showPoint = TRUE, state = CONTINUE;
 	int mineLeast = mine;
-
+	
 	MapPrint(row, col, mine, point, showPoint, isFirst);
 	while (!state)
 	{
@@ -40,48 +52,32 @@ void Game(int row, int col, int mine, int isFirst)
 		case ARROW_UP:
 			point.row--;
 			showPoint = TRUE;
-			if (point.row <= 0)
-			{
-				point.row = row;
-			}
 			break;
 		case DOWN:
 		case ARROW_DOWN:
 			point.row++;
 			showPoint = TRUE;
-			if (point.row >= row + 1)
-			{
-				point.row = 1;
-			}
 			break;
 		case LEFT:
 		case ARROW_LEFT:
 			point.col--;
 			showPoint = TRUE;
-			if (point.col <= 0)
-			{
-				point.col = col;
-			}
 			break;
 		case RIGHT:
 		case ARROW_RIGHT:
 			point.col++;
 			showPoint = TRUE;
-			if (point.col >= col + 1)
-			{
-				point.col = 1;
-			}
 			break;
 		case MINECHECK:
 			if (!isFirst)
 			{
-				MapCheck(row, col, mineLeast);
+				GameState(row, col, mineLeast, MINECHECK);
 				while (GetKeyBoard() != ESC);
 			}
 			break;
 		case JUMP:
-			JumpMap(row, col, mineLeast, point, showPoint, isFirst);
-			printf("请输入您要跳转的坐标(row, col)：> ");
+			MapJump(row, col, mineLeast, point, showPoint, isFirst);
+			printf("坐标跳转(row, col)：> ");
 			while (!scanf("%d%d", &point.row, &point.col));
 			showPoint = TRUE;
 			break;
@@ -91,11 +87,11 @@ void Game(int row, int col, int mine, int isFirst)
 				MapInit(row, col, mine, point);
 				isFirst = FALSE;
 			}
-			if (map[point.row][point.col] == MINE)
+			if (g_map[point.row][point.col] == MINE)
 			{
 				state = OVER;
 			}
-			else if (tag[point.row][point.col] == COVERED)
+			else if (g_tag[point.row][point.col] == COVERED)
 			{
 				MapOpen(row, col, point.row, point.col);
 			}
@@ -111,16 +107,16 @@ void Game(int row, int col, int mine, int isFirst)
 			showPoint = FALSE;
 			break;
 		case MINEMARK:
-			if (tag[point.row][point.col] != OPENED)
+			if (g_tag[point.row][point.col] != OPENED)
 			{
-				if (tag[point.row][point.col] == COVERED)
+				if (g_tag[point.row][point.col] == COVERED)
 				{
-					tag[point.row][point.col] = MARKED;
+					g_tag[point.row][point.col] = MARKED;
 					mineLeast--;
 				}
 				else
 				{
-					tag[point.row][point.col] = COVERED;
+					g_tag[point.row][point.col] = COVERED;
 					mineLeast++;
 				}
 			}
@@ -134,14 +130,16 @@ void Game(int row, int col, int mine, int isFirst)
 		default:
 			break;
 		}
-		if (!coveredBlank && !isFirst)
+		if (!g_coveredBlank && !isFirst)
 		{
 			state = WIN;
 		}
+		point.row = BOUNDJUDGE(point.row, 1, row);
+		point.col = BOUNDJUDGE(point.col, 1, col);
 		MapPrint(row, col, mineLeast, point, showPoint, isFirst);
 		showPoint = !showPoint;
 	}
-	GameFinish(row, col, mineLeast, state);
+	GameState(row, col, mineLeast, state);
 	getchar();
 }
 
@@ -149,27 +147,27 @@ int SetLevel()
 {
 	while (1)
 	{
-		SetPage(gameLevel);
+		SetPage(g_gameLevel);
 		switch (GetKeyBoard())
 		{
 		case UP:
 		case ARROW_UP:
-			gameLevel--;
-			if (gameLevel == LEVEL1 - 1)
+			g_gameLevel--;
+			if (g_gameLevel < LEVEL1)
 			{
-				gameLevel = FREE;
+				g_gameLevel = FREE;
 			}
 			break;
 		case DOWN:
 		case ARROW_DOWN:
-			gameLevel++;
-			if (gameLevel == FREE + 1)
+			g_gameLevel++;
+			if (g_gameLevel > FREE)
 			{
-				gameLevel = LEVEL1;
+				g_gameLevel = LEVEL1;
 			}
 			break;
 		case ENTER:
-			return gameLevel;
+			return g_gameLevel;
 		case ESC:
 			return ESC;
 		default:
@@ -209,19 +207,17 @@ void Set(int *row, int *col, int *mine)
 
 void FreeDefine(int *row, int *col, int *mine)
 {
-	static int flag = 0;
-	int maxMine = 0;
+	static int flag = DEFINEHEIGHT;
 
 	while (1)
 	{
 		DefinePage(*row, *col, *mine, flag);
-		maxMine = MAXMINE(*row, *col);
 		switch (GetKeyBoard())
 		{
 		case UP:
 		case ARROW_UP:
 			flag--;
-			if (flag == DEFINEHEIGHT - 1)
+			if (flag < DEFINEHEIGHT)
 			{
 				flag = DEFINEMINE;
 			}
@@ -229,7 +225,7 @@ void FreeDefine(int *row, int *col, int *mine)
 		case DOWN:
 		case ARROW_DOWN:
 			flag++;
-			if (flag == DEFINEMINE + 1)
+			if (flag > DEFINEMINE)
 			{
 				flag = DEFINEHEIGHT;
 			}
@@ -257,36 +253,15 @@ void FreeDefine(int *row, int *col, int *mine)
 		default:
 			break;
 		}
-		if (*col < MINCOL)
-		{
-			*col = MINCOL;
-		}
-		else if(*col > MAXCOL)
-		{
-			*col = MAXCOL;
-		}
-		if (*row < MINROW)
-		{
-			*row = MINROW;
-		}
-		else if (*row > MAXROW)
-		{
-			*row = MAXROW;
-		}
-		if (*mine < MINMINE)
-		{
-			*mine = MINMINE;
-		}
-		else if (*mine > maxMine)
-		{
-			*mine = maxMine;
-		}
+		*row = BOUNDJUDGE(*row, MINROW, MAXROW);
+		*col = BOUNDJUDGE(*col, MINCOL, MAXCOL);
+		*mine = BOUNDJUDGE(*mine, MINMINE, MAXMINE(*row, *col));
 	}
 }
 
 int Welcome()
 {
-	static int flag = 1;
+	static int flag = WELCOMENEWGAME;
 
 	while (1)
 	{
@@ -296,7 +271,7 @@ int Welcome()
 		case UP:
 		case ARROW_UP:
 			flag--;
-			if (flag == WELCOMECONTINUE - 1)
+			if (flag < WELCOMECONTINUE)
 			{
 				flag = WELCOMEEXIT;
 			}
@@ -304,7 +279,7 @@ int Welcome()
 		case DOWN:
 		case ARROW_DOWN:
 			flag++;
-			if (flag == WELCOMEEXIT + 1)
+			if (flag > WELCOMEEXIT)
 			{
 				flag = WELCOMECONTINUE;
 			}
@@ -319,10 +294,12 @@ int Welcome()
 
 void GameControl()
 {
-	int row = 16, col = 16, mine = 40;
+	int row = INITIALROWS, col = INITIALCOLS, mine = INITIALMINES;
 	int o_row, o_col, o_mine;
 
-	LoadList(0);
+	HideCursor();
+	SetConsoleTitle("扫雷");
+	LoadList();
 	while (1)
 	{
 		switch (Welcome())
@@ -331,6 +308,10 @@ void GameControl()
 			Load(&o_row, &o_col, &o_mine);
 			break;
 		case NEWGAME:
+			if (g_nowGameLevel != g_gameLevel)
+			{
+				g_nowGameLevel = g_gameLevel;
+			}
 			Game(row, col, mine, TRUE);
 			break;
 		case GAMESET:

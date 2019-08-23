@@ -2,11 +2,18 @@
 
 #define _SAVE_H_
 
-#define FIRSTSAVE 0
-#define LASTSAVE 49
+#include<time.h>
+#include<string.h>
+#include"Control.h"
 
+#define FIRSTSAVE 0
+#define LASTSAVE 99
+#define MAXSAVENUM (LASTSAVE - FIRSTSAVE + 1)
+
+#define LISTLINES 10
+
+void LoadList();
 void SaveList(int flag);
-void LoadList(int flag);
 void SaveData(int row, int col, int mineLeast, int flag);
 int LoadData(int *row, int *col, int *mineLeast, int flag);
 

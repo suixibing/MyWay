@@ -4,6 +4,14 @@
 
 #define _CONTROL_H_
 
+#include <conio.h>
+#include<stdio.h>
+#include<Windows.h>
+#include<stdlib.h>
+#include"Map.h"
+#include"Page.h"
+#include"Save.h"
+
 #define CONTINUE 0
 #define OVER 1
 #define WIN 2
@@ -28,6 +36,12 @@
 #define ESC 27
 #define ENTER 13
 
+#define INITIALROWS 16
+#define INITIALCOLS 16
+#define INITIALMINES 40
+
+#define BOUNDJUDGE(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
+
 enum GameLevel
 {
 	LEVEL1,
@@ -45,6 +59,9 @@ enum WelcomeOption
 };
 
 int GetKeyBoard();
+void HideCursor();
+void SetConsoleSize(int cols, int lines);
+
 void Game(int row, int col, int mine, int isFirst);
 void FreeDefine(int *row, int *col, int *mine);
 int Welcome();

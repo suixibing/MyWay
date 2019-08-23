@@ -4,10 +4,23 @@
 
 #define _PAGE_H_
 
+#include<string.h>
+#include"Control.h"
+
 #define ARROW_UP    0xE048
 #define ARROW_DOWN  0xE050
 #define ARROW_LEFT  0xE04B
 #define ARROW_RIGHT 0xE04D
+
+#define WELCOMECOLS 40
+#define WELCOMELINES 15
+#define SETCOLS 36
+#define SETLINES 15
+#define SAVECOLS 40
+#define SAVELINES 15
+
+#define PAGESIZE_COMMOM 1000
+#define PAGESIZE_MINE 2000
 
 enum Define
 {

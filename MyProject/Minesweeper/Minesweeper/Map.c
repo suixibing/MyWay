@@ -1,103 +1,98 @@
-﻿#include<time.h>
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include"Map.h"
-#include"Control.h"
+﻿#include"Map.h"
 
-int coveredBlank = 16 * 16;
-char map[26][32] = { 0 };
-char tag[26][32] = { 0 };
+int g_coveredBlank = INITIALROWS * INITIALCOLS;
+char g_map[MAXROW + BOUNDARY_NUM][MAXCOL + BOUNDARY_NUM];
+char g_tag[MAXROW + BOUNDARY_NUM][MAXCOL + BOUNDARY_NUM];
+static char s_mineNum[][4] = { "　", "１", "２", "３", "４", "５", "６", "７", "８" };
 
 void MapInit(int row, int col, int mine, Point point)
 {
 	int i, j, tmp;
 	srand((unsigned int)time(NULL));
 	
-	coveredBlank = row * col - mine;
-	for (i = 0; i < row + 2; i++)
+	g_coveredBlank = row * col - mine;
+	for (i = 0; i < row + BOUNDARY_NUM; i++)
 	{
-		for (j = 0; j < col + 2; j++)
+		for (j = 0; j < col + BOUNDARY_NUM; j++)
 		{
-			map[i][j] = BLANK;
-			tag[i][j] = COVERED;
+			g_map[i][j] = BLANK;
+			g_tag[i][j] = COVERED;
 		}
 	}
 	for (i = -1; i <= 1; i++)
 	{
 		for (j = -1; j <= 1; j++)
 		{
-			map[point.row + i][point.col + j] = MINE;
+			g_map[point.row + i][point.col + j] = MINE;
 		}
 	}
 	while (mine--)
 	{
 		tmp = rand() % (row * col);
-		if (map[tmp / col + 1][tmp % col + 1] == BLANK)
+		if (g_map[tmp / col + 1][tmp % col + 1] == BLANK)
 		{
-			map[tmp / col + 1][tmp % col + 1] = MINE;
+			g_map[tmp / col + 1][tmp % col + 1] = MINE;
 		}
 		else
 		{
-			while (map[tmp / col + 1][tmp % col + 1] == MINE)
+			while (g_map[tmp / col + 1][tmp % col + 1] == MINE)
 			{
 				tmp = (tmp + 1) % (row * col);
 			}
-			map[tmp / col + 1][tmp % col + 1] = MINE;
+			g_map[tmp / col + 1][tmp % col + 1] = MINE;
 		}
 	}
 	for (i = -1; i <= 1; i++)
 	{
 		for (j = -1; j <= 1; j++)
 		{
-			map[point.row + i][point.col + j] = BLANK;
+			g_map[point.row + i][point.col + j] = BLANK;
 		}
 	}
 }
 
-void JumpMap(int row, int col, int mineLeast, Point point, int showPoint, int isFirst)
+void MapJump(int row, int col, int mineLeast, Point point, int showPoint, int isFirst)
 {
 	int i, j;
-	char page[2000] = { 0 };
-	char change1[9][4] = { "　", "１", "２", "３", "４", "５", "６", "７", "８" };
-	char change2[][4] = { "⑩", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨" };
+	char page[PAGESIZE_MINE] = { 0 };
+	char lineNum[][4] = { "⑩", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨" };
 
+	SetConsoleSize((col + 2) * 2, (row + 2) + 3);
 	strcat(page, "█");
-	for (j = 1; j < col + 1; j++)
+	for (j = 1; j <= col; j++)
 	{
-		strcat(page, change2[j % 10]);
+		strcat(page, lineNum[j % 10]);
 	}
-	strcat(page, "█\n");
+	strcat(page, "█");
 	for (i = 1; i <= row; i++)
 	{
-		strcat(page, change2[i % 10]);
+		strcat(page, lineNum[i % 10]);
 		for (j = 1; j <= col; j++)
 		{
 			if (showPoint && i == point.row && j == point.col)
 			{
 				strcat(page, "□");
 			}
-			else if (tag[i][j] == COVERED || isFirst)
+			else if (g_tag[i][j] == COVERED || isFirst)
 			{
 				strcat(page, "■");
 			}
-			else if (tag[i][j] == OPENED)
+			else if (g_tag[i][j] == OPENED)
 			{
-				strcat(page, change1[map[i][j]]);
+				strcat(page, s_mineNum[g_map[i][j]]);
 			}
 			else
 			{
 				strcat(page, "△");
 			}
 		}
-		strcat(page, "█\n");
+		strcat(page, "█");
 	}
-	for (i = 0; i < col + 2; i++)
+	for (i = 0; i < col + BOUNDARY_NUM; i++)
 	{
 		strcat(page, "█");
 	}
-	strcat(page, "\n　　　　方向键控制 空格键确定\n");
-	strcat(page, "　　　　  未标记雷数： %3d\n");
+	strcat(page, "未标记雷数： %3d\n");
 	system("cls");
 	printf(page, mineLeast);
 }
@@ -105,14 +100,13 @@ void JumpMap(int row, int col, int mineLeast, Point point, int showPoint, int is
 void MapPrint(int row, int col, int mineLeast, Point point, int showPoint, int isFirst)
 {
 	int i, j;
-	char page[2000] = { 0 };
-	char change[9][4] = { "　", "１", "２", "３", "４", "５", "６", "７", "８" };
-	
-	for (j = 0; j < col + 2; j++)
+	char page[PAGESIZE_MINE] = { 0 };
+
+	SetConsoleSize((col + 2) * 2, (row + 2) + 3);
+	for (j = 0; j < col + BOUNDARY_NUM; j++)
 	{
 		strcat(page, "█");
 	}
-	strcat(page, "\n");
 	for (i = 1; i <= row; i++)
 	{
 		strcat(page, "█");
@@ -122,29 +116,27 @@ void MapPrint(int row, int col, int mineLeast, Point point, int showPoint, int i
 			{
 				strcat(page, "□");
 			}
-			else if (tag[i][j] == COVERED || isFirst)
+			else if (g_tag[i][j] == COVERED || isFirst)
 			{
 				strcat(page, "■");
 			}
-			else if(tag[i][j] == OPENED)
+			else if(g_tag[i][j] == OPENED)
 			{
-				strcat(page, change[map[i][j]]);
+				strcat(page, s_mineNum[g_map[i][j]]);
 			}
 			else
 			{
 				strcat(page, "△");
 			}
 		}
-		strcat(page, "█\n");
+		strcat(page, "█");
 	}
-	for (j = 0; j < col + 2; j++)
+	for (j = 0; j < col + BOUNDARY_NUM; j++)
 	{
 		strcat(page, "█");
 	}
-	//strncat(page, "\n　　　　", );
-	strcat(page, "\n　　　　方向键控制 空格键确定\n");
-	strcat(page, "　　　　h-隐藏光标 m-标记地雷\n");
-	strcat(page, "　　　　  未标记雷数： %3d\n");
+	strcat(page, "h-隐藏光标 m-标记地雷\n");
+	strcat(page, "未标记雷数： %3d");
 	system("cls");
 	printf(page, mineLeast);
 }
@@ -153,23 +145,23 @@ void MapOpen(int row, int col, int pointx, int pointy)
 {
 	int i, j;
 
-	if (pointx < 1 || pointx > row || pointy < 1 || pointy > col || tag[pointx][pointy] != COVERED || map[pointx][pointy] == MINE)
+	if (pointx < 1 || pointx > row || pointy < 1 || pointy > col || g_tag[pointx][pointy] != COVERED || g_map[pointx][pointy] == MINE)
 	{
 		return;
 	}
-	tag[pointx][pointy] = OPENED;
-	coveredBlank--;
+	g_tag[pointx][pointy] = OPENED;
+	g_coveredBlank--;
 	for (i = -1; i <= 1; i++)
 	{
 		for (j = -1; j <= 1; j++)
 		{
-			if (pointx + i >= 1 && pointx + i <= row && pointy + j >= 1 && pointy + j <= col && map[pointx + i][pointy + j] == MINE)
+			if (pointx + i >= 1 && pointx + i <= row && pointy + j >= 1 && pointy + j <= col && g_map[pointx + i][pointy + j] == MINE)
 			{
-				map[pointx][pointy]++;
+				g_map[pointx][pointy]++;
 			}
 		}
 	}
-	if (!map[pointx][pointy])
+	if (!g_map[pointx][pointy])
 	{
 		for (i = -1; i <= 1; i++)
 		{
@@ -183,38 +175,35 @@ void MapOpen(int row, int col, int pointx, int pointy)
 
 int OpenAround(int row, int col, Point point, int mineLeast)
 {
-	int i, j, flag = CONTINUE, count = 0;
+	int i, j, count = 0, flag = CONTINUE;
 
 	for (i = -1; i <= 1; i++)
 	{
 		for (j = -1; j <= 1; j++)
 		{
-			if (tag[point.row + i][point.col + j] == MARKED)
+			if (g_tag[point.row + i][point.col + j] == MARKED)
 			{
 				count++;
-				if (map[point.row + i][point.col + j] != MINE)
+				if (g_map[point.row + i][point.col + j] != MINE)
 				{
 					flag = OVER;
 				}
 			}
 		}
 	}
-	if (count == map[point.row][point.col])
+	if (count == g_map[point.row][point.col])
 	{
 		if (flag)
 		{
 			return OVER;
 		}
-		else
+		for (i = -1; i <= 1; i++)
 		{
-			for (i = -1; i <= 1; i++)
+			for (j = -1; j <= 1; j++)
 			{
-				for (j = -1; j <= 1; j++)
+				if (g_tag[point.row + i][point.col + j] != MARKED)
 				{
-					if (tag[point.row + i][point.col + j] != MARKED)
-					{
-						MapOpen(row, col, point.row + i, point.col + j);
-					}
+					MapOpen(row, col, point.row + i, point.col + j);
 				}
 			}
 		}
@@ -223,25 +212,24 @@ int OpenAround(int row, int col, Point point, int mineLeast)
 	return CONTINUE;
 }
 
-void GameFinish(int row, int col, int mineLeast, int state)
+void GameState(int row, int col, int mineLeast, int state)
 {
 	int i, j;
-	char page[2000] = { 0 };
-	char change[9][4] = { "　", "１", "２", "３", "４", "５", "６", "７", "８" };
+	char page[PAGESIZE_MINE] = { 0 };
 
-	for (j = 0; j < col + 2; j++)
+	SetConsoleSize((col + 2) * 2, (row + 2) + 3);
+	for (j = 0; j < col + BOUNDARY_NUM; j++)
 	{
 		strcat(page, "█");
 	}
-	strcat(page, "\n");
 	for (i = 1; i <= row; i++)
 	{
 		strcat(page, "█");
 		for (j = 1; j <= col; j++)
 		{
-			if (map[i][j] == MINE)
+			if (g_map[i][j] == MINE)
 			{
-				if (tag[i][j] == MARKED)
+				if (g_tag[i][j] == MARKED)
 				{
 					strcat(page, "△");
 				}
@@ -252,11 +240,11 @@ void GameFinish(int row, int col, int mineLeast, int state)
 			}
 			else
 			{
-				if (tag[i][j] == OPENED)
+				if (g_tag[i][j] == OPENED)
 				{
-					strcat(page, change[map[i][j]]);
+					strcat(page, s_mineNum[g_map[i][j]]);
 				}
-				else if (state == OVER && tag[i][j] == MARKED)
+				else if (state == OVER && g_tag[i][j] == MARKED)
 				{
 					strcat(page, "×");
 				}
@@ -266,79 +254,26 @@ void GameFinish(int row, int col, int mineLeast, int state)
 				}
 			}
 		}
-		strcat(page, "█\n");
+		strcat(page, "█");
 	}
-	for (j = 0; j < col + 2; j++)
+	for (j = 0; j < col + BOUNDARY_NUM; j++)
 	{
 		strcat(page, "█");
 	}
 
 	if (state == OVER)
 	{
-		strcat(page, "\n　　　　      你输了…\n");
+		strcat(page, "你输了…\n");
 	}
-	else
+	else if(state == WIN)
 	{
-		strcat(page, "\n　　　　      你赢了…\n");
+		strcat(page, "你赢了…\n");
 	}
-	strcat(page, "　　　　    按回车键继续\n");
-	strcat(page, "　　　　  未标记雷数： %3d\n");
-	system("cls");
-	printf(page, mineLeast);
-}
-
-void MapCheck(int row, int col, int mineLeast)
-{
-	int i, j;
-	char page[2000] = { 0 };
-	char change[9][4] = { "　", "１", "２", "３", "４", "５", "６", "７", "８" };
-
-	for (j = 0; j < col + 2; j++)
+	else if (state == MINECHECK)
 	{
-		strcat(page, "█");
+		strcat(page, "h-隐藏光标 m-标记地雷\n");
 	}
-	strcat(page, "\n");
-	for (i = 1; i <= row; i++)
-	{
-		strcat(page, "█");
-		for (j = 1; j <= col; j++)
-		{
-			if (map[i][j] == MINE)
-			{
-				if (tag[i][j] == MARKED)
-				{
-					strcat(page, "△");
-				}
-				else
-				{
-					strcat(page, "¤");
-				}
-			}
-			else
-			{
-				if (tag[i][j] == OPENED)
-				{
-					strcat(page, change[map[i][j]]);
-				}
-				else if (tag[i][j] == MARKED)
-				{
-					strcat(page, "×");
-				}
-				else
-				{
-					strcat(page, "■");
-				}
-			}
-		}
-		strcat(page, "█\n");
-	}
-	for (j = 0; j < col + 2; j++)
-	{
-		strcat(page, "█");
-	}
-	strcat(page, "\n　　　　方向键控制 空格键确定\n");
-	strcat(page, "　　　　h-隐藏光标 m-标记地雷\n");
-	strcat(page, "　　　　  未标记雷数： %3d\n");
+	strcat(page, "未标记雷数： %3d");
 	system("cls");
 	printf(page, mineLeast);
 }

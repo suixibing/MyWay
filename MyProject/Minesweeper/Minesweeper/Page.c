@@ -1,47 +1,43 @@
-#include<string.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include"Control.h"
 #include"Page.h"
-#include"Map.h"
 
-extern char saveList[100][37];
+extern char g_saveList[MAXSAVENUM][SAVECOLS - BOUNDARY_SIZE_CHAR + 1];
 
 void WelcomePage(int flag)
 {
-	int set = 41 * 6 + 12;
-	char page[1024] = { 0 };
+	int set = WELCOMECOLS * 6 + 12;
+	char page[PAGESIZE_COMMOM] = { 0 };
 
-	strcat(page, "████████████████████\n"); // 一行 41 个字符（包含换行符）
-	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　　扫　　　　雷　　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　　　　继续　　　　　　　　█\n");
-	strcat(page, "█　　　　　　　 新游戏 　　　　　　　█\n");
-	strcat(page, "█　　　　　　　游戏设置　　　　　　　█\n");
-	strcat(page, "█　　　　　　　　退出　　　　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "████████████████████\n");
+	SetConsoleSize(WELCOMECOLS, WELCOMELINES);
+	strcat(page, "████████████████████"); // 一行 40 个字符
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　　扫　　　　雷　　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　　　　继续　　　　　　　　█");
+	strcat(page, "█　　　　　　　 新游戏 　　　　　　　█");
+	strcat(page, "█　　　　　　　游戏设置　　　　　　　█");
+	strcat(page, "█　　　　　　　　退出　　　　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　　　█");
+	strcat(page, "████████████████████");
 	strcat(page, "　　　   方向键选择　回车键确认\n");
 
 	switch (flag)
 	{
 	case WELCOMECONTINUE:
-		strcat(page, "　　　　　　　　继续游戏\n\n");
+		strcat(page, "　　　　　　　　继续游戏");
 		break;
 	case WELCOMENEWGAME:
-		set += 41;
-		strcat(page, "　　　　　　　　开始游戏\n\n");
+		set += WELCOMECOLS;
+		strcat(page, "　　　　　　　　开始游戏");
 		break;
 	case WELCOMESET:
-		set += 41 * 2;
-		strcat(page, "　　　　　　　设置游戏难度\n\n");
+		set += WELCOMECOLS * 2;
+		strcat(page, "　　　　　　　设置游戏难度");
 		break;
 	case WELCOMEEXIT:
-		set += 41 * 3;
-		strcat(page, "　　　　　　　　退出游戏\n\n");
+		set += WELCOMECOLS * 3;
+		strcat(page, "　　　　　　　　退出游戏");
 		break;
 	default:
 		break;
@@ -56,36 +52,37 @@ void WelcomePage(int flag)
 
 void SetPage(int flag)
 {
-	int set = 37 * 6 + 10;
-	char page[1024] = { 0 };
+	int set = SETCOLS * 6 + 10;
+	char page[PAGESIZE_COMMOM] = { 0 };
 
-	strcat(page, "██████████████████\n");  // 一行 37 个字符（包含换行符）
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　 扫      雷 　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　　初　　级　　　　　　█\n");
-	strcat(page, "█　　　　　　中　　级　　　　　　█\n");
-	strcat(page, "█　　　　　  高　　级　　　　　　█\n");
-	strcat(page, "█　　　　　　自 定 义　　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "██████████████████\n");
+	SetConsoleSize(SETCOLS, SETLINES);
+	strcat(page, "██████████████████");  // 一行 36 个字符
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　 扫      雷 　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　　初　　级　　　　　　█");
+	strcat(page, "█　　　　　　中　　级　　　　　　█");
+	strcat(page, "█　　　　　  高　　级　　　　　　█");
+	strcat(page, "█　　　　　　自 定 义　　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "██████████████████");
 	strcat(page, "　　　 方向键选择　回车键确认\n");
-	strcat(page, "　　　　　　 Esc-首页\n\n");
+	strcat(page, "　　　　　　  Esc-首页");
 
 	switch (flag)
 	{
 	case LEVEL1:
 		break;
 	case LEVEL2:
-		set += 37;
+		set += SETCOLS;
 		break;
 	case LEVEL3:
-		set += 37 * 2;
+		set += SETCOLS * 2;
 		break;
 	case FREE:
-		set += 37 * 3;
+		set += SETCOLS * 3;
 	default:
 		break;
 	}
@@ -99,34 +96,35 @@ void SetPage(int flag)
 
 void DefinePage(int row, int col, int mine, int flag)
 {
-	int set = 37 * 7 + 10;
-	char page[1024] = { 0 };
+	int set = SETCOLS * 7 + 8;
+	char page[PAGESIZE_COMMOM] = { 0 };
 
-	strcat(page, "██████████████████\n"); // 一行 37 个字符（包含换行符）
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　 扫      雷 　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "█　　　　　高  度：%3d 　　　　　█\n");
-	strcat(page, "█　　　　　宽  度：%3d　　 　　　█\n");
-	strcat(page, "█　　　  　雷  数：%3d     　　　█\n");
-	strcat(page, "█　　　　　　　　　　　　　　　　█\n");
-	strcat(page, "██████████████████\n");
+	SetConsoleSize(SETCOLS, SETLINES);
+	strcat(page, "██████████████████"); // 一行 37 个字符（包含换行符）
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　 扫      雷 　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "█　　　　　高  度：%3d 　　　　　█");
+	strcat(page, "█　　　　　宽  度：%3d　　 　　　█");
+	strcat(page, "█　　　  　雷  数：%3d     　　　█");
+	strcat(page, "█　　　　　　　　　　　　　　　　█");
+	strcat(page, "██████████████████");
 	strcat(page, "　　　 方向键选择　回车键确认\n");
 	switch (flag)
 	{
 	case DEFINEHEIGHT:
-		strcat(page, "　　　  设置高度（范围9-24）\n\n");
+		strcat(page, "　　　  设置高度（范围9-24）");
 		break;
 	case DEFINEWIDTH:
-		set += 37;
-		strcat(page, "　　　  设置宽度（范围9-30）\n\n");
+		set += SETCOLS;
+		strcat(page, "　　　  设置宽度（范围9-30）");
 		break;
 	case DEFINEMINE:
-		set += 37 * 2;
-		strcat(page, "　　　  设置雷数（范围10-%d）\n\n");
+		set += SETCOLS * 2;
+		strcat(page, "　　　  设置雷数（范围10-%d）");
 		break;
 	default:
 		break;
@@ -148,32 +146,32 @@ void DefinePage(int row, int col, int mine, int flag)
 
 void SavePage(int flag)
 {
-	char page[1024] = { 0 };
+	char page[PAGESIZE_COMMOM] = { 0 };
 
+	SetConsoleSize(SAVECOLS, SAVELINES);
 	if (flag != TMP)
 	{
-		saveList[flag][1] = 0xa1;
-		saveList[flag][2] = 0xf4;
+		g_saveList[flag][1] = 0xa1;
+		g_saveList[flag][2] = 0xf4;
 	}
 	else
 	{
 		flag++;
 	}
-	strcat(page, "████████████████████\n");
-	//strcat(page, "█ ◆ 自定义 Tue Aug 20 15:42:11 2019 █\n"); // 保存样例
-	//strcat(page, "█    未存档 NNN NNN NN NN:NN:NN NNNN █\n"); // 保存样例
-	for (int i = flag / 10 * 10; i < flag / 10 * 10 + 10; i++)
+	strcat(page, "████████████████████");
+	//strcat(page, "█ ◆ 自定义 Tue Aug 20 15:42:11 2019 █"); // 保存样例
+	//strcat(page, "█    未存档 NNN NNN NN NN:NN:NN NNNN █"); // 保存样例
+	for (int i = flag / LISTLINES * LISTLINES; i < flag / LISTLINES * LISTLINES + LISTLINES; i++)
 	{
 		strcat(page, "█");
-		strcat(page, saveList[i]);
-		strcat(page, "█\n");
+		strcat(page, g_saveList[i]);
+		strcat(page, "█");
 	}
-	strcat(page, "█████████████████第%2d页\n");
-	strcat(page, "　　　   方向键选择　回车键确认\n");
-	strcat(page, "　　　　　  C-继续上次游戏\n\n");
-	saveList[flag][1] = ' ';
-	saveList[flag][2] = ' ';
+	strcat(page, "█████████████████第%2d页");
+	strcat(page, "　　　　　      Esc-退出");
+	g_saveList[flag][1] = ' ';
+	g_saveList[flag][2] = ' ';
 
 	system("cls");
-	printf(page, flag / 10 + 1);
+	printf(page, flag / LISTLINES + 1);
 }
