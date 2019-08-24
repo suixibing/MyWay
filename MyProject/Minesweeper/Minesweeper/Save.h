@@ -12,7 +12,8 @@
 
 #define LISTLINES 10
 
-void LoadList();
+void InitNullList();
+int LoadList();
 void SaveList(int flag);
 void SaveData(int row, int col, int mineLeast, int flag);
 int LoadData(int *row, int *col, int *mineLeast, int flag);

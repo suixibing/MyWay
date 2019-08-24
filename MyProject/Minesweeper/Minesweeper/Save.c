@@ -5,7 +5,24 @@ extern int g_nowGameLevel;
 extern char g_map[MAXROW + BOUNDARY_NUM][MAXCOL + BOUNDARY_NUM];
 extern char g_tag[MAXROW + BOUNDARY_NUM][MAXCOL + BOUNDARY_NUM];
 
+char g_nullList[LISTLINES][SAVECOLS - BOUNDARY_SIZE_CHAR + 1];
 char g_saveList[MAXSAVENUM][SAVECOLS - BOUNDARY_SIZE_CHAR + 1];
+
+void InitNullList()
+{
+	int num = 0;
+
+	while (num < LISTLINES / 2 - 1)
+	{
+		strcat(g_nullList[num++], "                                    ");
+	}
+	strcat(g_nullList[num++], "           存档页面不存在           ");
+	strcat(g_nullList[num++], "         请检查 Save 文件夹         ");
+	while (num != LISTLINES)
+	{
+		strcat(g_nullList[num++], "                                    ");
+	}
+}
 
 void SaveList(int flag)
 {
@@ -14,6 +31,10 @@ void SaveList(int flag)
 	char level[4][10] = { " 初级  ", " 中级  ", " 高级  ", "自定义 " };
 	FILE *pf = fopen("..\\Save\\saveList.txt", "w");
 
+	if (!pf)
+	{
+		return;
+	}
 	time(&saveTime); // 获取当前时间
 	strcat(tmp, level[g_nowGameLevel]);
 	// ctime 返回的字符串自带换行符，使用 strncat 去除换行符
@@ -28,17 +49,36 @@ void SaveList(int flag)
 	fclose(pf);
 }
 
-void LoadList()
+int LoadList()
 {
 	int num = FIRSTSAVE;
 	FILE *pf = fopen("..\\Save\\saveList.txt", "r");
 
+	if (!pf)
+	{
+		while (num < LASTSAVE)
+		{
+			while (num % LISTLINES < LISTLINES / 2 - 1)
+			{
+				strcat(g_saveList[num++], "                                    ");
+			}
+			strcat(g_saveList[num++], "           存档页面不存在           ");
+			strcat(g_saveList[num++], "         请检查 Save 文件夹         ");
+			while (num % LISTLINES != 0)
+			{
+				strcat(g_saveList[num++], "                                    ");
+			}
+		}
+		return ERROR;
+	}
 	while (!feof(pf))
 	{
 		fgets(g_saveList[num++], SAVECOLS - BOUNDARY_SIZE_CHAR + 1, pf);
 		fgetc(pf);
 	}
 	fclose(pf);
+
+	return SUCCESS;
 }
 
 void SaveData(int row, int col, int mineLeast, int flag)
@@ -57,6 +97,10 @@ void SaveData(int row, int col, int mineLeast, int flag)
 		strcat(filename, num);
 		strcat(filename, ".data");
 		pf = fopen(filename, "wb");
+	}
+	if (!pf)
+	{
+		return;
 	}
 
 	fwrite(&row, sizeof(int), 1, pf);
@@ -143,7 +187,11 @@ void Save(int row, int col, int mineLeast)
 			flag -= LISTLINES;
 			if (flag < FIRSTSAVE)
 			{
-				flag += LASTSAVE - FIRSTSAVE + 1;
+				while (flag < LASTSAVE)
+				{
+					flag += LISTLINES;
+				}
+				flag -= LISTLINES;
 			}
 			break;
 		case RIGHT:
@@ -151,7 +199,7 @@ void Save(int row, int col, int mineLeast)
 			flag += LISTLINES;
 			if (flag > LASTSAVE)
 			{
-				flag -= LASTSAVE - FIRSTSAVE + 1;
+				flag = flag % LISTLINES;
 			}
 			break;
 		case JUMP:
@@ -208,7 +256,11 @@ void Load(int *row, int *col, int *mineLeast)
 			flag -= LISTLINES;
 			if (flag < FIRSTSAVE)
 			{
-				flag += LASTSAVE - FIRSTSAVE + 1;
+				while (flag < LASTSAVE)
+				{
+					flag += LISTLINES;
+				}
+				flag -= LISTLINES;
 			}
 			break;
 		case RIGHT:
@@ -216,13 +268,20 @@ void Load(int *row, int *col, int *mineLeast)
 			flag += LISTLINES;
 			if (flag > LASTSAVE)
 			{
-				flag -= LASTSAVE - FIRSTSAVE + 1;
+				flag = flag % LISTLINES;
 			}
 			break;
 		case JUMP:
 			printf("\n跳转页码：> ");
 			while (!scanf("%d", &jump));
-			flag = (jump - 1) * LISTLINES + flag % LISTLINES;
+			if (jump > 0)
+			{
+				flag = (jump - 1) * LISTLINES + flag % LISTLINES;
+			}
+			else
+			{
+				flag = jump * LISTLINES - flag % LISTLINES;
+			}
 			break;
 		case 'C':
 			flag = TMP; // 临时存档
@@ -236,7 +295,7 @@ void Load(int *row, int *col, int *mineLeast)
 		}
 		if (flag != TMP)
 		{
-			flag = BOUNDJUDGE(flag, FIRSTSAVE, LASTSAVE);
+			//flag = BOUNDJUDGE(flag, FIRSTSAVE, LASTSAVE);
 		}
 		SavePage(flag);
 	}

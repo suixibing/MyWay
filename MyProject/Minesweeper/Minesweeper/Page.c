@@ -1,5 +1,6 @@
 #include"Page.h"
 
+char g_nullList[LISTLINES][SAVECOLS - BOUNDARY_SIZE_CHAR + 1];
 extern char g_saveList[MAXSAVENUM][SAVECOLS - BOUNDARY_SIZE_CHAR + 1];
 
 void WelcomePage(int flag)
@@ -149,14 +150,10 @@ void SavePage(int flag)
 	char page[PAGESIZE_COMMOM] = { 0 };
 
 	SetConsoleSize(SAVECOLS, SAVELINES);
-	if (flag != TMP)
+	if (flag >= FIRSTSAVE && flag <= LASTSAVE)
 	{
 		g_saveList[flag][1] = 0xa1;
 		g_saveList[flag][2] = 0xf4;
-	}
-	else
-	{
-		flag++;
 	}
 	strcat(page, "████████████████████");
 	//strcat(page, "█ ◆ 自定义 Tue Aug 20 15:42:11 2019 █"); // 保存样例
@@ -164,14 +161,31 @@ void SavePage(int flag)
 	for (int i = flag / LISTLINES * LISTLINES; i < flag / LISTLINES * LISTLINES + LISTLINES; i++)
 	{
 		strcat(page, "█");
-		strcat(page, g_saveList[i]);
+		if (flag >= FIRSTSAVE && flag <= LASTSAVE || flag == TMP)
+		{
+			strcat(page, g_saveList[i]);
+		}
+		else
+		{
+			strcat(page, g_nullList[abs(i % 10)]);
+		}
 		strcat(page, "█");
 	}
 	strcat(page, "█████████████████第%2d页");
 	strcat(page, "　　　　　      Esc-退出");
-	g_saveList[flag][1] = ' ';
-	g_saveList[flag][2] = ' ';
+	if (flag >= FIRSTSAVE && flag <= LASTSAVE)
+	{
+		g_saveList[flag][1] = ' ';
+		g_saveList[flag][2] = ' ';
+	}
 
 	system("cls");
-	printf(page, flag / LISTLINES + 1);
+	if (flag >= FIRSTSAVE || flag == TMP)
+	{
+		printf(page, flag / LISTLINES + 1);
+	}
+	else
+	{
+		printf(page, flag / LISTLINES);
+	}
 }

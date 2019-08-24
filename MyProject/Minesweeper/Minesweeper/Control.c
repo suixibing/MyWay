@@ -36,16 +36,55 @@ void SetConsoleSize(int cols, int lines)
 	SetWindowLongPtr(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX);
 }
 
+int GetMouse(int *row, int *col)
+{
+	HWND hwn;
+	POINT cursor;
+	RECT rectWindow;
+
+	hwn = GetConsoleWindow();
+	while (1)
+	{
+		GetCursorPos(&cursor);
+		GetWindowRect(hwn, &rectWindow);
+		if(KEY_DOWN(VK_LBUTTON) && 
+			cursor.x >= rectWindow.left && cursor.x <= rectWindow.right && 
+			cursor.y >= rectWindow.top && cursor.y <= rectWindow.bottom)
+		{
+			*row = (cursor.y - rectWindow.top - 30) / 20;
+			*col = (cursor.x - rectWindow.left - 8) / 20;
+			return ENTER;
+		}
+		else if(KEY_DOWN(VK_RBUTTON) &&
+			cursor.x >= rectWindow.left && cursor.x <= rectWindow.right &&
+			cursor.y >= rectWindow.top && cursor.y <= rectWindow.bottom)
+		{
+			*row = (cursor.y - rectWindow.top - 30) / 20;
+			*col = (cursor.x - rectWindow.left - 8) / 20;
+			return MINEMARK;
+		}
+		Sleep(100);
+	}
+}
+
 void Game(int row, int col, int mine, int isFirst)
 {
 	Point point = { (row + 1) / 2, (col + 1) / 2 };
-	int input, showPoint = TRUE, state = CONTINUE;
+	char mode = MODE_KEYBOARD;
+	int showPoint = TRUE, state = CONTINUE, input;
 	int mineLeast = mine;
 	
 	MapPrint(row, col, mine, point, showPoint, isFirst);
 	while (!state)
 	{
-		input = GetKeyBoard();
+		if (mode == MODE_KEYBOARD)
+		{
+			input = GetKeyBoard();
+		}
+		else if(mode == MODE_MOUSE)
+		{
+			input = GetMouse(&point.row, &point.col);
+		}
 		switch (input)
 		{
 		case UP:
@@ -87,7 +126,7 @@ void Game(int row, int col, int mine, int isFirst)
 				MapInit(row, col, mine, point);
 				isFirst = FALSE;
 			}
-			if (g_map[point.row][point.col] == MINE)
+			if (g_map[point.row][point.col] == MINE && g_tag[point.row][point.col] != MARKED)
 			{
 				state = OVER;
 			}
@@ -105,6 +144,9 @@ void Game(int row, int col, int mine, int isFirst)
 			break;
 		case HIDEPOINT:
 			showPoint = FALSE;
+			break;
+		case MODE_MOUSE:
+			mode = MODE_MOUSE;
 			break;
 		case MINEMARK:
 			if (g_tag[point.row][point.col] != OPENED)
@@ -140,6 +182,7 @@ void Game(int row, int col, int mine, int isFirst)
 		showPoint = !showPoint;
 	}
 	GameState(row, col, mineLeast, state);
+
 	getchar();
 }
 
@@ -299,6 +342,7 @@ void GameControl()
 
 	HideCursor();
 	SetConsoleTitle("É¨À×");
+	InitNullList();
 	LoadList();
 	while (1)
 	{

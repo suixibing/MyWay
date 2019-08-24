@@ -36,11 +36,15 @@
 #define ESC 27
 #define ENTER 13
 
+#define MODE_KEYBOARD 'K'
+#define MODE_MOUSE 'M'
+
 #define INITIALROWS 16
 #define INITIALCOLS 16
 #define INITIALMINES 40
 
 #define BOUNDJUDGE(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
+#define KEY_DOWN(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 1 : 0)
 
 enum GameLevel
 {
@@ -60,8 +64,10 @@ enum WelcomeOption
 
 int GetKeyBoard();
 void HideCursor();
+
 void SetConsoleSize(int cols, int lines);
 
+int GetMouse(int *row, int *col);
 void Game(int row, int col, int mine, int isFirst);
 void FreeDefine(int *row, int *col, int *mine);
 int Welcome();
