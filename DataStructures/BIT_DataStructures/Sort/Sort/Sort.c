@@ -27,23 +27,22 @@ void InsertSort(SORTDATA arr[], int size)
 }
 
 // 希尔排序(缩小增量排序)
+// 数组越有序直接插入排序越快
 void ShellSort(SORTDATA arr[], int size)
 {
-	int gap = size / 2;
+	int gap = size / 3;
 	int start, now;
 	SORTDATA key;
 
 	while (gap > 0)
 	{
-		printf("gap = %d\n", gap);
-		for (start = 0; start + gap < size; start++)
+		//printf("gap = %d\n", gap);
+		for (start = gap; start < size; start++)
 		{
-			now = start;
-			key = arr[now + gap];
-			while (now >= 0 && arr[now] > key)
+			key = arr[start];
+			for (now = start;  now >= gap && arr[now] >= key; now -= gap)
 			{
-				arr[now + gap] = arr[now];
-				now -= gap;
+				arr[now] = arr[now - gap];
 			}
 			arr[now + gap] = key;
 		}
@@ -73,18 +72,21 @@ void SeclectionSort(SORTDATA arr[], int size)
 // 建立大堆
 void HeapCreate(SORTDATA arr[], int size)
 {
-	int i, num;
-
-	for (num = size; num > 0; num--)
+	int num = size, tmp;
+	
+	for (int i = size / 2 - 1; i >= 0; i--)
 	{
-		i = num;
-		while (i > 0)
+		if (2 * i + 2 >= size)
 		{
-			if (arr[i] > arr[i / 2])
-			{
-				DataExchange(&arr[i], &arr[i / 2]);
-			}
-			i /= 2;
+			tmp = 2 * i + 1;
+		}
+		else
+		{
+			tmp = arr[2 * i + 1] > arr[2 * i + 2] ? 2 * i + 1 : 2 * i + 2;
+		}
+		if (arr[tmp] > arr[i])
+		{
+			DataExchange(&arr[tmp], &arr[i]);
 		}
 	}
 }
@@ -93,9 +95,9 @@ void HeapSort(SORTDATA arr[], int size)
 {
 	int num = size;
 
-	while (num--)
+	while (num)
 	{
-		HeapCreate(arr, num);
+		HeapCreate(arr, num--);
 		DataExchange(&arr[0], &arr[num]);
 	}
 }
@@ -120,20 +122,20 @@ void BubbleSort(SORTDATA arr[], int size)
 // 快速排序
 void QuickSort(SORTDATA arr[], int left, int right)
 {
-	int i = left + 1, j = right;
+	int i = left, j = right;
 	SORTDATA key = arr[left];
 
-	if (i > j)
+	if (left >= right)
 	{
 		return;
 	}
 	while (i < j)
 	{
-		while (i < j && key < arr[j])
+		while (i < j && key <= arr[j])
 		{
 			j--;
 		}
-		while (i < j && key > arr[i])
+		while (i < j && key >= arr[i])
 		{
 			i++;
 		}
@@ -142,13 +144,10 @@ void QuickSort(SORTDATA arr[], int left, int right)
 			DataExchange(&arr[i], &arr[j]);
 		}
 	}
-	if (arr[left] > arr[i])
-	{
-		arr[left] = arr[i];
-		arr[i] = key;
-	}
+	arr[left] = arr[i];
+	arr[i] = key;
 	QuickSort(arr, left, i - 1);
-	QuickSort(arr, i, right);
+	QuickSort(arr, i + 1, right);
 }
 
 // 归并子函数
@@ -161,26 +160,37 @@ void Merge(SORTDATA arr[], int left, int mid, int right)
 	{
 		if (l < mid && arr[l] < arr[m] || m > right)
 		{
-			cur[i] = arr[l++];
+			cur[i] = arr[l];
+			l++;
 		}
-		else if (m <= right)
+		else
 		{
-			cur[i] = arr[m++];
+			cur[i] = arr[m];
+			m++;
 		}
 		i++;
 	}
+	for (i = 0; i < size; i++)
+	{
+		arr[left + i] = cur[i];
+	}
 }
-// 归并排序
-void MergeSort(SORTDATA arr[], int left, int right)
+// 归并排序实现
+void DealMergeSort(SORTDATA arr[], int left, int right)
 {
 	int mid = left + (right - left) / 2;
 
 	if (left < right)
 	{
-		MergeSort(arr, left, mid);
-		MergeSort(arr, mid + 1, right);
+		DealMergeSort(arr, left, mid);
+		DealMergeSort(arr, mid + 1, right);
 		Merge(arr, left, mid + 1, right);
 	}
+}
+// 归并函数接口
+void MergeSort(SORTDATA arr[], int size)
+{
+	DealMergeSort(arr, 0, size - 1);
 }
 
 // 桶排序
