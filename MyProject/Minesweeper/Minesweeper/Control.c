@@ -26,6 +26,13 @@ void HideCursor()
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 }
 
+void Gotoxy(int x, int y)
+{
+	COORD pos = { x, y };
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	SetConsoleCursorPosition(hOut, pos);
+}
 void SetConsoleSize(int cols, int lines)
 {
 	HWND hWnd = GetConsoleWindow();
@@ -188,10 +195,19 @@ void Game(int row, int col, int mine, int isFirst)
 
 int SetLevel()
 {
+	int input;
+	
+	SetPage(g_gameLevel);
+	Gotoxy(6, 13);
+	printf(" 方向键选择　回车键确认");
 	while (1)
 	{
-		SetPage(g_gameLevel);
-		switch (GetKeyBoard())
+		Gotoxy(10, 6 + g_gameLevel);
+		printf("◆");
+		input = GetKeyBoard();
+		Gotoxy(10, 6 + g_gameLevel);
+		printf("  ");
+		switch (input)
 		{
 		case UP:
 		case ARROW_UP:
@@ -251,11 +267,17 @@ void Set(int *row, int *col, int *mine)
 void FreeDefine(int *row, int *col, int *mine)
 {
 	static int flag = DEFINEHEIGHT;
+	int input, *(p[3]) = { row, col, mine }, maxMine = MAXMINE(*row, *col);
 
+	DefinePage(*row, *col, *mine, flag);
 	while (1)
 	{
-		DefinePage(*row, *col, *mine, flag);
-		switch (GetKeyBoard())
+		Gotoxy(8, 7 + flag);
+		printf("◆");
+		input = GetKeyBoard();
+		Gotoxy(8, 7 + flag);
+		printf("  ");
+		switch (input)
 		{
 		case UP:
 		case ARROW_UP:
@@ -298,18 +320,46 @@ void FreeDefine(int *row, int *col, int *mine)
 		}
 		*row = BOUNDJUDGE(*row, MINROW, MAXROW);
 		*col = BOUNDJUDGE(*col, MINCOL, MAXCOL);
-		*mine = BOUNDJUDGE(*mine, MINMINE, MAXMINE(*row, *col));
+		maxMine = MAXMINE(*row, *col);
+		*mine = BOUNDJUDGE(*mine, MINMINE, maxMine);
+		
+		Gotoxy(20, 7 + flag);
+		printf("%3d", *(p[flag]));
+		Gotoxy(7, 12);
+		switch (flag)
+		{
+		case DEFINEHEIGHT:
+			printf(" 设置高度 (范围9-24)  ");
+			break;
+		case DEFINEWIDTH:
+			printf(" 设置宽度 (范围9-30)  ");
+			break;
+		case DEFINEMINE:
+			printf(" 设置雷数 (范围10-%d) ", maxMine);
+			break;
+		default:
+			break;
+		}
 	}
 }
 
 int Welcome()
 {
 	static int flag = WELCOMENEWGAME;
+	int input;
+	char help[][15] = { "     继续   ", "    新游戏  ", " 设置游戏难度 ", "   退出游戏 " };
 
+	WelcomePage(flag);
+	Gotoxy(13, 13);
+	printf("%s", help[flag]);
 	while (1)
 	{
-		WelcomePage(flag);
-		switch (GetKeyBoard())
+		Gotoxy(12, 6 + flag);
+		printf("◆");
+		input = GetKeyBoard();
+		Gotoxy(12, 6 + flag);
+		printf("  ");
+		switch (input)
 		{
 		case UP:
 		case ARROW_UP:
@@ -332,6 +382,8 @@ int Welcome()
 		default:
 			break;
 		}
+		Gotoxy(13, 13);
+		printf("%s", help[flag]);
 	}
 }
 

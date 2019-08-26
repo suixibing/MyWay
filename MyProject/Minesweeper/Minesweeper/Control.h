@@ -64,7 +64,7 @@ enum WelcomeOption
 
 int GetKeyBoard();
 void HideCursor();
-
+void Gotoxy(int x, int y);
 void SetConsoleSize(int cols, int lines);
 
 int GetMouse(int *row, int *col);

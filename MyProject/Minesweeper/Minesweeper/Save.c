@@ -1,5 +1,6 @@
 ﻿#include"Save.h"
 
+extern int lastFlag;
 extern int g_coveredBlank;
 extern int g_nowGameLevel;
 extern char g_map[MAXROW + BOUNDARY_NUM][MAXCOL + BOUNDARY_NUM];
@@ -58,16 +59,8 @@ int LoadList()
 	{
 		while (num < LASTSAVE)
 		{
-			while (num % LISTLINES < LISTLINES / 2 - 1)
-			{
-				strcat(g_saveList[num++], "                                    ");
-			}
-			strcat(g_saveList[num++], "           存档页面不存在           ");
-			strcat(g_saveList[num++], "         请检查 Save 文件夹         ");
-			while (num % LISTLINES != 0)
-			{
-				strcat(g_saveList[num++], "                                    ");
-			}
+			strcat(g_saveList[num], g_nullList[num % LISTLINES]);
+			num++;
 		}
 		return ERROR;
 	}
@@ -136,7 +129,8 @@ int LoadData(int *row, int *col, int *mineLeast, int flag)
 
 	if (!pf)
 	{
-		printf("\n　　　　　      读档失败");
+		Gotoxy(0, 13);
+		printf("　　　　　      读档失败");
 		GetKeyBoard();
 		return ERROR;
 	}
@@ -151,20 +145,24 @@ int LoadData(int *row, int *col, int *mineLeast, int flag)
 		fread(&g_tag[i][1], sizeof(char), (unsigned)*col, pf);
 	}
 	fclose(pf);
-	printf("\n　　　　　      读档成功");
+	Gotoxy(0, 13);
+	printf("　　　　　      读档成功");
 	return SUCCESS;
 }
 
 void Save(int row, int col, int mineLeast)
 {
-	int jump;
-	static int flag = FIRSTSAVE;
+	int jump, input;
+	int flag = FIRSTSAVE;
 	int state = CONTINUE;
 	
 	SavePage(flag);
 	while (!state)
 	{
-		switch (GetKeyBoard())
+		input = GetKeyBoard();
+		Gotoxy(3, 1 + flag % LISTLINES);
+		printf("  ");
+		switch (input)
 		{
 		case UP:
 		case ARROW_UP:
@@ -185,25 +183,15 @@ void Save(int row, int col, int mineLeast)
 		case LEFT:
 		case ARROW_LEFT:
 			flag -= LISTLINES;
-			if (flag < FIRSTSAVE)
-			{
-				while (flag < LASTSAVE)
-				{
-					flag += LISTLINES;
-				}
-				flag -= LISTLINES;
-			}
 			break;
 		case RIGHT:
 		case ARROW_RIGHT:
 			flag += LISTLINES;
-			if (flag > LASTSAVE)
-			{
-				flag = flag % LISTLINES;
-			}
 			break;
 		case JUMP:
-			printf("\n跳转页码：> ");
+			Gotoxy(0, 12);
+			printf("跳转页码：> ");
+			lastFlag = -101;
 			while (!scanf("%d", &jump));
 			flag = (jump - 1) * LISTLINES + flag % LISTLINES;
 			break;
@@ -211,29 +199,46 @@ void Save(int row, int col, int mineLeast)
 			state = OVER;
 			break;
 		case ESC:
+			lastFlag = 0;
 			return;
 		default:
 			break;
 		}
-		flag = BOUNDJUDGE(flag, FIRSTSAVE, LASTSAVE);
+		if (flag > LASTSAVE)
+		{
+			flag = flag % LISTLINES;
+		}
+		else if (flag < FIRSTSAVE)
+		{
+			while (flag < LASTSAVE)
+			{
+				flag += LISTLINES;
+			}
+			flag -= LISTLINES;
+		}
 		SavePage(flag);
 	}
+	lastFlag = -100;
 	SaveList(flag);
 	SaveData(row, col, mineLeast, flag);
-	printf("\n　　　　　      保存成功");
+	Gotoxy(0, 13);
+	printf("　　　　　      保存成功");
 	getchar();
 }
 
 void Load(int *row, int *col, int *mineLeast)
 {
-	int jump;
-	static int flag = FIRSTSAVE;
+	int jump, input;
+	int flag = FIRSTSAVE;
 	int state = CONTINUE;
 
 	SavePage(flag);
 	while (!state)
 	{
-		switch (GetKeyBoard())
+		input = GetKeyBoard();
+		Gotoxy(3, 1 + flag % LISTLINES);
+		printf("  ");
+		switch (input)
 		{
 		case UP:
 		case ARROW_UP:
@@ -254,25 +259,15 @@ void Load(int *row, int *col, int *mineLeast)
 		case LEFT:
 		case ARROW_LEFT:
 			flag -= LISTLINES;
-			if (flag < FIRSTSAVE)
-			{
-				while (flag < LASTSAVE)
-				{
-					flag += LISTLINES;
-				}
-				flag -= LISTLINES;
-			}
 			break;
 		case RIGHT:
 		case ARROW_RIGHT:
 			flag += LISTLINES;
-			if (flag > LASTSAVE)
-			{
-				flag = flag % LISTLINES;
-			}
 			break;
 		case JUMP:
-			printf("\n跳转页码：> ");
+			Gotoxy(0, 12);
+			printf("跳转页码：> ");
+			lastFlag = -99;
 			while (!scanf("%d", &jump));
 			if (jump > 0)
 			{
@@ -289,16 +284,26 @@ void Load(int *row, int *col, int *mineLeast)
 			state = OVER;
 			break;
 		case ESC:
+			lastFlag = 0;
 			return;
 		default:
 			break;
 		}
-		if (flag != TMP)
+		if (flag > LASTSAVE)
 		{
-			//flag = BOUNDJUDGE(flag, FIRSTSAVE, LASTSAVE);
+			flag = flag % LISTLINES;
+		}
+		else if (flag < FIRSTSAVE)
+		{
+			while (flag < LASTSAVE)
+			{
+				flag += LISTLINES;
+			}
+			flag -= LISTLINES;
 		}
 		SavePage(flag);
 	}
+	lastFlag = -100;
 	if (LoadData(row, col, mineLeast, flag))
 	{
 		Game(*row, *col, *mineLeast, FALSE);
