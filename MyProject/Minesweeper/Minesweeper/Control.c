@@ -60,7 +60,7 @@ int GetMouse(int *row, int *col)
 		{
 			*row = (cursor.y - rectWindow.top - 30) / 20;
 			*col = (cursor.x - rectWindow.left - 8) / 20;
-			return ENTER;
+			return LEFTCLICK;
 		}
 		else if(KEY_DOWN(VK_RBUTTON) &&
 			cursor.x >= rectWindow.left && cursor.x <= rectWindow.right &&
@@ -68,7 +68,11 @@ int GetMouse(int *row, int *col)
 		{
 			*row = (cursor.y - rectWindow.top - 30) / 20;
 			*col = (cursor.x - rectWindow.left - 8) / 20;
-			return MINEMARK;
+			return RIGHTCLICK;
+		}
+		else if (_kbhit())
+		{
+			return GetKeyBoard();
 		}
 		Sleep(100);
 	}
@@ -76,21 +80,19 @@ int GetMouse(int *row, int *col)
 
 void Game(int row, int col, int mine, int isFirst)
 {
-	Point point = { (row + 1) / 2, (col + 1) / 2 };
-	char mode = MODE_KEYBOARD;
-	int showPoint = TRUE, state = CONTINUE, input;
-	int mineLeast = mine;
+	Point point = { (row + 1) / 2, (col + 1) / 2 }, tmp = { 0, 0 };
+	int showPoint = TRUE, state = CONTINUE;
+	int mineLeast = mine, input;
 	
 	MapPrint(row, col, mine, point, showPoint, isFirst);
 	while (!state)
 	{
-		if (mode == MODE_KEYBOARD)
+		MapPoint(point, showPoint);
+		input = GetMouse(&tmp.row, &tmp.col);
+		MapPoint(point, FALSE);
+		if ((input == LEFTCLICK || input == RIGHTCLICK) && tmp.col >= 1 && tmp.col <= col && tmp.row >= 1 && tmp.row <= row)
 		{
-			input = GetKeyBoard();
-		}
-		else if(mode == MODE_MOUSE)
-		{
-			input = GetMouse(&point.row, &point.col);
+			point = tmp;
 		}
 		switch (input)
 		{
@@ -98,27 +100,44 @@ void Game(int row, int col, int mine, int isFirst)
 		case ARROW_UP:
 			point.row--;
 			showPoint = TRUE;
+			if (point.row < 1)
+			{
+				point.row = row;
+			}
 			break;
 		case DOWN:
 		case ARROW_DOWN:
 			point.row++;
 			showPoint = TRUE;
+			if (point.row > row)
+			{
+				point.row = 1;
+			}
 			break;
 		case LEFT:
 		case ARROW_LEFT:
 			point.col--;
 			showPoint = TRUE;
+			if (point.col < 1)
+			{
+				point.col = col;
+			}
 			break;
 		case RIGHT:
 		case ARROW_RIGHT:
 			point.col++;
 			showPoint = TRUE;
+			if (point.col > col)
+			{
+				point.col = 1;
+			}
 			break;
 		case MINECHECK:
 			if (!isFirst)
 			{
 				GameState(row, col, mineLeast, MINECHECK);
 				while (GetKeyBoard() != ESC);
+				MapPrint(row, col, mineLeast, point, showPoint, isFirst);
 			}
 			break;
 		case JUMP:
@@ -126,7 +145,10 @@ void Game(int row, int col, int mine, int isFirst)
 			printf("坐标跳转(row, col)：> ");
 			while (!scanf("%d%d", &point.row, &point.col));
 			showPoint = TRUE;
+			MapPrint(row, col, mineLeast, point, showPoint, isFirst);
 			break;
+		case LEFTCLICK:
+			showPoint = FALSE;
 		case ENTER:
 			if (isFirst == TRUE)
 			{
@@ -152,26 +174,29 @@ void Game(int row, int col, int mine, int isFirst)
 		case HIDEPOINT:
 			showPoint = FALSE;
 			break;
-		case MODE_MOUSE:
-			mode = MODE_MOUSE;
-			break;
+		case RIGHTCLICK:
+			showPoint = FALSE;
 		case MINEMARK:
 			if (g_tag[point.row][point.col] != OPENED)
 			{
+				Gotoxy(point.col * 2, point.row);
 				if (g_tag[point.row][point.col] == COVERED)
 				{
+					printf("△");
 					g_tag[point.row][point.col] = MARKED;
 					mineLeast--;
 				}
 				else
 				{
+					printf("■");
 					g_tag[point.row][point.col] = COVERED;
 					mineLeast++;
 				}
+				Sleep(20);
 			}
 			break;
 		case SAVE:
-			Save(row, col, mineLeast);
+			SaveOrLoad(&row, &col, &mineLeast, GAMESAVE);
 			break;
 		case ESC:
 			SaveData(row, col, mineLeast, TMP);
@@ -185,28 +210,31 @@ void Game(int row, int col, int mine, int isFirst)
 		}
 		point.row = BOUNDJUDGE(point.row, 1, row);
 		point.col = BOUNDJUDGE(point.col, 1, col);
-		MapPrint(row, col, mineLeast, point, showPoint, isFirst);
-		showPoint = !showPoint;
 	}
+	MapPrint(row, col, mineLeast, point, showPoint, isFirst);
 	GameState(row, col, mineLeast, state);
-
-	getchar();
+	GetMouse(&point.row, &point.col);
 }
 
-int SetLevel()
+void Set(int *row, int *col, int *mine)
 {
-	int input;
+	int state = CONTINUE;
+	int input, tmp1, tmp2;
 	
 	SetPage(g_gameLevel);
 	Gotoxy(6, 13);
 	printf(" 方向键选择　回车键确认");
-	while (1)
+	while (!state)
 	{
 		Gotoxy(10, 6 + g_gameLevel);
 		printf("◆");
-		input = GetKeyBoard();
+		input = GetMouse(&tmp1, &tmp2);
 		Gotoxy(10, 6 + g_gameLevel);
 		printf("  ");
+		if ((input == LEFTCLICK || input == RIGHTCLICK) && tmp1 >= 6 && tmp1 <= 9)
+		{
+			g_gameLevel = tmp1 - 6;
+		}
 		switch (input)
 		{
 		case UP:
@@ -225,19 +253,19 @@ int SetLevel()
 				g_gameLevel = LEVEL1;
 			}
 			break;
+		case RIGHTCLICK:
+			break;
+		case LEFTCLICK:
 		case ENTER:
-			return g_gameLevel;
+			state = OVER;
+			break;
 		case ESC:
-			return ESC;
+			return;
 		default:
 			break;
 		}
 	}
-}
-
-void Set(int *row, int *col, int *mine)
-{
-	switch (SetLevel())
+	switch (g_gameLevel)
 	{
 	case LEVEL1:
 		*row = 9;
@@ -257,8 +285,6 @@ void Set(int *row, int *col, int *mine)
 	case FREE:
 		FreeDefine(row, col, mine);
 		break;
-	case ESC:
-		return;
 	default:
 		break;
 	}
@@ -267,6 +293,7 @@ void Set(int *row, int *col, int *mine)
 void FreeDefine(int *row, int *col, int *mine)
 {
 	static int flag = DEFINEHEIGHT;
+	int tmp1, tmp2;
 	int input, *(p[3]) = { row, col, mine }, maxMine = MAXMINE(*row, *col);
 
 	DefinePage(*row, *col, *mine, flag);
@@ -274,9 +301,13 @@ void FreeDefine(int *row, int *col, int *mine)
 	{
 		Gotoxy(8, 7 + flag);
 		printf("◆");
-		input = GetKeyBoard();
+		input = GetMouse(&tmp1, &tmp2);
 		Gotoxy(8, 7 + flag);
 		printf("  ");
+		if ((input == LEFTCLICK || input == RIGHTCLICK) && tmp1 >= 7 && tmp1 <= 9)
+		{
+			flag = tmp1 - 7;
+		}
 		switch (input)
 		{
 		case UP:
@@ -313,6 +344,9 @@ void FreeDefine(int *row, int *col, int *mine)
 			}
 			flag ? (*col)++ : (*row)++;
 			break;
+		case RIGHTCLICK:
+			break;
+		case LEFTCLICK:
 		case ENTER:
 			return;
 		default:
@@ -346,8 +380,8 @@ void FreeDefine(int *row, int *col, int *mine)
 int Welcome()
 {
 	static int flag = WELCOMENEWGAME;
-	int input;
-	char help[][15] = { "     继续   ", "    新游戏  ", " 设置游戏难度 ", "   退出游戏 " };
+	int input, tmp1, tmp2;
+	char *help[4] = { "     继续   ", "    新游戏  ", " 设置游戏难度 ", "   退出游戏 " };
 
 	WelcomePage(flag);
 	Gotoxy(13, 13);
@@ -356,9 +390,13 @@ int Welcome()
 	{
 		Gotoxy(12, 6 + flag);
 		printf("◆");
-		input = GetKeyBoard();
+		input = GetMouse(&tmp1, &tmp2);
 		Gotoxy(12, 6 + flag);
 		printf("  ");
+		if ((input == LEFTCLICK || input == RIGHTCLICK) && tmp1 >= 6 && tmp1 <= 9)
+		{
+			flag = tmp1 - 6;
+		}
 		switch (input)
 		{
 		case UP:
@@ -377,6 +415,9 @@ int Welcome()
 				flag = WELCOMECONTINUE;
 			}
 			break;
+		case RIGHTCLICK:
+			break;
+		case LEFTCLICK:
 		case ENTER:
 			return flag;
 		default:
@@ -401,7 +442,7 @@ void GameControl()
 		switch (Welcome())
 		{
 		case GAMECONTINUE:
-			Load(&o_row, &o_col, &o_mine);
+			SaveOrLoad(&o_row, &o_col, &o_mine, GAMELOAD);
 			break;
 		case NEWGAME:
 			if (g_nowGameLevel != g_gameLevel)

@@ -131,7 +131,8 @@ int LoadData(int *row, int *col, int *mineLeast, int flag)
 	{
 		Gotoxy(0, 13);
 		printf("　　　　　      读档失败");
-		GetKeyBoard();
+		int tmp1, tmp2;
+		GetMouse(&tmp1, &tmp2);
 		return ERROR;
 	}
 	fread(row, sizeof(int), 1, pf);
@@ -150,94 +151,24 @@ int LoadData(int *row, int *col, int *mineLeast, int flag)
 	return SUCCESS;
 }
 
-void Save(int row, int col, int mineLeast)
+void SaveOrLoad(int *row, int *col, int *mineLeast, int isSave)
 {
 	int jump, input;
 	int flag = FIRSTSAVE;
 	int state = CONTINUE;
-	
-	SavePage(flag);
-	while (!state)
-	{
-		input = GetKeyBoard();
-		Gotoxy(3, 1 + flag % LISTLINES);
-		printf("  ");
-		switch (input)
-		{
-		case UP:
-		case ARROW_UP:
-			flag--;
-			if (flag == FIRSTSAVE - 1)
-			{
-				flag = LASTSAVE;
-			}
-			break;
-		case DOWN:
-		case ARROW_DOWN:
-			flag++;
-			if (flag == LASTSAVE + 1)
-			{
-				flag = FIRSTSAVE;
-			}
-			break;
-		case LEFT:
-		case ARROW_LEFT:
-			flag -= LISTLINES;
-			break;
-		case RIGHT:
-		case ARROW_RIGHT:
-			flag += LISTLINES;
-			break;
-		case JUMP:
-			Gotoxy(0, 12);
-			printf("跳转页码：> ");
-			lastFlag = -101;
-			while (!scanf("%d", &jump));
-			flag = (jump - 1) * LISTLINES + flag % LISTLINES;
-			break;
-		case ENTER:
-			state = OVER;
-			break;
-		case ESC:
-			lastFlag = 0;
-			return;
-		default:
-			break;
-		}
-		if (flag > LASTSAVE)
-		{
-			flag = flag % LISTLINES;
-		}
-		else if (flag < FIRSTSAVE)
-		{
-			while (flag < LASTSAVE)
-			{
-				flag += LISTLINES;
-			}
-			flag -= LISTLINES;
-		}
-		SavePage(flag);
-	}
-	lastFlag = -100;
-	SaveList(flag);
-	SaveData(row, col, mineLeast, flag);
-	Gotoxy(0, 13);
-	printf("　　　　　      保存成功");
-	getchar();
-}
-
-void Load(int *row, int *col, int *mineLeast)
-{
-	int jump, input;
-	int flag = FIRSTSAVE;
-	int state = CONTINUE;
+	int lines = 0, tmp = 0;
 
 	SavePage(flag);
 	while (!state)
 	{
-		input = GetKeyBoard();
+		input = GetMouse(&lines, &tmp);
 		Gotoxy(3, 1 + flag % LISTLINES);
 		printf("  ");
+		if ((input == LEFTCLICK || input == RIGHTCLICK) && lines >= 1 && lines <= LISTLINES)
+		{
+			flag = lines - 1;
+		}
+		Gotoxy(0, 12);
 		switch (input)
 		{
 		case UP:
@@ -265,7 +196,6 @@ void Load(int *row, int *col, int *mineLeast)
 			flag += LISTLINES;
 			break;
 		case JUMP:
-			Gotoxy(0, 12);
 			printf("跳转页码：> ");
 			lastFlag = -99;
 			while (!scanf("%d", &jump));
@@ -279,7 +209,12 @@ void Load(int *row, int *col, int *mineLeast)
 			}
 			break;
 		case 'C':
+			if (isSave)
+			{
+				break;
+			}
 			flag = TMP; // 临时存档
+		case LEFTCLICK:
 		case ENTER:
 			state = OVER;
 			break;
@@ -293,7 +228,7 @@ void Load(int *row, int *col, int *mineLeast)
 		{
 			flag = flag % LISTLINES;
 		}
-		else if (flag < FIRSTSAVE)
+		else if (flag < FIRSTSAVE && (!isSave && flag != TMP))
 		{
 			while (flag < LASTSAVE)
 			{
@@ -301,10 +236,21 @@ void Load(int *row, int *col, int *mineLeast)
 			}
 			flag -= LISTLINES;
 		}
-		SavePage(flag);
+		if (flag != TMP)
+		{
+			SavePage(flag);
+		}
 	}
 	lastFlag = -100;
-	if (LoadData(row, col, mineLeast, flag))
+	if (isSave)
+	{
+		SaveList(flag);
+		SaveData(*row, *col, *mineLeast, flag);
+		Gotoxy(0, 13);
+		printf("　　　　　      保存成功");
+		getchar();
+	}
+	else if (LoadData(row, col, mineLeast, flag))
 	{
 		Game(*row, *col, *mineLeast, FALSE);
 	}

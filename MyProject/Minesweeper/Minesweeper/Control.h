@@ -35,9 +35,8 @@
 #define JUMP 'J'
 #define ESC 27
 #define ENTER 13
-
-#define MODE_KEYBOARD 'K'
-#define MODE_MOUSE 'M'
+#define LEFTCLICK 1000
+#define RIGHTCLICK 1001
 
 #define INITIALROWS 16
 #define INITIALCOLS 16
@@ -71,7 +70,6 @@ int GetMouse(int *row, int *col);
 void Game(int row, int col, int mine, int isFirst);
 void FreeDefine(int *row, int *col, int *mine);
 int Welcome();
-int SetLevel();
 void Set(int *row, int *col, int *mine);
 void GameControl();
 

@@ -51,50 +51,44 @@ void MapInit(int row, int col, int mine, Point point)
 	}
 }
 
+void MapPoint(Point point, int showPoint)
+{
+	Gotoxy(point.col * 2, point.row);
+	if (showPoint == TRUE)
+	{
+		printf("□");
+	}
+	else if (g_tag[point.row][point.col] == COVERED)
+	{
+		printf("■");
+	}
+	else if (g_tag[point.row][point.col] == MARKED)
+	{
+		printf("△");
+	}
+	else
+	{
+		printf("%s", s_mineNum[g_map[point.row][point.col]]);
+	}
+}
+
 void MapJump(int row, int col, int mineLeast, Point point, int showPoint, int isFirst)
 {
 	int i, j;
-	char page[PAGESIZE_MINE] = { 0 };
 	char lineNum[][4] = { "⑩", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨" };
 
-	SetConsoleSize((col + 2) * 2, (row + 2) + 3);
-	strcat(page, "█");
+	Gotoxy(2, 0);
 	for (j = 1; j <= col; j++)
 	{
-		strcat(page, lineNum[j % 10]);
+		printf("%s", lineNum[j % 10]);
 	}
-	strcat(page, "█");
 	for (i = 1; i <= row; i++)
 	{
-		strcat(page, lineNum[i % 10]);
-		for (j = 1; j <= col; j++)
-		{
-			if (showPoint && i == point.row && j == point.col)
-			{
-				strcat(page, "□");
-			}
-			else if (g_tag[i][j] == COVERED || isFirst)
-			{
-				strcat(page, "■");
-			}
-			else if (g_tag[i][j] == OPENED)
-			{
-				strcat(page, s_mineNum[g_map[i][j]]);
-			}
-			else
-			{
-				strcat(page, "△");
-			}
-		}
-		strcat(page, "█");
+		Gotoxy(0, i);
+		printf("%s", lineNum[i % 10]);
 	}
-	for (i = 0; i < col + BOUNDARY_NUM; i++)
-	{
-		strcat(page, "█");
-	}
-	strcat(page, "未标记雷数： %3d\n");
-	system("cls");
-	printf(page, mineLeast);
+	Gotoxy(0, row + 2);
+	printf("未标记雷数： %3d                    ", mineLeast);
 }
 
 void MapPrint(int row, int col, int mineLeast, Point point, int showPoint, int isFirst)
@@ -161,6 +155,8 @@ void MapOpen(int row, int col, int pointx, int pointy)
 			}
 		}
 	}
+	Gotoxy(pointy * 2, pointx);
+	printf("%s", s_mineNum[g_map[pointx][pointy]]);
 	if (!g_map[pointx][pointy])
 	{
 		for (i = -1; i <= 1; i++)
@@ -244,7 +240,7 @@ void GameState(int row, int col, int mineLeast, int state)
 				{
 					strcat(page, s_mineNum[g_map[i][j]]);
 				}
-				else if (state == OVER && g_tag[i][j] == MARKED)
+				else if (g_tag[i][j] == MARKED)
 				{
 					strcat(page, "×");
 				}

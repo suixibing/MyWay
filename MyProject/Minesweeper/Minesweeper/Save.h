@@ -12,6 +12,9 @@
 
 #define LISTLINES 10
 
+#define GAMELOAD 0
+#define GAMESAVE 1
+
 void InitNullList();
 int LoadList();
 void SaveList(int flag);
@@ -19,6 +22,6 @@ void SaveData(int row, int col, int mineLeast, int flag);
 int LoadData(int *row, int *col, int *mineLeast, int flag);
 
 void Save(int row, int col, int mineLeast);
-void Load(int *row, int *col, int *mineLeast);
+void SaveOrLoad(int *row, int *col, int *mineLeast, int isSave);
 
 #endif // _SAVE_H_
