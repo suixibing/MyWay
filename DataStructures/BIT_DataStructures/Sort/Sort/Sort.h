@@ -21,5 +21,6 @@ void MergeSort(SORTDATA arr[], int size); // 归并排序
 void BucketSort(SORTDATA arr[], int size); // 桶排序
 
 void Print(SORTDATA arr[], int size); // 打印数据
+int Judge(SORTDATA arr[], int size);
 
 #endif // _SORT_H_

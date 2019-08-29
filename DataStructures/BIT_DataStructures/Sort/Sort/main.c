@@ -23,6 +23,7 @@ int main()
 		HeapSort(a, size);
 		c2 = clock();
 		printf("HeapSort(a, size) time : %d\n", c2 - c);
+		Judge(a, size);
 	}
 	for (int i = 0; i < 10; i++)
 	{
@@ -31,6 +32,7 @@ int main()
 		SeclectionSort(a, size);
 		c2 = clock();
 		printf("SeclectionSort(a, size) time : %d\n", c2 - c);
+		Judge(a, size);
 	}
 	for (int i = 0; i < 10; i++)
 	{
@@ -39,6 +41,7 @@ int main()
 		ShellSort(a, size);
 		c2 = clock();
 		printf("ShellSort(a, size) time : %d\n", c2 - c);
+		Judge(a, size);
 	}
 	for (int i = 0; i < 10; i++)
 	{
@@ -47,6 +50,7 @@ int main()
 		InsertSort(a, size);
 		c2 = clock();
 		printf("InsertSort(a, size) time : %d\n", c2 - c);
+		Judge(a, size);
 	}
 	for (int i = 0; i < 10; i++)
 	{
@@ -55,6 +59,7 @@ int main()
 		BubbleSort(a, size);
 		c2 = clock();
 		printf("BubbleSort(a, size) time : %d\n", c2 - c);
+		Judge(a, size);
 	}
 	for (int i = 0; i < 10; i++)
 	{
@@ -63,6 +68,7 @@ int main()
 		QuickSort(a, 0, size - 1);
 		c2 = clock();
 		printf("QuickSort(a, 0, size - 1) time : %d\n", c2 - c);
+		Judge(a, size);
 	}
 	for (int i = 0; i < 10; i++)
 	{
@@ -71,6 +77,7 @@ int main()
 		MergeSort(a, size);
 		c2 = clock();
 		printf("MergeSort(a, size) time : %d\n", c2 - c);
+		Judge(a, size);
 	}
 	for (int i = 0; i < 10; i++)
 	{
@@ -79,6 +86,7 @@ int main()
 		BucketSort(a, size);
 		c2 = clock();
 		printf("BucketSort(a, size) time : %d\n", c2 - c);
+		Judge(a, size);
 		//Print(a, size);
 	}
 

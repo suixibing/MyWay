@@ -40,13 +40,13 @@ void ShellSort(SORTDATA arr[], int size)
 		for (start = gap; start < size; start++)
 		{
 			key = arr[start];
-			for (now = start;  now >= gap && arr[now] >= key; now -= gap)
+			for (now = start - gap;  now >= 0 && arr[now] >= key; now -= gap)
 			{
-				arr[now] = arr[now - gap];
+				arr[now + gap] = arr[now];
 			}
 			arr[now + gap] = key;
 		}
-		gap /= 2;
+		gap /= 3;
 	}
 }
 
@@ -241,4 +241,21 @@ void Print(SORTDATA arr[], int size)
 		i++;
 	}
 	putchar('\n');
+}
+
+
+int Judge(SORTDATA arr[], int size)
+{
+	int i;
+
+	for (i = 1; i < size; i++)
+	{
+		if (arr[i - 1] > arr[i])
+		{
+			printf("ERROR!\n");
+			return 0;
+		}
+	}
+
+	return 1;
 }
