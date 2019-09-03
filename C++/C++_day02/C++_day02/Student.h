@@ -5,6 +5,8 @@
 #include<string>
 #include<valarray>
 
+
+// 使用包含对象的方法，实现 Student 类
 class Student
 {
 private:
