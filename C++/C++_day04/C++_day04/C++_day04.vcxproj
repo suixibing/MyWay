@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayTP.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="StackTP.h" />
   </ItemGroup>
