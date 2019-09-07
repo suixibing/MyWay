@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ArrayTP.h" />
+    <ClInclude Include="FriendTest.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="StackTP.h" />
   </ItemGroup>

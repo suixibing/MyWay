@@ -2,6 +2,7 @@
 #include<ctime>
 #include"ArrayTP.h"
 #include"StackTP.h"
+#include"FriendTest.h"
 
 using std::cout;
 using std::endl;
@@ -10,6 +11,8 @@ using std::string;
 
 void Test1();
 void Test2();
+void Test3();
+void Test4();
 void ArrayTPHelp();
 
 int main()
@@ -18,10 +21,10 @@ int main()
 
 	while (1)
 	{
-		cout << "1: 测试1\t2: 测试2\t3: 模板说明\tq: 退出\n";
+		cout << "1: 测试1\t2: 测试2\t3: 测试3\t4: 测试4\t0: 模板说明\tq: 退出\n";
 		cout << "请选择：";
 		cin >> choice;
-		while (strchr("123q", choice) == NULL)
+		while (strchr("01234q", choice) == NULL)
 		{
 			cin >> choice;
 		}
@@ -39,6 +42,12 @@ int main()
 			Test2();
 			break;
 		case '3':
+			Test3();
+			break;
+		case '4':
+			Test4();
+			break;
+		case '0':
 			ArrayTPHelp();
 			break;
 		default:
@@ -134,6 +143,69 @@ void Test2()
 	{
 		cout << "# " << output[i] << endl;
 	}
+}
+
+void Test3()
+{
+	Multiple<StackTP> m;
+	int a;
+	double b;
+
+	while (!m.HasFull())
+	{
+		cin >> a >> b;
+		if (a < 0 || b < 0)
+		{
+			break;
+		}
+		m.Push(a, b);
+	}
+	while (m.Pop(a, b))
+	{
+		cout << a << ", " << b << endl;
+	}
+}
+
+void Test4()
+{
+	cout << "FriendType1:\n";
+	cout << "目前没有对象:\n";
+	Counts();
+	FriendType1<int> f1(13);
+	cout << "FriendType1<int> 建立后:\n";
+	Counts();
+	FriendType1<double> f2(1.4);
+	cout << "FriendType1<double> 建立后:\n";
+	Counts();
+	Report(f1);
+	Report(f2);
+
+	cout << "FriendType2:\n";
+	cout << "目前没有对象:\n";
+	cout << "Counts2<int> :\n";
+	Counts2<int>();
+	FriendType2<int> f3(15);
+	FriendType2<int> f4(23);
+	FriendType2<double> f5(53.24);
+	Report2(f3);
+	Report2(f4);
+	Report2(f5);
+	cout << "Counts2<int> :\n";
+	Counts2<int>();
+	cout << "Counts2<double> :\n";
+	Counts2<double>();
+
+	cout << "FriendType3:\n";
+	cout << "目前没有对象:\n";
+	FriendType3<int> f6(24);
+	FriendType3<int> f7(36);
+	FriendType3<double> f8(42.35);
+	cout << "<int>, <double> => ";
+	Show(f6, f8);
+	cout << "<double>, <int> => ";
+	Show(f8, f6);
+	cout << "<int>, <int> => ";
+	Show(f6, f7);
 }
 
 void ArrayTPHelp()

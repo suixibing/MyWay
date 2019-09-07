@@ -20,6 +20,19 @@ public:
 	const StackTP& operator=(const StackTP& s);
 };
 
+template <template <class T> class Thing, class T1 = int, class T2 = double>
+class Multiple
+{
+private:
+	Thing<T1> m_t1;
+	Thing<T2> m_t2;
+public:
+	Multiple() {}
+	bool Push(T1& a, T2& b) { return m_t1.Push(a) && m_t2.Push(b); }
+	bool Pop(T1& a, T2& b) { return m_t1.Pop(a) && m_t2.Pop(b); }
+	bool HasFull() { return m_t1.IsFull() || m_t2.IsFull(); }
+};
+
 template <class Type>
 StackTP<Type>::StackTP(int capacity) : m_capacity(capacity), m_top(0)
 {
