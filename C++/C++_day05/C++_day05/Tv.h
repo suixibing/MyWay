@@ -2,6 +2,29 @@
 
 #include<iostream>
 
+class Tv;
+
+class Remote
+{
+private:
+	int m_mode;
+public:
+	enum { Off, On };
+	enum { MinVolume, MaxVolume = 20 };
+	enum { Antenna, Cable };
+	enum { TV, VCR };
+
+	Remote(int m = TV) : m_mode(m) {}
+	bool VolumeUp(Tv& tv);
+	bool VolumeDown(Tv& tv);
+	void OnOff(Tv& tv);
+	void ChannelUp(Tv& tv);
+	void ChannelDown(Tv& tv);
+	void SetChannel(Tv& tv, int channel);
+	void SetMode(Tv& tv);
+	void SetInput(Tv& tv);
+};
+
 class Tv
 {
 private:
@@ -12,7 +35,7 @@ private:
 	int m_mode;
 	int m_input;
 public:
-	friend class Remote;
+	friend void Remote::SetChannel(Tv& tv, int channel);
 	enum { Off, On };
 	enum { MinVolume, MaxVolume = 20 };
 	enum { Antenna, Cable };
@@ -30,19 +53,11 @@ public:
 	void Settings()const;
 };
 
-class Remote
-{
-private:
-	int m_mode;
-public:
-	Remote(int m = Tv::TV) : m_mode(m) {}
-	bool VolumeUp(Tv& tv) { return tv.VolumeUp(); }
-	bool VolumeDown(Tv& tv) { return tv.VolumeDown(); }
-	void OnOff(Tv& tv) { tv.OnOff(); }
-	void ChannelUp(Tv& tv) { tv.ChannelUp(); }
-	void ChannelDown(Tv& tv) { tv.ChannelDown(); }
-	void SetChannel(Tv& tv, int channel) { tv.m_channel = channel; }
-	void SetMode(Tv& tv) { tv.SetMode(); }
-	void SetInput(Tv& tv) { tv.SetInput(); }
-};
-
+inline bool Remote::VolumeUp(Tv& tv) { return tv.VolumeUp(); }
+inline bool Remote::VolumeDown(Tv& tv) { return tv.VolumeDown(); }
+inline void Remote::OnOff(Tv& tv) { tv.OnOff(); }
+inline void Remote::ChannelUp(Tv& tv) { tv.ChannelUp(); }
+inline void Remote::ChannelDown(Tv& tv) { tv.ChannelDown(); }
+inline void Remote::SetChannel(Tv& tv, int channel) { tv.m_channel = channel; }
+inline void Remote::SetMode(Tv& tv) { tv.SetMode(); }
+inline void Remote::SetInput(Tv& tv) { tv.SetInput(); }
