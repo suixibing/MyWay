@@ -1,13 +1,13 @@
 #include "Student.h"
 
-std::ostream & Student::ArrOut(std::ostream & os)const
+std::ostream& Student::ArrOut(std::ostream& os)const
 {
-	if (scores.size() > 0)
+	if (m_scores.size() > 0)
 	{
-		int i = 0, size = scores.size();
+		int i = 0, size = m_scores.size();
 		for (i = 0; i < size; i++)
 		{
-			os << scores[i] << " ";
+			os << m_scores[i] << " ";
 			if (i % 5 == 4)
 			{
 				os << std::endl;
@@ -27,9 +27,9 @@ std::ostream & Student::ArrOut(std::ostream & os)const
 
 double Student::Average()const
 {
-	if (scores.size() > 0)
+	if (m_scores.size() > 0)
 	{
-		return scores.sum() / scores.size();
+		return m_scores.sum() / m_scores.size();
 	}
 	else
 	{
@@ -37,36 +37,36 @@ double Student::Average()const
 	}
 }
 
-const std::string & Student::Name()const
+const std::string& Student::Name()const
 {
-	return name;
+	return m_name;
 }
 
-double & Student::operator[](int n)
+double& Student::operator[](int n)
 {
-	return scores[n];
+	return m_scores[n];
 }
 
 double Student::operator[](int n)const
 {
-	return scores[n];
+	return m_scores[n];
 }
 
-std::ostream & operator<<(std::ostream & os, const Student & stu)
+std::ostream& operator<<(std::ostream& os, const Student& stu)
 {
-	os << "ĞÕÃû:" << stu.name << std::endl;
+	os << "ĞÕÃû:" << stu.m_name << std::endl;
 	stu.ArrOut(os);
 	return os;
 }
 
-std::istream & operator>>(std::istream & is, Student & stu)
+std::istream& operator>>(std::istream& is, Student& stu)
 {
-	is >> stu.name;
+	is >> stu.m_name;
 	return is;
 }
 
-std::istream & getline(std::istream & is, Student & stu)
+std::istream& getline(std::istream& is, Student& stu)
 {
-	getline(is, stu.name);
+	getline(is, stu.m_name);
 	return is;
 }

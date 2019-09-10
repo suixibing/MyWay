@@ -8,10 +8,10 @@ using namespace std;
 class Time
 {
 private:
-	int _day;
-	int _hour;
-	int _minite;
-	int _second;
+	int m_day;
+	int m_hour;
+	int m_minite;
+	int m_second;
 public:
 	Time();
 	void TimeAdjust();

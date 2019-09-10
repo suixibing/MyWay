@@ -1,6 +1,6 @@
 #include "StudentPrivate.h"
 
-std::ostream & StudentPrivate::ArrOut(std::ostream & os)const
+std::ostream& StudentPrivate::ArrOut(std::ostream& os)const
 {
 	if (Array::size() > 0)
 	{
@@ -37,12 +37,12 @@ double StudentPrivate::Average()const
 	}
 }
 
-const std::string & StudentPrivate::Name()const
+const std::string& StudentPrivate::Name()const
 {
-	return (const string & )*this;
+	return (const string& )*this;
 }
 
-double & StudentPrivate::operator[](int n)
+double& StudentPrivate::operator[](int n)
 {
 	return Array::operator[](n);
 }
@@ -52,21 +52,21 @@ double StudentPrivate::operator[](int n)const
 	return Array::operator[](n);
 }
 
-std::ostream & operator<<(std::ostream & os, const StudentPrivate & stu)
+std::ostream& operator<<(std::ostream& os, const StudentPrivate & stu)
 {
-	os << "ĞÕÃû:" << (const string &)stu << std::endl;
+	os << "ĞÕÃû:" << (const string&)stu << std::endl;
 	stu.ArrOut(os);
 	return os;
 }
 
-std::istream & operator>>(std::istream & is, StudentPrivate & stu)
+std::istream& operator>>(std::istream& is, StudentPrivate& stu)
 {
-	is >> (string &)stu;
+	is >> (string&)stu;
 	return is;
 }
 
-std::istream & getline(std::istream & is, StudentPrivate & stu)
+std::istream& getline(std::istream& is, StudentPrivate& stu)
 {
-	getline(is, (string &)stu);
+	getline(is, (string&)stu);
 	return is;
 }

@@ -14,6 +14,7 @@ template<> bool CompareMin<Time>(Time a, Time b)
 }
 int main()
 {
+	srand((unsigned)time(NULL));
 	int arr[5] = { 13, 52, 1, 5, 32 };
 	double arrd[10] = { 32.3, 32.1, 4.2, 53.2, 43, 42, 23, 52.23, 24, 52 };
 
@@ -30,7 +31,6 @@ int main()
 	}
 
 	Time t[10];
-	srand((unsigned)time(NULL));
 	Sort(t, 10, CompareMin, 2);
 	cout << "\nNewline:\n";
 	for (auto i : t)

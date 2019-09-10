@@ -5,8 +5,8 @@ using std::endl;
 using std::cout;
 using std::cin;
 
-void Set(Student & s, int n);
-void Set(StudentPrivate & s, int n);
+void Set(Student& s, int n);
+void Set(StudentPrivate& s, int n);
 
 const int pupils = 3;
 const int quizzes = 5;
@@ -63,7 +63,7 @@ int main()
 	return 0;
 }
 
-void Set(Student & s, int n)
+void Set(Student& s, int n)
 {
 	cout << "请输入学生的姓名：";
 	getline(cin, s);
@@ -75,7 +75,7 @@ void Set(Student & s, int n)
 	while (cin.get() != '\n');
 }
 
-void Set(StudentPrivate & s, int n)
+void Set(StudentPrivate& s, int n)
 {
 	cout << "请输入学生的姓名：";
 	getline(cin, s);
