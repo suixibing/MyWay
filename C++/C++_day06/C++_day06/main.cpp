@@ -1,21 +1,24 @@
 #include <iostream>
 #include <cstdlib>
+#include "BadClass.h"
 
 using namespace std;
 
-#define CASE1 1
-#define CASE2 2
-#define CASE3 3
-#define SET CASE1
-
-double hmean1(double a, double b);
-bool hmean2(double a, double b, double* ans);
-double hmean3(double a, double b);
+enum
+{
+	CASE1,
+	CASE2,
+	CASE3,
+	CASE4,
+	CASE5,
+};
+#define SET CASE5
 
 int main()
 {
-	int set = CASE3;
+	int set = SET;
 	double x, y, z;
+	Demo d1("创建 main()");
 
 	cout << "请输入两个数：";
 	while (cin >> x >> y)
@@ -48,6 +51,44 @@ int main()
 			}
 			cout << x << "和" << y << "的调和平均数为：" << z << endl;
 			break;
+		case CASE4:
+			try
+			{
+				z = hmean4(x, y);
+				cout << x << "和" << y << "的调和平均数为：" << z << endl;
+				cout << x << "和" << y << "的几何平均数为：" << gmean4(x, y) << endl;
+			}
+			catch (bad_hmean& bg)
+			{
+				bg.mesg();
+			}
+			catch (bad_gmean& hg)
+			{
+				cout << hg.mesg();
+				cout << "(x = " << x << ", y = " << y << ")" << endl;
+			}
+			break;
+		case CASE5:
+			try
+			{
+				z = means5(x, y);
+				cout << "means5(" << x << ", " << y << ")：" << z << endl;
+			}
+			catch (bad_hmean& bg)
+			{
+				bg.mesg();
+				cout << "请输入两个新的数：";
+				continue;
+			}
+			catch (bad_gmean& hg)
+			{
+				cout << "(x = " << x << ", y = " << y << ")" << endl;
+				cout << hg.mesg();
+				cout << "请输入两个新的数：";
+				continue;
+			}
+			d1.Show();
+			break;
 		default:
 			break;
 		}
@@ -56,34 +97,4 @@ int main()
 	}
 	system("pause");
 	return 0;
-}
-
-double hmean1(double a, double b)
-{
-	if (a == -b)
-	{
-		cout << "您输入了两个相反数，计算调和平均出现问题！\n";
-		abort();
-	}
-	return 2.0 * a * b / (a + b);
-}
-
-bool hmean2(double a, double b, double* ans)
-{
-	if (a == -b)
-	{
-		*ans = DBL_MAX;
-		return false;
-	}
-	*ans = 2.0 * a * b / (a + b);
-	return true;
-}
-
-double hmean3(double a, double b)
-{
-	if (a == -b)
-	{
-		throw "您输入了两个相反数，计算调和平均出现问题！\n";
-	}
-	return 2.0 * a * b / (a + b);
 }
