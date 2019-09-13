@@ -17,13 +17,13 @@ typedef struct Mail
 	int age;
 }MailMSG;
 
-#define MANNUM 100
+#define MANNUM 3
 #define TRUE 1
 #define ERROR 0
 
 typedef struct MailList
 {
-	MailMSG man[MANNUM];
+	MailMSG *man;
 	int num;
 }MailList;
 
@@ -40,6 +40,8 @@ enum OPTION
 };
 
 int Menu();
+void LoadMail();
+void SaveMail();
 void InsertMail();
 int DeleteMail(int id);
 int SearchMail(char *p);

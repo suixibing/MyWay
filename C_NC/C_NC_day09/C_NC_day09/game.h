@@ -6,9 +6,9 @@
 #include<time.h>
 #include<stdlib.h>
 
-#define ROW 9
-#define COL 9
-#define MINE_NUM 10
+#define ROW 15
+#define COL 15
+#define MINE_NUM 30
 #define EXIT -10000
 #define MINE '*'
 #define GRASS '*'

@@ -158,41 +158,6 @@ char CheckCross(char board[ROW][COL], int row, int col)
 
 	return CONTINUE;
 }
-//
-//只能检测对角线上的棋子是否完成
-//
-//char CheckXCross(char board[ROW][COL], int row, int col)
-//{
-//	int i, j, flag;
-//
-//	for (i = 0, flag = 0; i + 1 < row; i++)
-//	{
-//		flag++;
-//		if (board[i][i] == '\0' || board[i][i] != board[i + 1][i + 1])
-//		{
-//			flag = 0;
-//		}
-//		if (flag == N - 1)
-//		{
-//			return board[i][i];
-//		}
-//	}
-//
-//	for (i = row - 1, j = 0, flag = 0; i - 1 >= 0 && j + 1 < col; i--, j++)
-//	{
-//		flag++;
-//		if (board[i][j] == '\0' || board[i][j] != board[i - 1][j + 1])
-//		{
-//			flag = 0;
-//		}
-//		if (flag == N - 1)
-//		{
-//			return board[i][j];
-//		}
-//	}
-//
-//	return CONTINUE;
-//}
 
 //所有斜线上棋子都能检测
 char CheckXCross(char board[ROW][COL], int row, int col)
@@ -256,7 +221,7 @@ char CheckXCross(char board[ROW][COL], int row, int col)
 char CheckWin(char board[ROW][COL], int row, int col)
 {
 	int ch;
-	int i, j, flag;
+	int i, j;
 	
 	if ((ch = CheckCross(board, row, col)) != CONTINUE)
 	{

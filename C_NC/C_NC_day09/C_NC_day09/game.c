@@ -110,23 +110,23 @@ void Init(char play_map[ROW][COL], char mine_map[ROW][COL], int row, int col, in
 void ShowMap(char play_map[ROW][COL], int row, int col)
 {
 	int now_row, now_col;
-	printf("   |");
+	printf("    |");
 	for (now_col = 0; now_col < col; now_col++)
 	{
-		printf(" %d ", now_col + 1);
+		printf(" %2d ", now_col + 1);
 	}
 	putchar('\n');
 	for (now_col = 0; now_col < col + 1; now_col++)
 	{
-		printf("---");
+		printf("----");
 	}
 	putchar('\n');
 	for (now_row = 0; now_row < row; now_row++)
 	{
-		printf(" %d |", now_row + 1);
+		printf(" %2d |", now_row + 1);
 		for (now_col = 0; now_col < col; now_col++)
 		{
-			printf(" %c ", play_map[now_row][now_col]);
+			printf(" %2c ", play_map[now_row][now_col]);
 		}
 		putchar('\n');
 	}

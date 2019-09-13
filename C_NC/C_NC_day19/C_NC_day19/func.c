@@ -48,10 +48,9 @@ void InsertMail()
 	MailMSG input, *p = &input;
 
 	InputMSG(&p);
-	if (g_mail.num == MANNUM - 1)
+	if (g_mail.num % MANNUM == 0)
 	{
-		printf("通讯录已满,添加失败!\n");
-		return;
+		g_mail.man = (MailMSG*)realloc(g_mail.man, (g_mail.num / MANNUM + 1) * MANNUM * sizeof(MailMSG));
 	}
 	for (i = g_mail.num; i - 1 >= 0 && strcmp(g_mail.man[i - 1].name, input.name) > 0; i--)
 	{
@@ -78,6 +77,10 @@ int DeleteMail(int id)
 		i++;
 	}
 	g_mail.num--;
+	if (g_mail.num % MANNUM == 0)
+	{
+		g_mail.man = (MailMSG*)realloc(g_mail.man, (g_mail.num / MANNUM + 1) * MANNUM * sizeof(MailMSG));
+	}
 
 	return TRUE;
 }
@@ -185,4 +188,27 @@ void OutputMail()
 	{
 		PrintMSG(i);
 	}
+}
+
+void LoadMail()
+{
+	FILE *infile = fopen("..\\C_NC_day19\\mail.txt", "rb");
+
+	fread(&g_mail.num, sizeof(int), 1, infile);
+	if (g_mail.num > MANNUM)
+	{
+		g_mail.man = (MailMSG*)realloc(g_mail.man, (g_mail.num / MANNUM + 1) * MANNUM * sizeof(MailMSG));
+	}
+	fread(g_mail.man, sizeof(MailMSG), g_mail.num, infile);
+	fclose(infile);
+}
+
+void SaveMail()
+{
+	FILE *outfile = fopen("..\\C_NC_day19\\mail.txt", "wb");
+
+	fwrite(&g_mail.num, sizeof(int), 1, outfile);
+	fwrite(g_mail.man, sizeof(MailMSG), g_mail.num, outfile);
+	free(g_mail.man);
+	fclose(outfile);
 }

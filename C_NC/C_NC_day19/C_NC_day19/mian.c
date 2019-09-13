@@ -6,6 +6,8 @@ void MailSystem()
 	char aim[50] = { 0 };
 
 	g_mail.num = 0;
+	g_mail.man = (MailMSG*)calloc(MANNUM, sizeof(MailMSG));
+	LoadMail();
 	while (flag = Menu())
 	{
 		switch (flag)
@@ -70,6 +72,7 @@ void MailSystem()
 int main()
 {
 	MailSystem();
+	SaveMail();
 	printf("ÒÑÍË³ö!\n");
 
 	system("pause");
