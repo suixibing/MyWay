@@ -1,5 +1,5 @@
 #include "task.h"
-
+void main1();
 int main()
 {
 	int input;
@@ -29,8 +29,13 @@ int main()
 			magauss();
 			break;
 		case MANETON:
-			manewton();
+			double x;
+			cout << "ÊäÈëx:> ";
+			cin >> x;
+			manewton(x, precision);
 			break;
+		case 5:
+			system("type ..\\NumericalComputation\\example.txt");
 		}
 	}
 

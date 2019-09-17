@@ -12,4 +12,4 @@ enum
 
 extern void menu();
 extern void magauss();
-extern void manewton();
+extern void manewton(double x, int precision, int N = 500);

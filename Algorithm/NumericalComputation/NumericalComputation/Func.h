@@ -1,6 +1,7 @@
 #pragma once
 
 #include "task.h"
+#include <cmath>
 
 class Func
 {
@@ -13,11 +14,19 @@ private:
 	Node* head;
 public:
 	Func() { head = new Node; head->next = nullptr; }
-	Func(Func& func);
+	Func(const Func& func);
 	~Func();
 	void add();
-	void add(Func& func);
-	void show()const;
+	void add(const Func& func);
+	void multiplication(const Node& node);
+	double calculate(double x);
 	void derivative();
-	Func& operator=(Func& func);
+	void checkzero();
+	void show()const;
+	
+	const Func operator+(const Func& func)const;
+	const Func operator-(const Func& func)const;
+	const Func operator*(const Func& func)const;
+	Func& operator-();
+	Func& operator=(const Func& func);
 };
