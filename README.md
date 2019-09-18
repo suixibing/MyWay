@@ -29,5 +29,5 @@
 ## [一些C/C++小项目](./MyProject)
 ---
 
--	1、[扫雷](./MyProject/扫雷)
+-	1、[扫雷](./MyProject/Minesweeper)
 -	2、斗地主
