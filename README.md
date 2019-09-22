@@ -26,6 +26,16 @@
 ---
 -	1、简单的对数据结构进行了学习
 
+## [OJ](./OJ)
+---
+###	[LeetCode](./OJ/LeetCode)
+**String**
+与 string 类有关
+**Vector**
+与 vector 类有关
+**LinkList**
+与链表有关
+
 ## [一些C/C++小项目](./MyProject)
 ---
 
