@@ -1,6 +1,13 @@
 #include "Leetcode.h"
 
-// 4. 寻找两个有序数组的中位数
+/*
+ *
+ *	4. 寻找两个有序数组的中位数
+ *
+ *  	执行用时:		32 ms, 在所有 C++ 提交中击败了48.78%的用户
+ *  	内存消耗:		10 MB, 在所有 C++ 提交中击败了79.98%的用户
+ *
+ */
 double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
 {
 	vector<int> t;

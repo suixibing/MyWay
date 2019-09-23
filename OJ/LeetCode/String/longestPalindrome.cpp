@@ -1,6 +1,13 @@
 #include "Leetcode.h"
 
-// 5. 最长回文子串
+/*
+ *
+ *	5. 最长回文子串
+ *
+ *  	执行用时:		28 ms, 在所有 C++ 提交中击败了85.53%的用户
+ *  	内存消耗:		15.9 MB, 在所有 C++ 提交中击败了42.57%的用户
+ *
+ */
 string longestPalindrome(string s)
 {
 	int i, mid = 0, mid2 = 0, len = 0, flag = 0;

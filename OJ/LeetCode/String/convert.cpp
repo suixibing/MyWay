@@ -1,6 +1,13 @@
 #include "Leetcode.h"
 
-// 6. Z 字形变换
+/*
+ *
+ *	6. Z 字形变换
+ *
+ *  	执行用时:		16 ms, 在所有 C++ 提交中击败了79.35%的用户
+ *  	内存消耗:		12.2 MB, 在所有 C++ 提交中击败了83.14%的用户
+ *
+ */
 string convert(string s, int numRows)
 {
 	int i, j, plus = 1;

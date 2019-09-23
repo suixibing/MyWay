@@ -1,6 +1,13 @@
 #include "Leetcode.h"
 
-// 2. 两数相加
+/*
+ *
+ *	2. 两数相加
+ *
+ *  	执行用时 :		24 ms, 在所有 C++ 提交中击败了98.61%的用户
+ *  	内存消耗 :		10.4 MB, 在所有 C++ 提交中击败了79.09%的用户
+ *
+ */
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
 {
 	int val = l1->val + l2->val;
