@@ -17,39 +17,42 @@ struct ListNode {
 
 /*
  *
- * Int ÎÄ¼ş¼Ğ
+ * Int æ–‡ä»¶å¤¹
  *
  */
  
-int reverse(int x); 									// 7. ÕûÊı·´×ª
-bool isPalindrome(int x); 								// 9. »ØÎÄÊı
+int reverse(int x); // 7. æ•´æ•°åè½¬
+bool isPalindrome(int x); // 9. å›æ–‡æ•°
+string intToRoman(int num); // 12. æ•´æ•°è½¬ç½—é©¬æ•°å­—
 
 /*
  *
- * LinkList ÎÄ¼ş¼Ğ
+ * LinkList æ–‡ä»¶å¤¹
  *
  */
 
-ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);	// 2. Á½ÊıÏà¼Ó
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2); // 2. ä¸¤æ•°ç›¸åŠ 
 
 /*
  *
- * String ÎÄ¼ş¼Ğ
- *
- */
- 
-int lengthOfLongestSubstring(string s);					// 3. ÎŞÖØ¸´×Ö·ûµÄ×î³¤×Ó´®
-string longestPalindrome(string s);						// 5. ×î³¤»ØÎÄ×Ó´®
-string convert(string s, int numRows);					// 6. Z ×ÖĞÎ±ä»»
-int myAtoi(string str);									// 8. ×Ö·û´®×ª»»ÕûÊı (atoi)
-
-/*
- *
- * Vector ÎÄ¼ş¼Ğ
+ * String æ–‡ä»¶å¤¹
  *
  */
  
-vector<int> twoSum(vector<int>& nums, int target);		// 1. Á½ÊıÖ®ºÍ
-double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2);	// 4. Ñ°ÕÒÁ½¸öÓĞĞòÊı×éµÄÖĞÎ»Êı
-int maxArea(vector<int>& height);						// 11. Ê¢×î¶àË®µÄÈİÆ÷
+int lengthOfLongestSubstring(string s); // 3. æ— é‡å¤å­—ç¬¦çš„æœ€é•¿å­ä¸²
+string longestPalindrome(string s); // 5. æœ€é•¿å›æ–‡å­ä¸²
+string convert(string s, int numRows); // 6. Z å­—å½¢å˜æ¢
+int myAtoi(string str); // 8. å­—ç¬¦ä¸²è½¬æ¢æ•´æ•° (atoi)
+int romanToInt(string s); // 13. ç½—é©¬æ•°å­—è½¬æ•´æ•°
+string longestCommonPrefix(vector<string>& strs); // 14. æœ€é•¿å…¬å…±å‰ç¼€
+
+/*
+ *
+ * Vector æ–‡ä»¶å¤¹
+ *
+ */
+ 
+vector<int> twoSum(vector<int>& nums, int target); // 1. ä¸¤æ•°ä¹‹å’Œ
+double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2); // 4. å¯»æ‰¾ä¸¤ä¸ªæœ‰åºæ•°ç»„çš„ä¸­ä½æ•°
+int maxArea(vector<int>& height); // 11. ç››æœ€å¤šæ°´çš„å®¹å™¨
 
