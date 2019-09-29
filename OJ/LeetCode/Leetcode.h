@@ -26,6 +26,7 @@ struct ListNode {
 int reverse(int x); // 7. 整数反转
 bool isPalindrome(int x); // 9. 回文数
 string intToRoman(int num); // 12. 整数转罗马数字
+vector<string> generateParenthesis(int n); // 22. 括号生成
 
 /*
  *
@@ -35,7 +36,9 @@ string intToRoman(int num); // 12. 整数转罗马数字
 
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2); // 2. 两数相加
 ListNode* removeNthFromEnd(ListNode* head, int n); // 19. 删除链表的倒数第N个节点
-
+ListNode* mergeTwoLists(ListNode* l1, ListNode* l2); // 21. 合并两个有序链表
+ListNode* mergeKLists(vector<ListNode*>& lists); // 23. 合并K个排序链表
+ListNode* swapPairs(ListNode* head); // 24. 两两交换链表中的节点
 /*
  *
  * String 文件夹
