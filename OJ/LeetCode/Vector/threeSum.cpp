@@ -8,7 +8,7 @@
  *  	内存消耗:		14.4 MB, 在所有 C++ 提交中击败了99.13%的用户
  *
  */
-vector<vector<int>> threeSum(vector<int>& nums)
+vector< vector<int> > threeSum(vector<int>& nums)
 {
 	int i, j, k, size = nums.size();
 	vector<vector<int>> res;

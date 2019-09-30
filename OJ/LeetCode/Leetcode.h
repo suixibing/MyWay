@@ -39,6 +39,8 @@ ListNode* removeNthFromEnd(ListNode* head, int n); // 19. 删除链表的倒数�
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2); // 21. 合并两个有序链表
 ListNode* mergeKLists(vector<ListNode*>& lists); // 23. 合并K个排序链表
 ListNode* swapPairs(ListNode* head); // 24. 两两交换链表中的节点
+ListNode* reverseKGroup(ListNode* head, int k); // 25. K 个一组翻转链表
+
 /*
  *
  * String 文件夹
@@ -63,6 +65,8 @@ bool isValid(string s); // 20. 有效的括号
 vector<int> twoSum(vector<int>& nums, int target); // 1. 两数之和
 double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2); // 4. 寻找两个有序数组的中位数
 int maxArea(vector<int>& height); // 11. 盛最多水的容器
-vector<vector<int>> threeSum(vector<int>& nums); // 15. 三数之和
+vector< vector<int> > threeSum(vector<int>& nums); // 15. 三数之和
 int threeSumClosest(vector<int>& nums, int target); // 16. 最接近的三数之和
-vector<vector<int>> fourSum(vector<int>& nums, int target); // 18. 四数之和
+vector< vector<int> > fourSum(vector<int>& nums, int target); // 18. 四数之和
+int removeDuplicates(vector<int>& nums); // 26. 删除排序数组中的重复项
+int removeElement(vector<int>& nums, int val); // 27. 移除元素

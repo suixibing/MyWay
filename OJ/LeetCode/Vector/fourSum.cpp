@@ -8,7 +8,7 @@
  *  	内存消耗:		8.9 MB, 在所有 C++ 提交中击败了97.16%的用户
  *
  */
-vector<vector<int>> fourSum(vector<int>& nums, int target)
+vector< vector<int> > fourSum(vector<int>& nums, int target)
 {
 	vector<vector<int>> res;
 	int i, j, m, n, tmp, size = nums.size();
