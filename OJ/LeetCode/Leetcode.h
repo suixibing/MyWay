@@ -27,6 +27,7 @@ int reverse(int x); // 7. 整数反转
 bool isPalindrome(int x); // 9. 回文数
 string intToRoman(int num); // 12. 整数转罗马数字
 vector<string> generateParenthesis(int n); // 22. 括号生成
+int divide(int dividend, int divisor); // 29. 两数相除
 
 /*
  *
@@ -55,6 +56,8 @@ int romanToInt(string s); // 13. 罗马数字转整数
 string longestCommonPrefix(vector<string>& strs); // 14. 最长公共前缀
 vector<string> letterCombinations(string digits); // 17. 电话号码的字母组合
 bool isValid(string s); // 20. 有效的括号
+int strStr(string haystack, string needle); // 28. 实现 strStr()
+vector<int> findSubstring(string s, vector<string>& words); // 30. 串联所有单词的子串
 
 /*
  *
