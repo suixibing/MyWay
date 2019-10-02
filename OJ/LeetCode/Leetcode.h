@@ -73,3 +73,5 @@ int threeSumClosest(vector<int>& nums, int target); // 16. 最接近的三数之
 vector< vector<int> > fourSum(vector<int>& nums, int target); // 18. 四数之和
 int removeDuplicates(vector<int>& nums); // 26. 删除排序数组中的重复项
 int removeElement(vector<int>& nums, int val); // 27. 移除元素
+void nextPermutation(vector<int>& nums); // 31. 下一个排列
+int search(vector<int>& nums, int target); // 33. 搜索旋转排序数组
