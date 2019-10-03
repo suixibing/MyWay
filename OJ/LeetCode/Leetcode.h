@@ -75,3 +75,6 @@ int removeDuplicates(vector<int>& nums); // 26. 删除排序数组中的重复�
 int removeElement(vector<int>& nums, int val); // 27. 移除元素
 void nextPermutation(vector<int>& nums); // 31. 下一个排列
 int search(vector<int>& nums, int target); // 33. 搜索旋转排序数组
+vector<int> searchRange(vector<int>& nums, int target); // 34. 在排序数组中查找元素的第一个和最后一个位置
+int searchInsert(vector<int>& nums, int target); // 35. 搜索插入位置
+bool isValidSudoku(vector< vector<char> >& board); // 36. 有效的数独
