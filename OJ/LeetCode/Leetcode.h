@@ -28,6 +28,7 @@ bool isPalindrome(int x); // 9. 回文数
 string intToRoman(int num); // 12. 整数转罗马数字
 vector<string> generateParenthesis(int n); // 22. 括号生成
 int divide(int dividend, int divisor); // 29. 两数相除
+string countAndSay(int n); // 38. 报数
 
 /*
  *
@@ -78,3 +79,4 @@ int search(vector<int>& nums, int target); // 33. 搜索旋转排序数组
 vector<int> searchRange(vector<int>& nums, int target); // 34. 在排序数组中查找元素的第一个和最后一个位置
 int searchInsert(vector<int>& nums, int target); // 35. 搜索插入位置
 bool isValidSudoku(vector< vector<char> >& board); // 36. 有效的数独
+int firstMissingPositive(vector<int>& nums); // 41. 缺失的第一个正数
