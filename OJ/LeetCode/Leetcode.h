@@ -59,6 +59,7 @@ vector<string> letterCombinations(string digits); // 17. 电话号码的字母�
 bool isValid(string s); // 20. 有效的括号
 int strStr(string haystack, string needle); // 28. 实现 strStr()
 vector<int> findSubstring(string s, vector<string>& words); // 30. 串联所有单词的子串
+string multiply(string num1, string num2); // 43. 字符串相乘
 
 /*
  *
@@ -80,3 +81,5 @@ vector<int> searchRange(vector<int>& nums, int target); // 34. 在排序数组�
 int searchInsert(vector<int>& nums, int target); // 35. 搜索插入位置
 bool isValidSudoku(vector< vector<char> >& board); // 36. 有效的数独
 int firstMissingPositive(vector<int>& nums); // 41. 缺失的第一个正数
+int jump(vector<int>& nums); // 45. 跳跃游戏 II
+vector< vector<int> > permute(vector<int>& nums); // 46. 全排列
