@@ -9,7 +9,8 @@
 using namespace std;
 
 /*Definition for singly-linked list.*/
-struct ListNode {
+struct ListNode 
+{
 	int val;
 	ListNode *next;
 	ListNode(int x) : val(x), next(NULL) {}
@@ -83,3 +84,4 @@ bool isValidSudoku(vector< vector<char> >& board); // 36. 有效的数独
 int firstMissingPositive(vector<int>& nums); // 41. 缺失的第一个正数
 int jump(vector<int>& nums); // 45. 跳跃游戏 II
 vector< vector<int> > permute(vector<int>& nums); // 46. 全排列
+vector< vector<int> > permuteUnique(vector<int>& nums); // 47. 全排列 II

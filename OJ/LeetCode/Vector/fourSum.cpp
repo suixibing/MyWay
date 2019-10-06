@@ -10,7 +10,7 @@
  */
 vector< vector<int> > fourSum(vector<int>& nums, int target)
 {
-	vector<vector<int>> res;
+	vector< vector<int> > res;
 	int i, j, m, n, tmp, size = nums.size();
 	sort(nums.begin(), nums.end());
 	for (i = 0, j = i + 1; i + 3 < size; )

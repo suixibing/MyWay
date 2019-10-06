@@ -2,13 +2,13 @@
 
 /*
  *
- *	46. 全排列
+ *	47. 全排列 II
  *
- *  	执行用时:		12 ms, 在所有 C++ 提交中击败了98.14%的用户
- *  	内存消耗:		9 MB, 在所有 C++ 提交中击败了96.26%的用户
+ *  	执行用时:		40 ms, 在所有 C++ 提交中击败了66.14%的用户
+ *  	内存消耗:		9.8 MB, 在所有 C++ 提交中击败了91.38%的用户
  *
  */
-vector< vector<int> > permute(vector<int>& nums)
+vector< vector<int> > permuteUnique(vector<int>& nums)
 {
 	vector< vector<int> > res;
 	res.push_back(nums);

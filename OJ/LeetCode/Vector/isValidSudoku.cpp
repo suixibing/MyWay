@@ -10,7 +10,7 @@
  */
 int offSet[9][2] = { {-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, -1}, {1, 0}, {1, 1} };
 
-bool isValidSudoku(vector<vector<char>>& board)
+bool isValidSudoku(vector< vector<char> >& board)
 {
 	int i, j, k;
 	char book[10];
