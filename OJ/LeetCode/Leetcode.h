@@ -30,6 +30,7 @@ string intToRoman(int num); // 12. 整数转罗马数字
 vector<string> generateParenthesis(int n); // 22. 括号生成
 int divide(int dividend, int divisor); // 29. 两数相除
 string countAndSay(int n); // 38. 报数
+double myPow(double x, int n); // 50. Pow(x, n)
 
 /*
  *
