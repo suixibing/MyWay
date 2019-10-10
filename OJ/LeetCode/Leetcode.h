@@ -88,3 +88,4 @@ vector< vector<int> > permute(vector<int>& nums); // 46. 全排列
 vector< vector<int> > permuteUnique(vector<int>& nums); // 47. 全排列 II
 vector< vector<string> > groupAnagrams(vector<string>& strs); // 49. 字母异位词分组
 int maxSubArray(vector<int>& nums); // 53. 最大子序和
+vector<int> spiralOrder(vector< vector<int> >& matrix); // 54. 螺旋矩阵
