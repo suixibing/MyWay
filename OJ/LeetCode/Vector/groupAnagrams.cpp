@@ -8,7 +8,7 @@
  *  	内存消耗:		19.5 MB, 在所有 C++ 提交中击败了57.56%的用户
  *
  */
-vector< vector<string> > groupAnagrams(vector<string>& strs)
+vector< vector<string> > groupAnagrams1(vector<string>& strs)
 {
 	int i, j;
 	vector< vector<string> > res;
@@ -35,7 +35,7 @@ vector< vector<string> > groupAnagrams(vector<string>& strs)
 }
 
 // 超时
-vector< vector<string> > groupAnagrams(vector<string>& strs)
+vector< vector<string> > groupAnagrams2(vector<string>& strs)
 {
 	char book[26 * 2];
 	int i, j, k, flag;
@@ -94,4 +94,9 @@ vector< vector<string> > groupAnagrams(vector<string>& strs)
 			res.push_back(tmp);
 	}
 	return res;
+}
+
+vector< vector<string> > groupAnagrams(vector<string>& strs)
+{
+	return groupAnagrams1(strs);
 }

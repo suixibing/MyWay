@@ -19,17 +19,17 @@ int jump(vector<int>& nums)
 			nums[i] = 0;
 		if (!nums[i])
 			continue;
-		for (int j = 1; j <= nums[i] && i + j < nums.size(); ++j)
+		for (int jump = 1; jump <= nums[i] && i + jump < nums.size(); ++jump)
 		{
-			if (i + j == nums.size() - 1)
+			if (i + jump == nums.size() - 1)
 			{
 				book[i] = 1;
 				break;
 			}
-			if (nums[i + j] == 0)
+			if (nums[i + jump] == 0)
 				continue;
-			if (book[i + j] != 2147483647 && book[i] > book[i + j] + 1)
-				book[i] = book[i + j] + 1;
+			if (book[i + jump] != 2147483647 && book[i] > book[i + jump] + 1)
+				book[i] = book[i + jump] + 1;
 		}
 	}
 	return book[0];
