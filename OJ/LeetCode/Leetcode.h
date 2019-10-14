@@ -91,3 +91,4 @@ int maxSubArray(vector<int>& nums); // 53. 最大子序和
 vector<int> spiralOrder(vector< vector<int> >& matrix); // 54. 螺旋矩阵
 bool canJump(vector<int>& nums); // 55. 跳跃游戏
 vector< vector<int> > merge(vector< vector<int> >& intervals); // 56. 合并区间
+vector< vector<int> > insert(vector< vector<int> >& intervals, vector<int>& newInterval); // 57. 插入区间
