@@ -32,6 +32,7 @@ int divide(int dividend, int divisor); // 29. 两数相除
 string countAndSay(int n); // 38. 报数
 double myPow(double x, int n); // 50. Pow(x, n)
 vector< vector<int> > generateMatrix(int n) // 59. 螺旋矩阵 II
+string getPermutation(int n, int k); // 60. 第k个排列
 
 /*
  *
