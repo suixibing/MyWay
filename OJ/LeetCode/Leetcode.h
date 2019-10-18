@@ -31,7 +31,7 @@ vector<string> generateParenthesis(int n); // 22. 括号生成
 int divide(int dividend, int divisor); // 29. 两数相除
 string countAndSay(int n); // 38. 报数
 double myPow(double x, int n); // 50. Pow(x, n)
-vector< vector<int> > generateMatrix(int n) // 59. 螺旋矩阵 II
+vector< vector<int> > generateMatrix(int n); // 59. 螺旋矩阵 II
 string getPermutation(int n, int k); // 60. 第k个排列
 
 /*
@@ -46,6 +46,7 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2); // 21. 合并两个有序�
 ListNode* mergeKLists(vector<ListNode*>& lists); // 23. 合并K个排序链表
 ListNode* swapPairs(ListNode* head); // 24. 两两交换链表中的节点
 ListNode* reverseKGroup(ListNode* head, int k); // 25. K 个一组翻转链表
+ListNode* rotateRight(ListNode* head, int k); // 61. 旋转链表
 
 /*
  *
