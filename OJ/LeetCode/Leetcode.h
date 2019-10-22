@@ -67,6 +67,7 @@ int strStr(string haystack, string needle); // 28. 实现 strStr()
 vector<int> findSubstring(string s, vector<string>& words); // 30. 串联所有单词的子串
 string multiply(string num1, string num2); // 43. 字符串相乘
 int lengthOfLastWord(string s); // 58. 最后一个单词的长度
+bool isNumber(string s); // 65. 有效数字
 
 /*
  *
