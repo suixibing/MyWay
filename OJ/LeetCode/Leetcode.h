@@ -100,3 +100,4 @@ vector< vector<int> > merge(vector< vector<int> >& intervals); // 56. 合并区�
 vector< vector<int> > insert(vector< vector<int> >& intervals, vector<int>& newInterval); // 57. 插入区间
 int uniquePathsWithObstacles(vector< vector<int> >& obstacleGrid); // 63. 不同路径 II
 int minPathSum(vector< vector<int> >& grid); // 64. 最小路径和
+vector<int> plusOne(vector<int>& digits); // 66. 加一
