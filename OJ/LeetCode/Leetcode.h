@@ -68,6 +68,7 @@ vector<int> findSubstring(string s, vector<string>& words); // 30. 串联所有�
 string multiply(string num1, string num2); // 43. 字符串相乘
 int lengthOfLastWord(string s); // 58. 最后一个单词的长度
 bool isNumber(string s); // 65. 有效数字
+string addBinary(string a, string b); // 67. 二进制求和
 
 /*
  *
