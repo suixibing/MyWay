@@ -34,6 +34,7 @@ double myPow(double x, int n); // 50. Pow(x, n)
 vector< vector<int> > generateMatrix(int n); // 59. 螺旋矩阵 II
 string getPermutation(int n, int k); // 60. 第k个排列
 int uniquePaths(int m, int n); // 62. 不同路径
+int mySqrt(int x); // 69. x 的平方根
 
 /*
  *
@@ -102,3 +103,4 @@ vector< vector<int> > insert(vector< vector<int> >& intervals, vector<int>& newI
 int uniquePathsWithObstacles(vector< vector<int> >& obstacleGrid); // 63. 不同路径 II
 int minPathSum(vector< vector<int> >& grid); // 64. 最小路径和
 vector<int> plusOne(vector<int>& digits); // 66. 加一
+vector<string> fullJustify(vector<string>& words, int maxWidth); // 68. 文本左右对齐
