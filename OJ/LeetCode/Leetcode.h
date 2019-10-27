@@ -35,6 +35,7 @@ vector< vector<int> > generateMatrix(int n); // 59. 螺旋矩阵 II
 string getPermutation(int n, int k); // 60. 第k个排列
 int uniquePaths(int m, int n); // 62. 不同路径
 int mySqrt(int x); // 69. x 的平方根
+int climbStairs(int n); // 70. 爬楼梯
 
 /*
  *
@@ -70,6 +71,7 @@ string multiply(string num1, string num2); // 43. 字符串相乘
 int lengthOfLastWord(string s); // 58. 最后一个单词的长度
 bool isNumber(string s); // 65. 有效数字
 string addBinary(string a, string b); // 67. 二进制求和
+string simplifyPath(string path); // 71. 简化路径
 
 /*
  *
