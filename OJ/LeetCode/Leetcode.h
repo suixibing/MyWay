@@ -107,3 +107,4 @@ int uniquePathsWithObstacles(vector< vector<int> >& obstacleGrid); // 63. 不同
 int minPathSum(vector< vector<int> >& grid); // 64. 最小路径和
 vector<int> plusOne(vector<int>& digits); // 66. 加一
 vector<string> fullJustify(vector<string>& words, int maxWidth); // 68. 文本左右对齐
+void setZeroes(vector< vector<int> >& matrix); // 73. 矩阵置零
