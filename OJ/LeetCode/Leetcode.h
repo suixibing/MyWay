@@ -109,3 +109,4 @@ vector<int> plusOne(vector<int>& digits); // 66. 加一
 vector<string> fullJustify(vector<string>& words, int maxWidth); // 68. 文本左右对齐
 void setZeroes(vector< vector<int> >& matrix); // 73. 矩阵置零
 bool searchMatrix(vector< vector<int> >& matrix, int target); // 74. 搜索二维矩阵
+void sortColors(vector<int>& nums); // 75. 颜色分类
