@@ -50,6 +50,7 @@ ListNode* mergeKLists(vector<ListNode*>& lists); // 23. 合并K个排序链表
 ListNode* swapPairs(ListNode* head); // 24. 两两交换链表中的节点
 ListNode* reverseKGroup(ListNode* head, int k); // 25. K 个一组翻转链表
 ListNode* rotateRight(ListNode* head, int k); // 61. 旋转链表
+ListNode* deleteDuplicates(ListNode* head); // 83. 删除排序链表中的重复元素
 
 /*
  *
