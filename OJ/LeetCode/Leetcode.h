@@ -102,7 +102,7 @@ vector< vector<string> > groupAnagrams(vector<string>& strs); // 49. 字母异�
 int maxSubArray(vector<int>& nums); // 53. 最大子序和
 vector<int> spiralOrder(vector< vector<int> >& matrix); // 54. 螺旋矩阵
 bool canJump(vector<int>& nums); // 55. 跳跃游戏
-vector< vector<int> > merge(vector< vector<int> >& intervals); // 56. 合并区间
+vector< vector<int> > merge_56(vector< vector<int> >& intervals); // 56. 合并区间
 vector< vector<int> > insert(vector< vector<int> >& intervals, vector<int>& newInterval); // 57. 插入区间
 int uniquePathsWithObstacles(vector< vector<int> >& obstacleGrid); // 63. 不同路径 II
 int minPathSum(vector< vector<int> >& grid); // 64. 最小路径和
@@ -111,3 +111,4 @@ vector<string> fullJustify(vector<string>& words, int maxWidth); // 68. 文本�
 void setZeroes(vector< vector<int> >& matrix); // 73. 矩阵置零
 bool searchMatrix(vector< vector<int> >& matrix, int target); // 74. 搜索二维矩阵
 void sortColors(vector<int>& nums); // 75. 颜色分类
+void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n); // 88. 合并两个有序数组

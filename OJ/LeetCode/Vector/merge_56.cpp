@@ -8,7 +8,7 @@
  *  	内存消耗:		12.4 MB, 在所有 C++ 提交中击败了5.08%的用户
  *
  */
-vector< vector<int> > merge1(vector< vector<int> >& intervals)
+vector< vector<int> > merge1_56(vector< vector<int> >& intervals)
 {
 	if (intervals.size() < 2)
 		return intervals;
@@ -33,7 +33,7 @@ vector< vector<int> > merge1(vector< vector<int> >& intervals)
  *  	内存消耗:		12.5 MB, 在所有 C++ 提交中击败了5.08%的用户
  *
  */
-vector< vector<int> > merge2(vector< vector<int> >& intervals)
+vector< vector<int> > merge2_56(vector< vector<int> >& intervals)
 {
 	int i, j;
 	vector< vector<int> > res;
@@ -55,7 +55,7 @@ vector< vector<int> > merge2(vector< vector<int> >& intervals)
 	return res;
 }
 
-vector< vector<int> > merge(vector< vector<int> >& intervals)
+vector< vector<int> > merge_56(vector< vector<int> >& intervals)
 {
-	return merge1(intervals);
+	return merge1_56(intervals);
 }
