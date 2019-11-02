@@ -16,7 +16,14 @@ struct ListNode
 	ListNode(int x) : val(x), next(NULL) {}
 };
 
-
+/*Definition for a binary tree node.*/
+struct TreeNode 
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
 
 /*
  *
@@ -74,6 +81,14 @@ bool isNumber(string s); // 65. 有效数字
 string addBinary(string a, string b); // 67. 二进制求和
 string simplifyPath(string path); // 71. 简化路径
 int minDistance(string word1, string word2); // 72. 编辑距离
+
+/*
+ *
+ * TreeNode 文件夹
+ *
+ */
+
+bool isSameTree(TreeNode* p, TreeNode* q); // 100. 相同的树
 
 /*
  *
