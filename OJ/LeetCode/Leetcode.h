@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _LEETCODE_H_
+#define _LEETCODE_H_
 
 #include <stack>
 #include <iostream>
@@ -128,3 +129,5 @@ void setZeroes(vector< vector<int> >& matrix); // 73. 矩阵置零
 bool searchMatrix(vector< vector<int> >& matrix, int target); // 74. 搜索二维矩阵
 void sortColors(vector<int>& nums); // 75. 颜色分类
 void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n); // 88. 合并两个有序数组
+
+#endif /* _LEETCODE_H_ */
