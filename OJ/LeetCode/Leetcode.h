@@ -81,6 +81,7 @@ bool isNumber(string s); // 65. 有效数字
 string addBinary(string a, string b); // 67. 二进制求和
 string simplifyPath(string path); // 71. 简化路径
 int minDistance(string word1, string word2); // 72. 编辑距离
+string minWindow(string s, string t); // 76. 最小覆盖子串
 
 /*
  *

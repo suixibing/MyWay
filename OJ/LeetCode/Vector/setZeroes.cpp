@@ -43,3 +43,33 @@ void setZeroes(vector< vector<int> >& matrix)
 		for (i = 0; i < matrix.size(); ++i)
 			matrix[i][0] = 0;
 }
+
+/*
+ *
+ *	73. 矩阵置零
+ *
+ *  	执行用时:		60 ms, 在所有 C++ 提交中击败了81.45%的用户
+ *  	内存消耗:		11.4 MB, 在所有 C++ 提交中击败了68.41%的用户
+ *
+ */
+void setZeroes(vector<vector<int>>& matrix)
+{
+	int i, j;
+	vector<int> row(matrix.size(), 0), col(matrix[0].size(), 0);
+	for (i = 0; i < matrix.size(); ++i)
+	{
+		for (j = 0; j < matrix[0].size(); ++j)
+		{
+			if (matrix[i][j] == 0)
+				row[i] = col[j] = 1;
+		}
+	}
+	for (i = 0; i < matrix.size(); ++i)
+	{
+		for (j = 0; j < matrix[0].size(); ++j)
+		{
+			if (row[i] || col[j])
+				matrix[i][j] = 0;
+		}
+	}
+}
