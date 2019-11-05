@@ -8,7 +8,7 @@
  *  	内存消耗 :		9.8 MB, 在所有 C++ 提交中击败了89.27%的用户
  *
  */
-int removeDuplicates1(vector<int>& nums)
+int removeDuplicates1_26(vector<int>& nums)
 {
 	int i, j, count, size = nums.size();
 	for (i = size - 1; i > 0 && size > 1; i--)
@@ -37,7 +37,7 @@ int removeDuplicates1(vector<int>& nums)
  *  	内存消耗 :		9.7 MB, 在所有 C++ 提交中击败了97.27%的用户
  *
  */
-int removeDuplicates2(vector<int>& nums)
+int removeDuplicates2_26(vector<int>& nums)
 {
 	if (nums.size() <= 1)
 		return nums.size();
@@ -54,7 +54,7 @@ int removeDuplicates2(vector<int>& nums)
 	return left + 1;
 }
 
-int removeDuplicates(vector<int>& nums)
+int removeDuplicates_26(vector<int>& nums)
 {
-	return removeDuplicates1(nums);
+	return removeDuplicates1_26(nums);
 }

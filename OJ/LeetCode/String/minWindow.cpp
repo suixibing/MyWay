@@ -5,7 +5,7 @@
  *	76. 最小覆盖子串
  *
  *  	执行用时:		72 ms, 在所有 C++ 提交中击败了18.57%的用户
- *  	内存消耗:		9.7 MB, 在所有 C++ 提交中击败了76.66%的用户
+ *  	内存消耗:		9.7 MB, 在所有 C++ 提交中击败了83.54%的用户
  *
  */
 string minWindow(string s, string t)
@@ -16,8 +16,8 @@ string minWindow(string s, string t)
 	int resleft = -1, resright = s.size();
 	int book[64][2] = { 0 };
 
-	for (i = 0; i < t.size(); ++i)
-		++book[t[i] - 'A'][0];
+	for (auto tmp : t)
+		++book[tmp - 'A'][0];
 	while (right - left + 1 < t.size())
 	{
 		++right;
