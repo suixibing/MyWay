@@ -8,7 +8,7 @@
  *  	内存消耗:		8.6 MB, 在所有 C++ 提交中击败了91.11%的用户
  *
  */
-int search(vector<int>& nums, int target)
+int search_33(vector<int>& nums, int target)
 {
 	if (nums.size() == 0)
 		return -1;

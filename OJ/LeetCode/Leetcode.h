@@ -104,10 +104,10 @@ int maxArea(vector<int>& height); // 11. 盛最多水的容器
 vector< vector<int> > threeSum(vector<int>& nums); // 15. 三数之和
 int threeSumClosest(vector<int>& nums, int target); // 16. 最接近的三数之和
 vector< vector<int> > fourSum(vector<int>& nums, int target); // 18. 四数之和
-int removeDuplicates(vector<int>& nums); // 26. 删除排序数组中的重复项
+int removeDuplicates_26(vector<int>& nums); // 26. 删除排序数组中的重复项
 int removeElement(vector<int>& nums, int val); // 27. 移除元素
 void nextPermutation(vector<int>& nums); // 31. 下一个排列
-int search(vector<int>& nums, int target); // 33. 搜索旋转排序数组
+int search_33(vector<int>& nums, int target); // 33. 搜索旋转排序数组
 vector<int> searchRange(vector<int>& nums, int target); // 34. 在排序数组中查找元素的第一个和最后一个位置
 int searchInsert(vector<int>& nums, int target); // 35. 搜索插入位置
 bool isValidSudoku(vector< vector<char> >& board); // 36. 有效的数独
@@ -129,6 +129,7 @@ void setZeroes(vector< vector<int> >& matrix); // 73. 矩阵置零
 bool searchMatrix(vector< vector<int> >& matrix, int target); // 74. 搜索二维矩阵
 void sortColors(vector<int>& nums); // 75. 颜色分类
 int removeDuplicates_80(vector<int>& nums); // 80. 删除排序数组中的重复项 II
+bool search_81(vector<int>& nums, int target); // 81. 搜索旋转排序数组 II
 void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n); // 88. 合并两个有序数组
 
 #endif /* _LEETCODE_H_ */
