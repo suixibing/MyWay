@@ -8,7 +8,7 @@
  *  	内存消耗 :		9.1 MB, 在所有 C++ 提交中击败了66.01%的用户
  *
  */
-ListNode* deleteDuplicates(ListNode* head)
+ListNode* deleteDuplicates_83(ListNode* head)
 {
 	ListNode *cur, *tmp;
 	for (cur = head; cur; cur = cur->next)
