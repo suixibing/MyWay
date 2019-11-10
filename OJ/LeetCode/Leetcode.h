@@ -133,6 +133,7 @@ void sortColors(vector<int>& nums); // 75. 颜色分类
 int removeDuplicates_80(vector<int>& nums); // 80. 删除排序数组中的重复项 II
 bool search_81(vector<int>& nums, int target); // 81. 搜索旋转排序数组 II
 int largestRectangleArea(vector<int>& heights); // 84. 柱状图中最大的矩形
+int maximalRectangle(vector< vector<char> >& matrix); // 85. 最大矩形
 void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n); // 88. 合并两个有序数组
 
 #endif /* _LEETCODE_H_ */
