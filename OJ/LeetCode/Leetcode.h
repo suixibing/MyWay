@@ -60,6 +60,7 @@ ListNode* reverseKGroup(ListNode* head, int k); // 25. K 个一组翻转链表
 ListNode* rotateRight(ListNode* head, int k); // 61. 旋转链表
 ListNode* deleteDuplicates_82(ListNode* head); // 82. 删除排序链表中的重复元素 II
 ListNode* deleteDuplicates_83(ListNode* head); // 83. 删除排序链表中的重复元素
+ListNode* partition(ListNode* head, int x); // 86. 分隔链表
 
 /*
  *
