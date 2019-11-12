@@ -44,6 +44,7 @@ string getPermutation(int n, int k); // 60. 第k个排列
 int uniquePaths(int m, int n); // 62. 不同路径
 int mySqrt(int x); // 69. x 的平方根
 int climbStairs(int n); // 70. 爬楼梯
+vector<int> grayCode(int n); // 89. 格雷编码
 
 /*
  *
