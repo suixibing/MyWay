@@ -95,6 +95,7 @@ string minWindow(string s, string t); // 76. 最小覆盖子串
 
 bool isSameTree(TreeNode* p, TreeNode* q); // 100. 相同的树
 bool isSymmetric(TreeNode* root); // 101. 对称二叉树
+int maxDepth(TreeNode* root); // 104. 二叉树的最大深度
 
 /*
  *
