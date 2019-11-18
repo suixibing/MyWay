@@ -45,6 +45,7 @@ int uniquePaths(int m, int n); // 62. 不同路径
 int mySqrt(int x); // 69. x 的平方根
 int climbStairs(int n); // 70. 爬楼梯
 vector<int> grayCode(int n); // 89. 格雷编码
+vector< vector<int> > generate(int numRows); // 118. 杨辉三角
 
 /*
  *
