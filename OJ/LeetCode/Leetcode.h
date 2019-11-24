@@ -140,6 +140,7 @@ vector<string> fullJustify(vector<string>& words, int maxWidth); // 68. 文本�
 void setZeroes(vector< vector<int> >& matrix); // 73. 矩阵置零
 bool searchMatrix(vector< vector<int> >& matrix, int target); // 74. 搜索二维矩阵
 void sortColors(vector<int>& nums); // 75. 颜色分类
+vector< vector<int> > subsets(vector<int>& nums); // 78. 子集
 int removeDuplicates_80(vector<int>& nums); // 80. 删除排序数组中的重复项 II
 bool search_81(vector<int>& nums, int target); // 81. 搜索旋转排序数组 II
 int largestRectangleArea(vector<int>& heights); // 84. 柱状图中最大的矩形
