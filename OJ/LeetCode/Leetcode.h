@@ -141,11 +141,13 @@ void setZeroes(vector< vector<int> >& matrix); // 73. 矩阵置零
 bool searchMatrix(vector< vector<int> >& matrix, int target); // 74. 搜索二维矩阵
 void sortColors(vector<int>& nums); // 75. 颜色分类
 vector< vector<int> > subsets(vector<int>& nums); // 78. 子集
+bool exist(vector< vector<char> >& board, string word); // 79. 单词搜索
 int removeDuplicates_80(vector<int>& nums); // 80. 删除排序数组中的重复项 II
 bool search_81(vector<int>& nums, int target); // 81. 搜索旋转排序数组 II
 int largestRectangleArea(vector<int>& heights); // 84. 柱状图中最大的矩形
 int maximalRectangle(vector< vector<char> >& matrix); // 85. 最大矩形
 void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n); // 88. 合并两个有序数组
+void subfunc(vector<int>& nums, int pos, vector<int>& tmp, vector< vector<int> >& res); // 90. 子集 II
 
 
 #endif /* _LEETCODE_H_ */
