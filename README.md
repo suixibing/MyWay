@@ -21,6 +21,9 @@
 -	day04-模板类及各种友元函数
 -	day05-友元类及其他友元关系
 -	day06-异常
+-	day07-二叉搜索树
+-	day08-AVL树
+-	day09-红黑树
 
 ## [数据结构练习](./DataStructures)
 ---
@@ -29,15 +32,19 @@
 ## [OJ](./OJ)
 ---
 ###	[LeetCode](./OJ/LeetCode)
-**String**
-与 string 类有关
-**Vector**
-与 vector 类有关
+**Int**
+输入与 int 有关
 **LinkList**
-与链表有关
+输入与链表有关
+**String**
+输入与 string 类有关
+**TreeNode**
+输入与 TreeNode 类有关
+**Vector**
+输入与 vector 类有关
 
 ## [一些C/C++小项目](./MyProject)
 ---
 
 -	1、[扫雷](./MyProject/Minesweeper)
--	2、斗地主
+-	2、斗地主(还未实现)
