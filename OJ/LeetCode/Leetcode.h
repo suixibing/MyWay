@@ -150,6 +150,7 @@ int largestRectangleArea(vector<int>& heights); // 84. 柱状图中最大的矩�
 int maximalRectangle(vector< vector<char> >& matrix); // 85. 最大矩形
 void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n); // 88. 合并两个有序数组
 void subfunc(vector<int>& nums, int pos, vector<int>& tmp, vector< vector<int> >& res); // 90. 子集 II
+int maxProfit(vector<int>& prices); // 121. 买卖股票的最佳时机
 
 
 #endif /* _LEETCODE_H_ */
