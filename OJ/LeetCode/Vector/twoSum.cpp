@@ -8,7 +8,7 @@
  *  	内存消耗:		9.1 MB, 在所有 C++ 提交中击败了92.84%的用户
  *
  */
-vector<int> twoSum(vector<int>& nums, int target)
+vector<int> twoSum_1(vector<int>& nums, int target)
 {
 	vector<int> res;
 	int i, j, size = nums.size();

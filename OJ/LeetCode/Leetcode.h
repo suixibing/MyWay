@@ -113,7 +113,7 @@ bool hasPathSum(TreeNode* root, int sum); // 112. 路径总和
  *
  */
  
-vector<int> twoSum(vector<int>& nums, int target); // 1. 两数之和
+vector<int> twoSum_1(vector<int>& nums, int target); // 1. 两数之和
 double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2); // 4. 寻找两个有序数组的中位数
 int maxArea(vector<int>& height); // 11. 盛最多水的容器
 vector< vector<int> > threeSum(vector<int>& nums); // 15. 三数之和
@@ -152,6 +152,7 @@ int maximalRectangle(vector< vector<char> >& matrix); // 85. 最大矩形
 void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n); // 88. 合并两个有序数组
 void subfunc(vector<int>& nums, int pos, vector<int>& tmp, vector< vector<int> >& res); // 90. 子集 II
 int maxProfit(vector<int>& prices); // 121. 买卖股票的最佳时机
+vector<int> twoSum_167(vector<int>& numbers, int target); // 167. 两数之和 II - 输入有序数组
 
 
 #endif /* _LEETCODE_H_ */
