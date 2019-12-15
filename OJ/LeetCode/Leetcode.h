@@ -153,6 +153,6 @@ void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n); // 88. 合�
 void subfunc(vector<int>& nums, int pos, vector<int>& tmp, vector< vector<int> >& res); // 90. 子集 II
 int maxProfit(vector<int>& prices); // 121. 买卖股票的最佳时机
 vector<int> twoSum_167(vector<int>& numbers, int target); // 167. 两数之和 II - 输入有序数组
-
+int majorityElement(vector<int>& nums); // 169. 多数元素
 
 #endif /* _LEETCODE_H_ */
