@@ -50,6 +50,7 @@ vector<int> grayCode(int n); // 89. 格雷编码
 vector< vector<int> > generate(int numRows); // 118. 杨辉三角
 vector<int> getRow(int rowIndex); // 119. 杨辉三角 II
 uint32_t reverseBits(uint32_t n); // 190. 颠倒二进制位
+int hammingWeight(uint32_t n); // 191. 位1的个数
 
 /*
  *
