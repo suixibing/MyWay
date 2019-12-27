@@ -53,6 +53,7 @@ uint32_t reverseBits(uint32_t n); // 190. 颠倒二进制位
 int hammingWeight(uint32_t n); // 191. 位1的个数
 bool isHappy(int n); // 202. 快乐数
 int countPrimes(int n); // 204. 计数质数
+bool isIsomorphic(string s, string t); // 205. 同构字符串
 
 /*
  *
