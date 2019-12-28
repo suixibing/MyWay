@@ -161,5 +161,6 @@ int maxProfit(vector<int>& prices); // 121. 买卖股票的最佳时机
 vector<int> twoSum_167(vector<int>& numbers, int target); // 167. 两数之和 II - 输入有序数组
 int majorityElement(vector<int>& nums); // 169. 多数元素
 void rotate(vector<int>& nums, int k); // 189. 旋转数组
+bool containsDuplicate(vector<int>& nums); // 217. 存在重复元素
 
 #endif /* _LEETCODE_H_ */
