@@ -112,6 +112,7 @@ int maxDepth(TreeNode* root); // 104. 二叉树的最大深度
 vector< vector<int> > levelOrderBottom(TreeNode* root); // 107. 二叉树的层次遍历 II
 int minDepth(TreeNode* root); // 111. 二叉树的最小深度
 bool hasPathSum(TreeNode* root, int sum); // 112. 路径总和
+TreeNode* invertTree(TreeNode* root); // 226. 翻转二叉树
 
 /*
  *
