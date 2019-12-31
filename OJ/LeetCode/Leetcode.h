@@ -54,6 +54,7 @@ int hammingWeight(uint32_t n); // 191. 位1的个数
 bool isHappy(int n); // 202. 快乐数
 int countPrimes(int n); // 204. 计数质数
 bool isIsomorphic(string s, string t); // 205. 同构字符串
+bool isPowerOfTwo(int n); // 231. 2的幂
 
 /*
  *
@@ -73,6 +74,7 @@ ListNode* deleteDuplicates_83(ListNode* head); // 83. 删除排序链表中的�
 ListNode* partition(ListNode* head, int x); // 86. 分隔链表
 bool hasCycle(ListNode *head); // 141. 环形链表
 ListNode* removeElements(ListNode* head, int val); // 203. 移除链表元素
+bool isPalindrome(ListNode* head); // 234. 回文链表
 
 /*
  *
