@@ -115,6 +115,7 @@ vector< vector<int> > levelOrderBottom(TreeNode* root); // 107. 二叉树的层�
 int minDepth(TreeNode* root); // 111. 二叉树的最小深度
 bool hasPathSum(TreeNode* root, int sum); // 112. 路径总和
 TreeNode* invertTree(TreeNode* root); // 226. 翻转二叉树
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q); // 235. 二叉搜索树的最近公共祖先
 
 /*
  *
