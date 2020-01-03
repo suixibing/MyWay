@@ -75,6 +75,7 @@ ListNode* partition(ListNode* head, int x); // 86. 分隔链表
 bool hasCycle(ListNode *head); // 141. 环形链表
 ListNode* removeElements(ListNode* head, int val); // 203. 移除链表元素
 bool isPalindrome(ListNode* head); // 234. 回文链表
+void deleteNode(ListNode* node); // 237. 删除链表中的节点
 
 /*
  *
