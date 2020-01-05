@@ -55,6 +55,7 @@ bool isHappy(int n); // 202. 快乐数
 int countPrimes(int n); // 204. 计数质数
 bool isIsomorphic(string s, string t); // 205. 同构字符串
 bool isPowerOfTwo(int n); // 231. 2的幂
+int addDigits(int num); // 258. 各位相加
 
 /*
  *
