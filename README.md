@@ -24,6 +24,7 @@
 -	day07-二叉搜索树
 -	day08-AVL树
 -	day09-红黑树
+-	day10-哈希表
 
 ## [数据结构练习](./DataStructures)
 ---
