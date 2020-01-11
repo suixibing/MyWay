@@ -56,6 +56,7 @@ int countPrimes(int n); // 204. 计数质数
 bool isIsomorphic(string s, string t); // 205. 同构字符串
 bool isPowerOfTwo(int n); // 231. 2的幂
 int addDigits(int num); // 258. 各位相加
+bool isUgly(int num); // 263. 丑数
 
 /*
  *
@@ -169,5 +170,6 @@ vector<int> twoSum_167(vector<int>& numbers, int target); // 167. 两数之和 I
 int majorityElement(vector<int>& nums); // 169. 多数元素
 void rotate(vector<int>& nums, int k); // 189. 旋转数组
 bool containsDuplicate(vector<int>& nums); // 217. 存在重复元素
+int missingNumber(vector<int>& nums); // 268. 缺失数字
 
 #endif /* _LEETCODE_H_ */

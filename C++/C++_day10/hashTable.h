@@ -1,6 +1,6 @@
 #pragma once
 
-// ï¿½ï¿½É¢ï¿½ï¿½Êµï¿½ï¿½
+// ±ÕÉ¢ÁÐÊµÏÖ
 #include <map>
 #include <vector>
 using namespace std;
@@ -19,6 +19,7 @@ public:
 	{
 		return n;
 	}
+};
 
 class dealString
 {
@@ -158,7 +159,7 @@ const unsigned int hashTable<K, V, SWITCH>::s_m_primeTable[30] = {
  369098771,  738197549, 1476395029, 2952790033,	4294967295,
 };
 
-// ï¿½ï¿½É¢ï¿½ï¿½Êµï¿½ï¿½
+// ±ÕÉ¢ÁÐÊµÏÖ
 template<class T>
 class hashBucketNode
 {
