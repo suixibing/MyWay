@@ -57,6 +57,7 @@ bool isIsomorphic(string s, string t); // 205. 同构字符串
 bool isPowerOfTwo(int n); // 231. 2的幂
 int addDigits(int num); // 258. 各位相加
 bool isUgly(int num); // 263. 丑数
+int firstBadVersion(int n); // 278. 第一个错误的版本
 
 /*
  *
