@@ -172,5 +172,6 @@ int majorityElement(vector<int>& nums); // 169. 多数元素
 void rotate(vector<int>& nums, int k); // 189. 旋转数组
 bool containsDuplicate(vector<int>& nums); // 217. 存在重复元素
 int missingNumber(vector<int>& nums); // 268. 缺失数字
+void moveZeroes(vector<int>& nums); // 283. 移动零
 
 #endif /* _LEETCODE_H_ */
