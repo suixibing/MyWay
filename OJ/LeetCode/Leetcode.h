@@ -105,6 +105,7 @@ int minDistance(string word1, string word2); // 72. 编辑距离
 string minWindow(string s, string t); // 76. 最小覆盖子串
 bool isInterleave(string s1, string s2, string s3); // 97. 交错字符串
 bool isAnagram(string s, string t); // 242. 有效的字母异位词
+string getHint(string secret, string guess); // 299. 猜数字游戏
 
 /*
  *
