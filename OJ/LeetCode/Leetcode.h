@@ -47,6 +47,7 @@ int mySqrt(int x); // 69. x 的平方根
 int climbStairs(int n); // 70. 爬楼梯
 vector< vector<int> > combine(int n, int k); // 77. 组合
 vector<int> grayCode(int n); // 89. 格雷编码
+int numTrees(int n); // 96. 不同的二叉搜索树
 vector< vector<int> > generate(int numRows); // 118. 杨辉三角
 vector<int> getRow(int rowIndex); // 119. 杨辉三角 II
 uint32_t reverseBits(uint32_t n); // 190. 颠倒二进制位
