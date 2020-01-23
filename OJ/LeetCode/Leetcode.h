@@ -60,6 +60,7 @@ int addDigits(int num); // 258. 各位相加
 bool isUgly(int num); // 263. 丑数
 int firstBadVersion(int n); // 278. 第一个错误的版本
 int sumRange(int i, int j); // 303. 区域和检索 - 数组不可变
+bool isPowerOfThree(int n); // 326. 3的幂
 
 /*
  *
