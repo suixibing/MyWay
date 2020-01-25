@@ -1,8 +1,10 @@
 #pragma once
+#include "MyClass.h"
 #include <iostream>
 
 namespace lb
 {
+	using std::ostream;
 	class Point
 	{
 	private:
@@ -57,7 +59,7 @@ namespace lb
 		PointHandle(const PointHandle & ph) : m_up(ph.m_up) { ++(m_up->m_cnt); }
 		~PointHandle() { if (--(m_up->m_cnt) == 0) delete m_up; }
 		PointHandle& operator=(const PointHandle & ph);
-		friend std::ostream& operator<<(std::ostream & os, const PointHandle & ph);
+		friend ostream& operator<<(ostream & os, const PointHandle & ph);
 		int x() const { return m_up->x(); }
 		int y() const { return m_up->y(); }
 		int count() const { return m_up->count(); }
@@ -80,7 +82,7 @@ namespace lb
 		m_up = ph.m_up;
 		return *this;
 	}
-	std::ostream& operator<<(std::ostream & os, const PointHandle & ph)
+	ostream& operator<<(ostream & os, const PointHandle & ph)
 	{
 		os << '(' << ph.x() << ',' << ph.y() << ')';
 		return os;
@@ -107,42 +109,6 @@ namespace lb
 		return true;
 	}
 
-	// 计数类,用于需要引用计数的类
-	class UseCount
-	{
-	private:
-		int *m_cnt;
-	public:
-		UseCount() : m_cnt(new int(1)) { }
-		UseCount(const UseCount & uc) : m_cnt(uc.m_cnt) { ++(*m_cnt); }
-		~UseCount() { if (--(*m_cnt) == 0) delete m_cnt; }
-		int count() const { return *m_cnt; }
-		bool only() const { return *m_cnt == 1; }
-		bool reattach(const UseCount & uc);
-		bool makeOnly();
-	private:
-		UseCount& operator=(const UseCount & uc) { } // 不实现,阻止直接赋值操作
-	};
-	bool UseCount::reattach(const UseCount & uc)
-	{
-		++(*uc.m_cnt);
-		if (--(*m_cnt) == 0)
-		{
-			delete m_cnt;
-			m_cnt = uc.m_cnt;
-			return true;
-		}
-		m_cnt = uc.m_cnt;
-		return false;
-	}
-	bool UseCount::makeOnly()
-	{
-		if (*m_cnt == 1)
-			return false;
-		--(*m_cnt);
-		m_cnt = new int(1);
-		return true;
-	}
 	class PointHandle2
 	{
 	private:
@@ -156,7 +122,7 @@ namespace lb
 		PointHandle2(const PointHandle2 & hp) : m_p(hp.m_p), m_uc(hp.m_uc) { }
 		~PointHandle2() { if (m_uc.only()) delete m_p; }
 		PointHandle2& operator=(const PointHandle2 & hp);
-		friend std::ostream& operator<<(std::ostream & os, const PointHandle2 & ph);
+		friend ostream& operator<<(ostream & os, const PointHandle2 & ph);
 		int x() const { return m_p->x(); }
 		int y() const { return m_p->y(); }
 		int count() const { return m_uc.count(); }
@@ -171,7 +137,7 @@ namespace lb
 		m_p = hp.m_p;
 		return *this;
 	}
-	std::ostream& operator<<(std::ostream & os, const PointHandle2 & ph)
+	ostream& operator<<(ostream & os, const PointHandle2 & ph)
 	{
 		os << '(' << ph.x() << ',' << ph.y() << ')';
 		return os;
