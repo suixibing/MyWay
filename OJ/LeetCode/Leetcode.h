@@ -173,6 +173,8 @@ int largestRectangleArea(vector<int>& heights); // 84. 柱状图中最大的矩�
 int maximalRectangle(vector< vector<char> >& matrix); // 85. 最大矩形
 void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n); // 88. 合并两个有序数组
 void subfunc(vector<int>& nums, int pos, vector<int>& tmp, vector< vector<int> >& res); // 90. 子集 II
+TreeNode* buildTree_105(vector<int>& preorder, vector<int>& inorder); // 105. 从前序与中序遍历序列构造二叉树
+TreeNode* buildTree_106(vector<int>& inorder, vector<int>& postorder); // 106. 从中序与后序遍历序列构造二叉树
 int maxProfit(vector<int>& prices); // 121. 买卖股票的最佳时机
 vector<int> twoSum_167(vector<int>& numbers, int target); // 167. 两数之和 II - 输入有序数组
 int majorityElement(vector<int>& nums); // 169. 多数元素
