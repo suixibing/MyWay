@@ -1,7 +1,7 @@
 #include "picture.h"
 #include <iostream>
 using namespace std;
-using namespace lb;
+using namespace lb_old;
 
 const char *init[] = { "Paris", "in the", "Spring" };
 

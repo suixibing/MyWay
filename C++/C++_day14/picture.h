@@ -1,10 +1,218 @@
 #pragma once
-
+#include "MyClass.h"
 #include <iostream>
+
 namespace lb
 {
 	using std::ostream;
 	using std::endl;
+	class Picture;
+
+	class Pic_Node
+	{
+	protected:
+		friend class Picture;
+
+		static int max(int x, int y) { return x > y ? x : y; }
+		static void pad(ostream & os, int x, int y) { while (x++ < y) cout << ' '; }
+		virtual ~Pic_Node() { }
+		virtual int height() const = 0;
+		virtual int width() const = 0;
+		virtual void display(ostream & os, int row, int width) const = 0;
+	};
+	class String_Pic : public Pic_Node
+	{
+	private:
+		char **m_data;
+		int m_size;
+	private:
+		friend class Picture;
+
+		String_Pic(const char* const *data, int size);
+		~String_Pic();
+		int height() const;
+		int width() const;
+		void display(ostream & os, int row, int width) const;
+	};
+	class Frame_Pic : public Pic_Node
+	{
+	private:
+		Picture m_p;
+	private:
+		friend Picture frame(const Picture & p);
+
+		Frame_Pic(const Picture & p) : m_p(p) { }
+		int height() const;
+		int width() const;
+		void display(ostream & os, int row, int width) const;
+	};
+	class VCat_Pic : public Pic_Node
+	{
+	private:
+		Picture m_top;
+		Picture m_bottom;
+	private:
+		friend Picture operator&(const Picture & top, const Picture & bottom);
+
+		VCat_Pic(const Picture & top, const Picture & bottom) : m_top(top), m_bottom(bottom) { }
+		int height() const;
+		int width() const;
+		void display(ostream & os, int row, int width) const;
+	};
+	class HCat_Pic : public Pic_Node
+	{
+	private:
+		Picture m_left;
+		Picture m_right;
+	private:
+		friend Picture operator|(const Picture & left, const Picture & right);
+
+		HCat_Pic(const Picture & left, const Picture & right) : m_left(left), m_right(right) { }
+		int height() const;
+		int width() const;
+		void display(ostream & os, int, int) const;
+	};
+	class Picture
+	{
+	private:
+		UseCount m_uc;
+		Pic_Node *m_pn;
+	private:
+		friend Picture frame(const Picture & p);
+		friend Picture operator&(const Picture & top, const Picture & bottom);
+		friend Picture operator|(const Picture & left, const Picture & right);
+		friend ostream& operator<<(ostream & os, const Picture & pic);
+
+		Picture(Pic_Node * pn) : m_pn(pn) { }
+		int height() const { return m_pn->height(); }
+		int width() const { return m_pn->width(); }
+		void display(ostream & os, int row, int col) const { return m_pn->display(); }
+	public:
+		Picture() : m_pn(nullptr) { }
+		Picture(const Picture & p) : m_pn(p.m_pn), m_uc(p.m_uc) { }
+		Picture(const char * const *data, int size);
+		~Picture();
+		Picture& operator=(const Picture & p);
+	};
+
+	String_Pic::String_Pic(const char* const *data, int size)
+		: m_data(new char*[size]), m_size(size)
+	{
+		for (int i = 0; i < m_size; ++i)
+		{
+			m_data[i] = new char[strlen(data[i]) + 1];
+			strcpy(m_data[i], data[i]);
+		}
+	}
+	String_Pic::~String_Pic()
+	{
+		for (int i = 0; i < m_size; ++i)
+			delete m_data[i];
+		delete[] m_data;
+	}
+	int String_Pic::height() const
+	{
+		return m_size;
+	}
+	int String_Pic::width() const
+	{
+		int res = strlen(m_data[0]);
+		for (int i = 1; i < m_size; ++i)
+			res = max(res, strlen(m_data[i]));
+		return res;
+	}
+	void String_Pic::display(ostream & os, int row, int width) const
+	{
+		int start = 0;
+		if (row >= 0 && row < m_size)
+		{
+			os << m_data[row];
+			start = strlen(m_data[row]);
+		}
+		pad(os, start, width);
+	}
+	int Frame_Pic::height() const
+	{
+		
+	}
+	int Frame_Pic::width() const
+	{
+
+	}
+	void Frame_Pic::display(ostream & os, int row, int width) const
+	{
+
+	}
+	int VCat_Pic::height() const
+	{
+		
+	}
+	int VCat_Pic::width() const
+	{
+
+	}
+	void VCat_Pic::display(ostream & os, int row, int width) const
+	{
+
+	}
+	int HCat_Pic::height() const
+	{
+
+	}
+	int HCat_Pic::width() const
+	{
+
+	}
+	void HCat_Pic::display(ostream & os, int row, int width) const
+	{
+
+	}
+	Picture frame(const Picture & p)
+	{
+		return (new Frame_Pic(p));
+	}
+	Picture operator&(const Picture & top, const Picture & bottom)
+	{
+		return (new VCat_Pic(top, bottom));
+	}
+	Picture operator|(const Picture & left, const Picture & right)
+	{
+		return (new HCat_Pic(left, right));
+	}
+
+	Picture::Picture(const char * const *data, int size)
+	{
+		m_pn = new String_Pic(data, size);
+	}
+	Picture::~Picture()
+	{
+		if (m_uc.only())
+			delete m_pn;
+	}
+	Picture& Picture::operator=(const Picture & p)
+	{
+		if (m_uc.reattach(p.m_uc))
+			delete m_pn;
+		m_pn = p.m_pn;
+		return *this;
+	}
+	ostream& operator<<(ostream & os, const Picture & pic)
+	{
+		int ht = pic.height();
+		for (int i = 0; i < ht; ++i)
+		{
+			pic.display(os, i, i);
+			cout << endl;
+		}
+		return os;
+	}
+}
+
+namespace lb_old
+{
+	using std::ostream;
+	using std::endl;
+
 	class Picture
 	{
 	private:
