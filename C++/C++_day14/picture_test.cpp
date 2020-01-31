@@ -1,7 +1,7 @@
 #include "picture.h"
 #include <iostream>
 using namespace std;
-using namespace lb_old;
+using namespace lb;
 
 const char *init[] = { "Paris", "in the", "Spring" };
 
@@ -21,8 +21,11 @@ int main()
 	
 	Picture n = frame(s);
 	cout << n << endl;
+
+	Picture o = reframe(n, '$', '*', '*');
+	cout << o << endl;
 	
-	Picture k(s | n);
+	Picture k(s | o);
 	cout << k << endl;
 
 	cout << frame(k);
