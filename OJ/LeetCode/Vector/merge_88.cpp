@@ -37,8 +37,3 @@ void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n)
 	}
 	nums1 = res;
 }
-
-void merge_88(vector<int>& nums1, int m, vector<int>& nums2, int n)
-{
-	return merge_88(nums1, m, nums2, n);
-}

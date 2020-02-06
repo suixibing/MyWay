@@ -111,6 +111,7 @@ bool isAnagram(string s, string t); // 242. 有效的字母异位词
 string getHint(string secret, string guess); // 299. 猜数字游戏
 bool canConstruct(string ransomNote, string magazine); // 383. 赎金信
 string toLowerCase(string str); // 709. 转换成小写字母
+bool isLongPressedName(string name, string typed); // 925. 长按键入
 
 /*
  *
@@ -186,5 +187,6 @@ void rotate(vector<int>& nums, int k); // 189. 旋转数组
 bool containsDuplicate(vector<int>& nums); // 217. 存在重复元素
 int missingNumber(vector<int>& nums); // 268. 缺失数字
 void moveZeroes(vector<int>& nums); // 283. 移动零
+vector<int> sortedSquares(vector<int>& A); // 977. 有序数组的平方
 
 #endif /* _LEETCODE_H_ */
