@@ -189,6 +189,8 @@ void rotate(vector<int>& nums, int k); // 189. 旋转数组
 bool containsDuplicate(vector<int>& nums); // 217. 存在重复元素
 int missingNumber(vector<int>& nums); // 268. 缺失数字
 void moveZeroes(vector<int>& nums); // 283. 移动零
+int pivotIndex(vector<int>& nums); // 724. 寻找数组的中心索引
+vector<int> sortArrayByParity(vector<int>& A); // 905. 按奇偶排序数组
 vector<int> sortedSquares(vector<int>& A); // 977. 有序数组的平方
 
 #endif /* _LEETCODE_H_ */
