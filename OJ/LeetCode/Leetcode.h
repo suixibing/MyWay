@@ -110,7 +110,9 @@ bool isInterleave(string s1, string s2, string s3); // 97. 交错字符串
 bool isAnagram(string s, string t); // 242. 有效的字母异位词
 string getHint(string secret, string guess); // 299. 猜数字游戏
 bool canConstruct(string ransomNote, string magazine); // 383. 赎金信
+string reverseStr(string s, int k); // 541. 反转字符串 II
 string toLowerCase(string str); // 709. 转换成小写字母
+string reverseOnlyLetters(string S); // 917. 仅仅反转字母
 bool isLongPressedName(string name, string typed); // 925. 长按键入
 
 /*
