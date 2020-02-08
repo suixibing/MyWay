@@ -107,9 +107,11 @@ string simplifyPath(string path); // 71. 简化路径
 int minDistance(string word1, string word2); // 72. 编辑距离
 string minWindow(string s, string t); // 76. 最小覆盖子串
 bool isInterleave(string s1, string s2, string s3); // 97. 交错字符串
+bool isPalindrome(string s); // 125. 验证回文串
 bool isAnagram(string s, string t); // 242. 有效的字母异位词
 string getHint(string secret, string guess); // 299. 猜数字游戏
 bool canConstruct(string ransomNote, string magazine); // 383. 赎金信
+int compress(vector<char>& chars); // 443. 压缩字符串
 string reverseStr(string s, int k); // 541. 反转字符串 II
 string toLowerCase(string str); // 709. 转换成小写字母
 string reverseOnlyLetters(string S); // 917. 仅仅反转字母
@@ -189,6 +191,7 @@ void rotate(vector<int>& nums, int k); // 189. 旋转数组
 bool containsDuplicate(vector<int>& nums); // 217. 存在重复元素
 int missingNumber(vector<int>& nums); // 268. 缺失数字
 void moveZeroes(vector<int>& nums); // 283. 移动零
+int thirdMax(vector<int>& nums); // 414. 第三大的数
 int pivotIndex(vector<int>& nums); // 724. 寻找数组的中心索引
 vector<int> sortArrayByParity(vector<int>& A); // 905. 按奇偶排序数组
 vector<int> sortedSquares(vector<int>& A); // 977. 有序数组的平方

@@ -10,12 +10,8 @@
  */
 vector<int> searchRange(vector<int>& nums, int target)
 {
-	vector<int> res;
-	res.push_back(-1);
-	res.push_back(-1);
+	vector<int> res(2, -1);
 	int left = 0, right = nums.size() - 1, mid = (left + right) / 2;
-	if (right == -1)
-		return res;
 	while (left <= right)
 	{
 		if (nums[mid] < target)

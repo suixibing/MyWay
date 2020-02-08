@@ -17,17 +17,14 @@ vector<int> twoSum_1(vector<int>& nums, int target)
 		for (j = 0; j < size; j++)
 		{
 			if (i == j)
-			{
 				continue;
-			}
 			else if (nums[i] + nums[j] == target)
 			{
 				res.push_back(i);
 				res.push_back(j);
-				goto ret;
+				return res;
 			}
 		}
 	}
-ret:
 	return res;
 }

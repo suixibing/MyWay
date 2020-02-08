@@ -19,7 +19,5 @@ bool isPalindrome(int x)
 		y = y * 10 + tmp % 10;
 		tmp /= 10;
 	}
-	if (x != y)
-		return false;
-	return true;
+	return x == y;
 }
