@@ -134,6 +134,7 @@ bool hasPathSum(TreeNode* root, int sum); // 112. 路径总和
 vector< vector<int> > pathSum(TreeNode* root, int sum); // 113. 路径总和 II
 void flatten(TreeNode* root); // 114. 二叉树展开为链表
 int sumNumbers(TreeNode* root); // 129. 求根到叶子节点数字之和
+vector<int> rightSideView(TreeNode* root); // 199. 二叉树的右视图
 TreeNode* invertTree(TreeNode* root); // 226. 翻转二叉树
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q); // 235. 二叉搜索树的最近公共祖先
 
@@ -185,6 +186,7 @@ TreeNode* buildTree_105(vector<int>& preorder, vector<int>& inorder); // 105. �
 TreeNode* buildTree_106(vector<int>& inorder, vector<int>& postorder); // 106. 从中序与后序遍历序列构造二叉树
 TreeNode* sortedArrayToBST(vector<int>& nums); // 108. 将有序数组转换为二叉搜索树
 int maxProfit(vector<int>& prices); // 121. 买卖股票的最佳时机
+int evalRPN(vector<string>& tokens); // 150. 逆波兰表达式求值
 vector<int> twoSum_167(vector<int>& numbers, int target); // 167. 两数之和 II - 输入有序数组
 int majorityElement(vector<int>& nums); // 169. 多数元素
 void rotate(vector<int>& nums, int k); // 189. 旋转数组
@@ -192,6 +194,7 @@ bool containsDuplicate(vector<int>& nums); // 217. 存在重复元素
 int missingNumber(vector<int>& nums); // 268. 缺失数字
 void moveZeroes(vector<int>& nums); // 283. 移动零
 int thirdMax(vector<int>& nums); // 414. 第三大的数
+int findUnsortedSubarray(vector<int>& nums); // 581. 最短无序连续子数组
 int pivotIndex(vector<int>& nums); // 724. 寻找数组的中心索引
 vector<int> sortArrayByParity(vector<int>& A); // 905. 按奇偶排序数组
 vector<int> sortedSquares(vector<int>& A); // 977. 有序数组的平方

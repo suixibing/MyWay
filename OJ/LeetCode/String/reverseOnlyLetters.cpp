@@ -24,8 +24,7 @@ string reverseOnlyLetters(string S)
 			S[i] = S[j];
 			S[j] = tmp;
 		}
-		++i;
-		--j;
+		++i, --j;
 	}
 	return S;
 }
