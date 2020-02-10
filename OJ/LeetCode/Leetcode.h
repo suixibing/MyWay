@@ -28,6 +28,14 @@ struct TreeNode
 
 /*
  *
+ * Class 文件夹
+ *
+ */
+
+class MinStack; // 155. 最小栈
+
+/*
+ *
  * Int 文件夹
  *
  */
@@ -50,6 +58,8 @@ vector<int> grayCode(int n); // 89. 格雷编码
 int numTrees(int n); // 96. 不同的二叉搜索树
 vector< vector<int> > generate(int numRows); // 118. 杨辉三角
 vector<int> getRow(int rowIndex); // 119. 杨辉三角 II
+string convertToTitle(int n); // 168. Excel表列名称
+int trailingZeroes(int n); // 172. 阶乘后的零
 uint32_t reverseBits(uint32_t n); // 190. 颠倒二进制位
 int hammingWeight(uint32_t n); // 191. 位1的个数
 bool isHappy(int n); // 202. 快乐数
@@ -108,6 +118,7 @@ int minDistance(string word1, string word2); // 72. 编辑距离
 string minWindow(string s, string t); // 76. 最小覆盖子串
 bool isInterleave(string s1, string s2, string s3); // 97. 交错字符串
 bool isPalindrome(string s); // 125. 验证回文串
+int titleToNumber(string s); // 171. Excel表列序号
 bool isAnagram(string s, string t); // 242. 有效的字母异位词
 string getHint(string secret, string guess); // 299. 猜数字游戏
 bool canConstruct(string ransomNote, string magazine); // 383. 赎金信

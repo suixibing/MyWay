@@ -159,7 +159,7 @@ const unsigned int hashTable<K, V, SWITCH>::s_m_primeTable[30] = {
  369098771,  738197549, 1476395029, 2952790033,	4294967295,
 };
 
-// 闭散列实现
+// 开散列实现
 template<class T>
 class hashBucketNode
 {
