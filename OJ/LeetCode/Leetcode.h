@@ -89,6 +89,7 @@ ListNode* deleteDuplicates_82(ListNode* head); // 82. 删除排序链表中的�
 ListNode* deleteDuplicates_83(ListNode* head); // 83. 删除排序链表中的重复元素
 ListNode* partition(ListNode* head, int x); // 86. 分隔链表
 bool hasCycle(ListNode *head); // 141. 环形链表
+ListNode *detectCycle(ListNode *head); // 142. 环形链表 II
 ListNode* removeElements(ListNode* head, int val); // 203. 移除链表元素
 bool isPalindrome(ListNode* head); // 234. 回文链表
 void deleteNode(ListNode* node); // 237. 删除链表中的节点
@@ -197,6 +198,7 @@ TreeNode* buildTree_105(vector<int>& preorder, vector<int>& inorder); // 105. �
 TreeNode* buildTree_106(vector<int>& inorder, vector<int>& postorder); // 106. 从中序与后序遍历序列构造二叉树
 TreeNode* sortedArrayToBST(vector<int>& nums); // 108. 将有序数组转换为二叉搜索树
 int maxProfit(vector<int>& prices); // 121. 买卖股票的最佳时机
+int singleNumber(vector<int>& nums); // 136. 只出现一次的数字
 int evalRPN(vector<string>& tokens); // 150. 逆波兰表达式求值
 vector<int> twoSum_167(vector<int>& numbers, int target); // 167. 两数之和 II - 输入有序数组
 int majorityElement(vector<int>& nums); // 169. 多数元素
