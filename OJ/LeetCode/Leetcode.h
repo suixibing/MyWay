@@ -33,6 +33,7 @@ struct TreeNode
  */
 
 class MinStack; // 155. 最小栈
+class MyQueue； // 232. 用栈实现队列
 
 /*
  *
