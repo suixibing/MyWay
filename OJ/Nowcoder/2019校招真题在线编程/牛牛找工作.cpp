@@ -7,6 +7,7 @@ using namespace std;
 int main()
 {
     int N, M, Di, Pi, Ai;
+
     while (scanf("%d%d", &N, &M) != EOF)
     {
         vector<int> hardNum, people;
@@ -32,11 +33,11 @@ int main()
                 if (max < records[hardNum[j]])
                     max = records[hardNum[j]];
             }
-            //cout << max << endl;
             output[people[i]] = max;
         }
         for (int i = 0; i < M; ++i)
             printf("%d\n", output[tmp[i]]);
     }
+
     return 0;
 }

@@ -1,13 +1,6 @@
-#include "Nowcoder.h"
+#include <iostream>
+using namespace std;
 
-/*
- *
- *		求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
- *
- *  	运行时间：3ms
- *		占用内存：620k	
- *
- */
 class AddClass
 {
 private:
@@ -24,6 +17,7 @@ public:
 		return m_sum;
 	}
 };
+
 int Sum_Solution(int n)
 {
 	return AddClass(n).show();
