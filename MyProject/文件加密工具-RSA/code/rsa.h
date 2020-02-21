@@ -4,6 +4,7 @@
 namespace lb
 {
 	typedef long rsaDataType;
+	constexpr int BUFFERSIZE = 256;
 
 	struct RsaKey
 	{
@@ -16,25 +17,28 @@ namespace lb
 	{
 	private:
 		RsaKey m_key;
+
+	private:
+		static bool isPrime(rsaDataType num);
+		static rsaDataType getPrime();
+		static rsaDataType getPKey(rsaDataType prime1, rsaDataType prime2);
+		static rsaDataType getOrla(rsaDataType prime1, rsaDataType prime2);
+		static rsaDataType getEKey(rsaDataType orla);
+		static rsaDataType getDKey(rsaDataType eKey, rsaDataType orla);
+		static rsaDataType getGcd(rsaDataType num1, rsaDataType num2);
+		rsaDataType dealData(rsaDataType data, rsaDataType e, rsaDataType n);
+
 	public:
 		Rsa();
-		Rsa(RsaKey & key);
-
-		bool isPrime(rsaDataType num);
-		RsaKey getRsaKey();
-		rsaDataType getPrime();
-		rsaDataType getPKey(rsaDataType prime1, rsaDataType prime2);
-		rsaDataType getOrla(rsaDataType prime1, rsaDataType prime2);
-		rsaDataType getEKey(rsaDataType orla);
-		rsaDataType getDKey(rsaDataType eKey, rsaDataType orla);
-		rsaDataType getGcd(rsaDataType num1, rsaDataType num2);
-		rsaDataType dealData(rsaDataType data, rsaDataType e, rsaDataType n);
+		Rsa(const RsaKey & key);
+		
+		static const RsaKey& getRsaKey();
 		rsaDataType ecrept(rsaDataType data);
 		rsaDataType ecrept(rsaDataType data, rsaDataType eKey, rsaDataType pKey);
 		rsaDataType decrept(rsaDataType data);
 		rsaDataType decrept(rsaDataType data, rsaDataType dKey, rsaDataType pKey);
-		void ecreptFile(const std::string filename, const std::string e_filename);
-		void decreptFile(const std::string e_filename, const std::string d_filename);
+		bool ecreptFile(const std::string filename, const std::string e_filename);
+		bool decreptFile(const std::string e_filename, const std::string d_filename);
 
 		void show() const;
 	};
