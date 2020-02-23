@@ -6,11 +6,60 @@
 using namespace std;
 using namespace lb;
 
+void BigIntTest_sub(long long a, long long b)
+{
+	BigInt aa = a;
+	BigInt bb = b;
+	
+	cout << a << " and " << b << endl;
+	cout << aa << " and " << bb << endl;
+
+	cout << a + b << endl;
+	cout << aa + bb << endl;
+	cout << a - b << endl;
+	cout << aa - bb << endl;
+	cout << a * b << endl;
+	cout << aa * bb << endl;
+	cout << a / b << endl;
+	cout << aa / bb << endl;
+	cout << a % b << endl;
+	cout << aa % bb << endl;
+
+	cout << "-----swap----" << endl;
+	cout << b + a << endl;
+	cout << bb + aa << endl;
+	cout << b - a << endl;
+	cout << bb - aa << endl;
+	cout << b * a << endl;
+	cout << bb * aa << endl;
+	cout << b / a << endl;
+	cout << bb / aa << endl;
+	cout << b % a << endl;
+	cout << bb % aa << endl;
+}
+
+// 用于测试大数运算
+void BigIntTest()
+{
+	long long a = 6733454LL, b = -a;//7562452342LL;
+
+	BigInt s = 366553;
+	
+	BigIntTest_sub(a, b);
+	cout << endl;
+	BigIntTest_sub(a, -b);
+	cout << endl;
+	BigIntTest_sub(-a, b);
+	cout << endl;
+	BigIntTest_sub(-a, -b);
+	
+}
+
 // 生成一套密钥
 int test1()
 {
-	Rsa rsa;
-	RsaKey key = rsa.getRsaKey();
+	RsaKey key = Rsa::getRsaKey();
+	Rsa rsa(key);
 	rsa.show();
 
 	ofstream fileout;
@@ -39,7 +88,7 @@ int test1()
 // 测试密钥功能
 int test2()
 {
-	wifstream filein;
+	ifstream filein;
 	filein.open("./rsa.txt");
 
 	RsaKey key;
@@ -87,6 +136,8 @@ int main()
 	filein >> key.m_eKey >> key.m_dKey >> key.m_pKey;
 	Rsa rsa(key);
 
+	//BigIntTest();
+	//test1();
 	while (flag)
 	{
 		cout << "请输入要进行的操作(1.加密 2.解密 0.退出): " << endl;

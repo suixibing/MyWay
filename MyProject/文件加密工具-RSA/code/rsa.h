@@ -1,9 +1,12 @@
 #pragma once
 #include <string>
+#include "BigInt.h"
 
 namespace lb
 {
-	typedef long rsaDataType;
+	//typedef long rsaDataType;
+	typedef BigInt rsaDataType;
+	constexpr int DEBUG = 0;
 	constexpr int BUFFERSIZE = 256;
 
 	struct RsaKey
@@ -20,11 +23,13 @@ namespace lb
 
 	private:
 		static bool isPrime(rsaDataType num);
+		static rsaDataType getRandom();
 		static rsaDataType getPrime();
 		static rsaDataType getPKey(rsaDataType prime1, rsaDataType prime2);
 		static rsaDataType getOrla(rsaDataType prime1, rsaDataType prime2);
 		static rsaDataType getEKey(rsaDataType orla);
 		static rsaDataType getDKey(rsaDataType eKey, rsaDataType orla);
+		static rsaDataType extendGcd(rsaDataType a, rsaDataType b, rsaDataType & x, rsaDataType & y);
 		static rsaDataType getGcd(rsaDataType num1, rsaDataType num2);
 		rsaDataType dealData(rsaDataType data, rsaDataType e, rsaDataType n);
 
@@ -32,7 +37,7 @@ namespace lb
 		Rsa();
 		Rsa(const RsaKey & key);
 		
-		static const RsaKey& getRsaKey();
+		static RsaKey getRsaKey();
 		rsaDataType ecrept(rsaDataType data);
 		rsaDataType ecrept(rsaDataType data, rsaDataType eKey, rsaDataType pKey);
 		rsaDataType decrept(rsaDataType data);
