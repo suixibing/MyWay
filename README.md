@@ -31,6 +31,7 @@
 -	day14-图像类
 -	day15-容器类
 -	day16-文本查询程序类
+-	day17-模拟邮件簿记类
 
 ## [数据结构练习](./DataStructures)
 ---
@@ -39,16 +40,22 @@
 ## [OJ](./OJ)
 ---
 ###	[LeetCode](./OJ/LeetCode)
-**Int**
-输入与 int 有关
-**LinkList**
-输入与链表有关
-**String**
-输入与 string 类有关
-**TreeNode**
-输入与 TreeNode 类有关
-**Vector**
-输入与 vector 类有关
+- **Class**<br>
+与定义类有关<br>
+- **Int**<br>
+输入与 int 有关<br>
+- **LinkList**<br>
+输入与链表有关<br>
+- **String**<br>
+输入与 string 类有关<br>
+- **TreeNode**<br>
+输入与 TreeNode 类有关<br>
+- **Vector**<br>
+输入与 vector 类有关<br>
+###	[Nowcoder](./OJ/Nowcoder)
+- **2019校招真题在线编程**<br>
+- **华为机试在线训练**<br>
+- **剑指offer**<br>
 
 ## [一些C/C++小项目](./MyProject)
 ---
