@@ -30,22 +30,32 @@ namespace lb
 		void addToFolders();
 		// 使所有保存有当前message信息的folder删除当前message的位置信息
 		void removeFromFolders();
+		// 移动临时message的folder信息
+		void moveFolders(Message *msg);
 
 	public:
 		// m_folders隐式初始化为空
 		explicit Message(const std::string &contents = "")
 			: m_contents(contents) { }
-		// 拷贝构造函数，负责将新message信息添加到所有的folder中
+		// 拷贝构造函数，负责将新message信息拷贝添加到所有的folder中
 		Message(const Message &msg)
 			: m_contents(msg.m_contents), m_folders(msg.m_folders)
 		{
 			addToFolders();
 		}
+		// 移动构造函数，负责将临时的message信息移动到当前新message中
+		Message(Message &&msg)
+			: m_contents(std::move(msg.m_contents))
+		{
+			moveFolders(&msg);
+		}
 		// 析构函数，负责将要销毁的message从所有folder中删除
 		~Message() { removeFromFolders(); }
 
-		// 删除原有folder保存的旧message信息并添加一份新message信息
+		// 删除原有folder保存的旧message信息并拷贝添加一份新message信息
 		Message& operator=(const Message &msg);
+		// 删除原有folder保存的旧message信息并移动获取一份新message信息
+		Message& operator=(Message &&msg);
 		// 将message保存到指定的folder中
 		void save(Folder &fldr);
 		// 将message从指定的folder删除
@@ -87,6 +97,8 @@ namespace lb
 		void addToMessages();
 		// 使当前目录中所有message删除当前folder的位置信息
 		void removeFromMessages();
+		// 移动临时folder中的message信息
+		void moveMessage(Folder *fldr);
 
 	public:
 		// m_msg隐式初始化为空
@@ -97,11 +109,20 @@ namespace lb
 		{
 			addToMessages();
 		}
+		Folder(Folder &&fldr)
+		{
+			moveMessage(&fldr);
+		}
 		// 析构函数，负责将要销毁的当前folder从所有保存的message中删除
-		~Folder() { removeFromMessages(); }
+		~Folder()
+		{
+			removeFromMessages();
+		}
 
-		// 删除旧目录中所有message保留的旧folder信息并为新message添加新folder信息
+		// 删除旧目录中所有message保留的旧folder信息并为新message拷贝添加新folder信息
 		Folder& operator=(const Folder &fldr);
+		// 删除旧目录中所有message保留的旧folder信息并移动获取临时message的folder信息
+		Folder& operator=(Folder &&fldr);
 		// 将指定message保存到当前folder中
 		void save(Message &msg);
 		// 将指定message从当前folder删除
@@ -131,6 +152,28 @@ namespace lb
 		addToFolders();
 		return *this;
 	}
+	Message& Message::operator=(Message &&msg)
+	{
+		if (this != &msg)
+		{
+			removeFromFolders();
+			m_contents = std::move(msg.m_contents);
+			moveFolders(&msg);
+		}
+		return *this;
+	}
+	/*
+	// 同时实现拷贝和移动语义，当左值时拷贝得到msg，当右值时移动得到msg，
+	// 然后将msg和*this交换完成赋值
+	// 注意：自己给自己赋值时也会进行拷贝，产生资源浪费
+	// 		传一个右值时，会进行两次移动操作
+	Message& Message::operator=(Message msg)
+	{
+		// 直接调用自己的swap
+		swap(*this, msg);
+		return *this;
+	}
+	*/
 	inline void Message::save(Folder &fldr)
 	{
 		addFldr(&fldr);
@@ -163,12 +206,25 @@ namespace lb
 		for (auto f : m_folders)
 			f->remMsg(this);
 	}
+	void Message::moveFolders(Message *msg)
+	{
+		msg->removeFromFolders();
+		m_folders = std::move(msg->m_folders);
+		addToFolders();
+		msg->m_folders.clear(); // 保证销毁set是无害的
+	}
 
 	Folder& Folder::operator=(const Folder &fldr)
 	{
 		removeFromMessages();
 		m_msg = fldr.m_msg;
 		addToMessages();
+		return *this;
+	}
+	Folder& Folder::operator=(Folder &&fldr)
+	{
+		if (this != &fldr)
+			moveMessage(&fldr);
 		return *this;
 	}
 	inline void Folder::save(Message &msg)
@@ -208,6 +264,12 @@ namespace lb
 	{
 		for (auto m : m_msg)
 			m->remFldr(this);
+	}
+	void Folder::moveMessage(Folder *fldr)
+	{
+		fldr->removeFromMessages();
+		m_msg = std::move(fldr->m_msg);
+		addToMessages();
 	}
 }
 
