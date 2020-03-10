@@ -1,47 +1,40 @@
-#include <string>
-#include <cctype>
 #include <iostream>
+#include <cctype>
+#include <vector>
+#include <bitset>
 using namespace std;
-
-void Encrypt(string password, string result)
-{
-    result = password;
-    for (auto & i : result)
-    {
-        if (isdigit(i))
-            i = (i + 1 - '0') % 10 + '0';
-        else if (isupper(i))
-            i = (i + 1 - 'A') % 26 + 'a';
-        else if (islower(i))
-            i = (i + 1 - 'a') % 26 + 'A';
-    }
-    cout << result << endl;
-}
-
-void unEncrypt(string password, string result)
-{
-    result = password;
-    for (auto & i : result)
-    {
-        if (isdigit(i))
-            i = (i + 9 - '0') % 10 + '0';
-        else if (isupper(i))
-            i = (i + 25 - 'A') % 26 + 'a';
-        else if (islower(i))
-            i = (i + 25 - 'a') % 26 + 'A';
-    }
-    cout << result << endl;
-}
 
 int main()
 {
-    string input1, input2, result;
-    
-    while (cin >> input1 >> input2)
-    {
-        Encrypt(input1, result);
-        unEncrypt(input2, result);
-    }
-    
-    return 0;
+	string key, str;
+	bitset<26> book;
+
+	while (cin >> key >> str)
+	{
+		book.reset();
+		vector<char> vec;
+		for (auto c : key)
+		{
+			if (book[tolower(c) - 'a'] == 0)
+			{
+				book[tolower(c) - 'a'] = 1;
+				vec.push_back(tolower(c));
+			}
+		}
+		for (size_t i = 0; i < 26; ++i)
+		{
+			if (!book.test(i))
+				vec.push_back('a' + i);
+		}
+		for (auto &c : str)
+		{
+			if (isupper(c))
+				c = vec[c - 'A'] - 'a' + 'A';
+			else
+				c = vec[c - 'a'];
+		}
+		cout << str << endl;
+	}
+
+	return 0;
 }
