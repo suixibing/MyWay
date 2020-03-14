@@ -32,10 +32,20 @@
 -	day15-容器类
 -	day16-文本查询程序类
 -	day17-模拟邮件簿记类
+-	day18-Token类
 
 ## [数据结构练习](./DataStructures)
 ---
 -	1、简单的对数据结构进行了学习
+
+## [Java练习](./Java)
+---
+-	1、简单Java类
+-	2、简单映射转换类
+
+## [miniSTL实现](./miniSTL)
+---
+-	1、Vector实现
 
 ## [OJ](./OJ)
 ---
