@@ -1,0 +1,48 @@
+Annotation // 注解，标注
+
+覆写操作
+	@Override // 明确表示该方法是一个覆写来的方法
+过期操作
+	@Deprecated // 老版本继续用，如果是新的不要用了
+压制警告
+	@SuppressWarnings({***}) // 让警告信息不出现
+
+-------------------------------------------------------------
+
+instanceof 关键字 --> 返回boolean
+父类向子类转型时一般使用instanceof判断后再进行转换
+
+Person per = new Person(); // 未转型
+System.out.println(per instanceof Person); // true
+System.out.println(per instanceof SuperMan); // false
+
+Person per = new SuperMan(); // 向上转型
+System.out.println(per instanceof Person); // true
+System.out.println(per instanceof SuperMan); // true
+
+
+----------------------------------------------------------------
+
+Object类
+
+toString(); // 对象信息的获得默认是这个方法，可以覆写这个方法
+boolean equals(Object obj); // 比较两个对象是否完全一致，可以覆写这个方法
+public boolean equals(Object obj) // /默认只比较了地址
+{
+	return (this == obj);
+}
+@Override
+public boolean equals(Object obj)
+{
+	if (!(obj instanceof Person)) { // 跟不同类型比较
+		return false;
+	}
+	if (obj == null) {
+		return false;
+	}
+	if (this == obj) { // 跟自己比
+		return true;
+	}
+	Person per = (Person)obj;
+	return this.name.equals(per.name) && this.age.equals(per.age);
+}

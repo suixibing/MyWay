@@ -1,0 +1,63 @@
+String构造方法：
+	String();
+	String(byte[] bytes);
+	String(byte[] bytes, int offset, int length);
+	String(char[] value);
+	String(char[] value, int offset, int count);
+	String(String original);
+	
+1、字符串与字符
+	char charAt(int index)
+	char[] toCharArray();
+2、字符串与字节
+3、字符串比较
+	boolean equals(Object anObject);
+	boolean equalsIgnoreCase(String anotherString);
+	int compareTo(String anotherString);
+	int compareToIgnoreCase(String str);
+4、字符串查找
+	boolean contains(CharSequence s);
+	int indexOf(int ch);
+	int indexOf(int ch, int fromIndex);
+	int indexOf(String str);
+	int indexOf(String str, int fromIndex);
+	int lastIndexOf(int ch);
+	int lastIndexOf(int ch, int fromIndex);
+	int lastIndexOf(String str);
+	int lastIndexOf(String str, int fromIndex);
+	boolean startsWith(String prefix);
+	boolean startsWith(String prefix, int toffset);
+	boolean endsWith(String suffix);
+5、字符串替换
+	String replace(char oldChar, char newChar);
+	String replace(CharSequence target, CharSequence replacement);
+	String replaceAll(String regex, String replacement);
+	String replaceFirst(String regex, String replacement);
+6、字符串拆分
+	String[] split(String regex); // 正则表达式使用"\\"转义
+	String[] split(String regex, int limit);
+7、字符串截取
+	String substring(int beginIndex);
+	String substring(int beginIndex, int endIndex);
+8、字符串格式化
+	static  String format(String format, Object... args);
+9、其它方法
+	String concat(String str); // 字符串连接
+	String intern(); // 字符串入池
+	boolean isEmpty(); // 判断是否是空字符串，不是判断null
+	int length(); // 计算字符串长度
+	String trim(); // 返回去除首尾空格的字符串
+	String toUpperCase(); // 将所有字母转换为大写
+	String toLowerCase(); // 将所有字母转换为小写
+
+注意： String没有实现首字母大写的功能，我们可以自己实现
+	public static String initcap(String str) {
+		if (str == null || "".equals(str)) {
+			return str;
+		}
+		if (str.length == 1) {
+			return str.toUpperCase();
+		}
+		return str.substring(0, 1).toUpperCase() + str.substr(1);
+	}
+
