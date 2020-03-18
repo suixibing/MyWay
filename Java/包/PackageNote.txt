@@ -1,0 +1,56 @@
+对程序进行编译与打包处理：
+	1、对程序打包编译： javac -d . Message.java
+	2、此时会形成cn的包，包里面有相应的子包与*.class文件，
+	将其打包为lb.jar： jar -cvf lb.jar cn
+		'-c' 创建一个新的jar文件
+		'-v' 得到一个详细输出
+	'-f' 设置要生成的jar文件的名称
+	3、每一个*.jar文件都是一个独立的程序路径，如果要想在Java程序中使用此路径
+	则必须通过CLASSPATH进行配置(SET CLASSPATH=.;D:\MyJava\包\cn.jar)
+	4、解释程序： java cn.lb.test.Test.TestMessage
+
+注意：
+	如果此时程序编译通过之后，由于CLASSPATH发生了改变，类无法加载到了，
+	则执行TestMessage会出现如下错误提示： 
+	Exception in thread "main" java.lang.NoClassDefFoundError: cn/lb/util/Message
+	出现这种错误只有一种情况： *.jar包没有配置正确
+
+注意：
+	1.9以前CLASSPATH必须配置dt.jar和tools.jar，在传统的Java开发中必须每次都加载这两个类文件
+	1.9之后提供了一个模块化的设计将原本很大的要加载的一个*.jar文件变成了若干个模块文件（.jmod文件），
+	这样在启动时可以根据程序加载指定的模块（模块中有包），就可以使启动速度变快
+
+生成jar文件的输出：
+	> jar -cvf cn.jar cn (回车)
+	已添加清单
+	正在添加: cn/(输入 = 0) (输出 = 0)(存储了 0%)
+	正在添加: cn/lb/(输入 = 0) (输出 = 0)(存储了 0%)
+	正在添加: cn/lb/demo/(输入 = 0) (输出 = 0)(存储了 0%)
+	正在添加: cn/lb/demo/Hello.class(输入 = 427) (输出 = 294)(压缩了 31%)
+	正在添加: cn/lb/test/(输入 = 0) (输出 = 0)(存储了 0%)
+	正在添加: cn/lb/test/TestMath.class(输入 = 505) (输出 = 357)(压缩了 29%)
+	正在添加: cn/lb/test/TestMessage.class(输入 = 508) (输出 = 334)(压缩了 34%)
+	正在添加: cn/lb/util/(输入 = 0) (输出 = 0)(存储了 0%)
+	正在添加: cn/lb/util/Message.class(输入 = 295) (输出 = 227)(压缩了 23%)
+	正在添加: cn/lb/util/MyMath.class(输入 = 407) (输出 = 312)(压缩了 23%) 
+
+Java常用包：
+	java.lang： 像String、Number、Object等类都在这个包里，默认导入
+	java.lang.reflect： 反射机制处理包，所有设计从此开始
+	java.util： 工具类的定义，包括数据结构的定义
+	java.io： 进行输入与输出流操作的程序包
+	java.net： 网络程序开发的程序包
+	java.sql： 进行数据库编程的开发包
+	java.applet： Java的最原始的使用形式，直接嵌套在网页上执行的程序类
+		现在的程序已经以Application为主了（有主方法的程序）
+	java.awt、javax.swing： Java的图形界面开发包（GUI），
+		其中awt是重量级的组件，swing是轻量级的组件
+	
+访问权限： private、default（不写）、protected、public
+		访问范围			private		default		protected	public
+	同一包中的同一类			y			y			y			y
+	同一包中的不同类						y			y			y		
+	不同包的子类										y			y
+	不同包的所有类												y
+	->	只要是进行属性的定义，全部使用private
+	->	只要是进行方法的定义，全部使用public
